@@ -1,5 +1,7 @@
 class passenger::compile {
 
+  require passenger::install
+
   exec {'compile-passenger':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     command   => 'passenger-install-apache2-module -a',

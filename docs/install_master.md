@@ -15,7 +15,7 @@ This will also bring down Ruby and a few other things.
 
 Now you can install puppet modules with the following syntax:
 
-    puppet apply --modulepath ./modules manifests/node.pp
+    puppet apply --modulepath ./modules manifests/node.pp --ordering manifest
 
 
 # Puppet Master Install (Centos 7)
@@ -115,8 +115,8 @@ Finally, create the following in the files puppetmaster.conf in /etc/httpd/conf/
     SSLCipherSuite EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
     SSLHonorCipherOrder     on
 
-    SSLCertificateFile      /var/lib/puppet/ssl/certs/localhost.pem
-    SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/localhost.pem
+    SSLCertificateFile      /var/lib/puppet/ssl/certs/puppet_master_cert.pem
+    SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/puppet_master_cert.pem
     SSLCertificateChainFile /var/lib/puppet/ssl/ca/ca_crt.pem
     SSLCACertificateFile    /var/lib/puppet/ssl/ca/ca_crt.pem
     SSLCARevocationFile     /var/lib/puppet/ssl/ca/ca_crl.pem

@@ -1,9 +1,10 @@
-class puppet-master::config {
+class puppetmaster::config {
+ 
+  $hostnames = $puppetmaster::hostnames
       
-  file { 'puppet.conf':
-    path    => '/etc/puppet/puppet.conf',
+  file { '/etc/puppet/puppet.conf':
     ensure  => file,
-    content => template("puppet-master/puppet.conf.erb"),
+    content => template("puppetmaster/puppet.conf.erb"),
   }
 
   file { '/usr/share/puppet/rack':
@@ -33,7 +34,7 @@ class puppet-master::config {
 
   file { "/etc/httpd/conf.d/vhost_puppetmaster.conf":
       ensure => present,
-      source => "puppet:///modules/puppet-master/virtual_host.conf",
+      source => "puppet:///modules/puppetmaster/virtual_host.conf",
   }
 
 }

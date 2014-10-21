@@ -1,3 +1,3 @@
 node "puppetnode" {
-  include base, httpd, passenger
+  include base, httpd, passenger, puppetmaster
 }

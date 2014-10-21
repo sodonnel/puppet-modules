@@ -1,4 +1,4 @@
-class puppet-master::install {
+class puppetmaster::install {
 
   package { [puppet-server]:
     ensure => present,
