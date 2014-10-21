@@ -1,4 +1,10 @@
 class puppet-master::config {
+      
+  file { 'puppet.conf':
+    path    => '/etc/puppet/puppet.conf',
+    ensure  => file,
+    content => template("puppet-master/puppet.conf.erb"),
+  }
 
   file { '/usr/share/puppet/rack':
     ensure => 'directory'
