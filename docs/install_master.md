@@ -42,7 +42,13 @@ Now the node is ready to receive manifests.
 
 # Configure Node To Receive Manifests
 
+The puppet modules live in `/etc/puppet/modules` by default. If you copy your modules into this location from source control, and then add a site.pp file containing the following in `/etc/puppet/manifests/site.pp`
 
+    node "puppetnode" {
+      include base, httpd
+    }
+
+Next time the puppet agent connects, it will receive the base and httpd manifests and apply them to the node.
 
 
 # Puppet Master Install (Centos 7)
