@@ -6,5 +6,6 @@ class puppetmaster {
 
   $hostnames = 'puppet,puppet.example.com'
 
-  include puppetmaster::install, puppetmaster::config
+  contain puppetmaster::install
+  contain puppetmaster::config
 }

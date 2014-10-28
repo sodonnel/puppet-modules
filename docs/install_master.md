@@ -15,7 +15,34 @@ This will also bring down Ruby and a few other things.
 
 Now you can install puppet modules with the following syntax:
 
-    puppet apply --modulepath ./modules manifests/node.pp --ordering manifest
+puppet apply --modulepath ./modules manifests/node.pp --ordering manifest
+
+# Register Node
+
+Assuming you have a master running, each node must register with the master:
+
+    puppet agent --verbose --no-daemonize
+
+On the first run, this will generate a certificate and sent it to the master.
+
+Assuming the master is not setup to autosign every certificate, then you must sign the certificate onthe master to allow the node to join.
+
+List the nodes with pending certificates:
+
+    puppet cert list
+
+    "puppetnode" (SHA256) 07:05:62:95:67:3E:3D:48:46:B5:F0:F2:6A:51:03:7B:FE:7A:CA:C2:EF:9D:75:3F:3D:62:24:2C:4B:F8:E1:2E
+
+Then sign the certificates:
+
+    puppet cert --sign puppetnode
+
+
+Now the node is ready to receive manifests.
+
+# Configure Node To Receive Manifests
+
+
 
 
 # Puppet Master Install (Centos 7)

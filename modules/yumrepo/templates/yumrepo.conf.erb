@@ -1,0 +1,5 @@
+<Directory '<%= scope.lookupvar("::yumrepo::location") -%>'>
+  Options Indexes
+</Directory>
+
+Alias /yumrepo <%= scope.lookupvar("::yumrepo::location") %>

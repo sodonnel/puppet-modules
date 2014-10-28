@@ -1,3 +1,4 @@
-class base {    
-  include base::install, base::config
+class base {
+  contain base::install
+  contain base::config
 }

@@ -2,5 +2,7 @@ class httpd {
 
   require base
 
-  include httpd::install
+  contain httpd::install
+  include httpd::service
+  
 }

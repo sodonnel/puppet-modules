@@ -1,0 +1,2 @@
+* Certs for puppet master
+* Hosts file to avoid DNS

@@ -1,6 +1,8 @@
-class passenger {
+class passenger($passenger_version = '4.0.52') {
 
   require httpd
 
-  include passenger::install, passenger::compile, passenger::config
+  contain passenger::install
+  contain passenger::compile
+  contain passenger::config
 }
