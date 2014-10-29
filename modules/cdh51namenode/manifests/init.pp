@@ -1,3 +1,7 @@
 class cdh51namenode {
-  contains cdh51namenode::install
+  
+  require cdh51java
+  require cdh51repo
+  
+  contain cdh51namenode::install
 }
