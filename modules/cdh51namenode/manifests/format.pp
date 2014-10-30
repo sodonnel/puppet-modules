@@ -1,5 +1,5 @@
 class cdh51namenode::format {
-  exec {'compile-passenger':
+  exec {'format-namenode':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',
     command   => 'hdfs namenode -format',
