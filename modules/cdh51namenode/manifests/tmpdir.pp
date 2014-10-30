@@ -1,6 +1,6 @@
 class cdh51namenode::tmpdir {
 
-  exec {'format-namenode':
+  exec {'namenode-tmpdir':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',
     command   => 'hadoop fs -mkdir /tmp',
@@ -11,7 +11,7 @@ class cdh51namenode::tmpdir {
 
   ->
 
-  exec {'format-namenode':
+  exec {'namenode-tmpdir-permissions':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',
     command   => 'hadoop fs -chmod -R 1777 /tmp',

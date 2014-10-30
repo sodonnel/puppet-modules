@@ -1,2 +1,12 @@
 * Certs for puppet master
 * Hosts file to avoid DNS
+
+
+
+###### Hadoop
+
+* Namenode - VM uses 2 network interfaces. Should I pass the IP along with the hostname or can I use the factr IP address?
+
+* Secondary Namenode and multiple namenode data directories
+
+

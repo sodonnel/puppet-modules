@@ -22,4 +22,18 @@
     <name>fs.defaultFS</name>
     <value>hdfs://<%= scope.lookupvar("::cdh51namenode::hostname") -%>:8020</value>
   </property>
+
+  <!-- Time before trash is deleted in minutes -->
+  <property>
+    <name>fs.trash.interval</name>
+    <value>60</value>
+  </property>
+
+  <!-- Time before trashcheckpoints are created in minutes -->
+  <property>
+    <name>fs.trash.checkpoint.interval</name>
+    <value>30</value>
+  </property>
+
+
 </configuration>
