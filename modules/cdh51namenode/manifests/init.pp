@@ -5,4 +5,6 @@ class cdh51namenode($hostname = namenode) {
   
   contain cdh51namenode::install
   contain cdh51namenode::config
+  contain cdh51namenode::format
+  
 }
