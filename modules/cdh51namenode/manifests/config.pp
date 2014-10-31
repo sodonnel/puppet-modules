@@ -1,21 +1,21 @@
 class cdh51namenode::config {
 
-  host { $::cdh51namenode::hostname:
-    ip => '192.168.57.6',
-  }
+  $namenodehostname = $::cdh51namenode::hostname
   
   file { "/etc/hadoop/conf/hdfs-site.xml":
-    ensure => present,
+    ensure  => present,
     content => template("cdh51namenode/hdfs-site.xml.erb"),
-    owner => "root",
-    group => "root",
+    owner   => "root",
+    group   => "root",
+    notify  => Service['hadoop-hdfs-namenode'],
   }
 
   file { "/etc/hadoop/conf/core-site.xml":
-    ensure => present,
+    ensure  => present,
     content => template("cdh51namenode/core-site.xml.erb"),
-    owner => "root",
-    group => "root",
+    owner   => "root",
+    group   => "root",
+    notify  => Service['hadoop-hdfs-namenode'],
   }
   
 }

@@ -2,11 +2,33 @@
 * Hosts file to avoid DNS
 
 
-
-###### Hadoop
+#################
+###### Hadoop ###
+#################
 
 * Namenode - VM uses 2 network interfaces. Should I pass the IP along with the hostname or can I use the factr IP address?
 
 * Secondary Namenode and multiple namenode data directories
+
+* Notify datanode and yarn-nodemanager services if config changes
+
+* Move the YARN HDFS checks into resource manager instead of running on each datanode
+
+One host in the cluster:
+
+
+
+
+
+mapreduce-historyserver hadoop-yarn-proxyserver
+
+Resource manager:
+
+hadoop-yarn-resourcemanager
+
+
+all nodes except resource manager:
+
+ hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce
 
 

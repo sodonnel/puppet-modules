@@ -1,12 +1,14 @@
-class cdh51datanode($hostname = namenode) {
+class cdh51datanode(
+  $namenodehost = namenode
+)
+{
   
   require cdh51java
   require cdh51repo
+  require cdh51hosts
   
   contain cdh51datanode::install
-#  contain cdh51namenode::config
-#  contain cdh51namenode::format
-#  contain cdh51namenode::service
-#  contain cdh51namenode::tmpdir
+  contain cdh51datanode::config
+  contain cdh51datanode::service
   
 }
