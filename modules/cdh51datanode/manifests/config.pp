@@ -2,6 +2,8 @@ class cdh51datanode::config {
 
   $namenodehostname = $::cdh51datanode::namenodehost
 
+  require cdh51datanode::install
+  
   file { [ "/data", '/data/1' ]:
     ensure => "directory",
     owner  => 'hdfs',

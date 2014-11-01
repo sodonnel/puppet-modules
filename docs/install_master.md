@@ -15,7 +15,7 @@ This will also bring down Ruby and a few other things.
 
 Now you can install puppet modules with the following syntax:
 
-puppet apply --modulepath ./modules manifests/node.pp --ordering manifest
+    puppet apply --modulepath ./modules manifests/node.pp --ordering manifest
 
 # Register Node
 

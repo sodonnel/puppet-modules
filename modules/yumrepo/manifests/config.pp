@@ -7,5 +7,10 @@ class yumrepo::config {
     group => "root",
     notify  => Service["httpd"]
   }
-  
+
+  file { $::yumrepo::location:
+    ensure => directory,
+    owner  => root,
+    group  => root,
+  }
 }

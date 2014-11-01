@@ -43,6 +43,17 @@ class cdh51yarn::config {
 
   ->
 
+  exec {'yarn-user-permissions':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hadoop fs -chmod -R 1777 /user/history',
+    logoutput => on_failure,
+    unless    => 'hadoop fs -ls / | grep /user | grep drwxrwxr-x',
+    timeout   => 0,
+  }
+
+  ->
+  
   exec {'yarn-history-permissions':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',
@@ -81,7 +92,29 @@ class cdh51yarn::config {
     user      => 'hdfs',
     command   => 'hadoop fs -chown yarn:mapred /var/log/hadoop-yarn',
     logoutput => on_failure,
-    unless    => 'hadoop fs -ls /user | grep /var/log/hadoop-yarn | grep mapred',
+    unless    => 'hadoop fs -ls /var/log | grep /var/log/hadoop-yarn | grep yarn\ mapred',
+    timeout   => 0,
+  }
+
+  ->
+
+  exec {'yarn-log-apps':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hadoop fs -mkdir -p /var/log/hadoop-yarn/apps',
+    logoutput => on_failure,
+    unless    => 'hadoop fs -ls /var/log/hadoop-yarn/apps',
+    timeout   => 0,
+  }
+
+  ->
+
+  exec {'yarn-log-apps-owner':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hadoop fs -chown yarn:mapred /var/log/hadoop-yarn/apps',
+    logoutput => on_failure,
+    unless    => 'hadoop fs -ls /var/log/hadoop-yarn | grep /var/log/hadoop-yarn/apps | grep yarn\ mapred',
     timeout   => 0,
   }
 
