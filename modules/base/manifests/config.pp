@@ -7,11 +7,4 @@ class base::config {
       group => "root",
   }
 
-  file { "/etc/yum.repos.d/local-yum.repo":
-      ensure => present,
-      source => "puppet:///modules/base/local-yum.repo",
-      owner => "root",
-      group => "root",
-  }
-
 }

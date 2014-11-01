@@ -8,4 +8,11 @@ class yumrepo::config {
     notify  => Service["httpd"]
   }
 
+  file { "/etc/yum.repos.d/local-yum.repo":
+    ensure => present,
+    source => "puppet:///modules/yumrepo/local-yum.repo",
+    owner => "root",
+    group => "root",
+  }
+  
 }
