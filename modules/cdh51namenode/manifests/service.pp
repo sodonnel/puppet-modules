@@ -6,6 +6,11 @@ class cdh51namenode::service {
     hasrestart  => true,
     hasstatus   => true,
     enable      => true,
+    subscribe   => [
+                    File['/etc/hadoop/conf/hdfs-site.xml'],
+                    File['/etc/hadoop/conf/core-site.xml']
+                    ]
+
   }
 
 }

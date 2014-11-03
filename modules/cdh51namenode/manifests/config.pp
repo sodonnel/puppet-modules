@@ -7,7 +7,6 @@ class cdh51namenode::config {
     content => template("cdh51namenode/hdfs-site.xml.erb"),
     owner   => "root",
     group   => "root",
-    notify  => Service['hadoop-hdfs-namenode'],
   }
 
   file { "/etc/hadoop/conf/core-site.xml":
@@ -15,7 +14,8 @@ class cdh51namenode::config {
     content => template("cdh51namenode/core-site.xml.erb"),
     owner   => "root",
     group   => "root",
-    notify  => Service['hadoop-hdfs-namenode'],
   }
   
 }
+
+
