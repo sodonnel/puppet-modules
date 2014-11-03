@@ -5,7 +5,6 @@ class cdh51yarn(
 {
 
   require cdh51java
-  require cdh51repo
   require cdh51hosts
   require cdh51datanode
 

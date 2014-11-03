@@ -1,8 +1,7 @@
 class cdh51java {
 
-  require localyumrepo
-
-  # This come from the local repo
+  # This package is a custom package and need to be deployed
+  # on localyumrepo
   package { [javajdk]:
     ensure => present,
   }

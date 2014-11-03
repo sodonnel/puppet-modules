@@ -4,7 +4,6 @@ class cdh51datanode(
 {
   
   require cdh51java
-  require cdh51repo
   require cdh51hosts
   
   contain cdh51datanode::install

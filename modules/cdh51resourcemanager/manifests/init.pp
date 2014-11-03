@@ -5,7 +5,6 @@ class cdh51resourcemanager(
 {
 
   require cdh51java
-  require cdh51repo
   require cdh51hosts
 
   contain cdh51resourcemanager::install
