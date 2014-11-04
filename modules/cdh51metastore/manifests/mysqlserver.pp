@@ -18,27 +18,31 @@ class cdh51metastore::mysqlserver {
     user     => 'metastoreuser',
     password => 'secret',
   #  host     => 'master.puppetlabs.vm',
-    sql        => '/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.12.0.mysql.sql',
+    sql      => '/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.12.0.mysql.sql',
   }
 
- #  mysql_user { 'bob@localhost':
- #   ensure                   => 'present',
- #   max_connections_per_hour => '60',
- #   max_queries_per_hour     => '120',
- #   max_updates_per_hour     => '120',
- #   max_user_connections     => '10',
- # }
+  ->
+  
+  file { '/usr/lib/hive/lib/mysql-connector-java.jar':
+    ensure => 'link',
+    target => '/usr/share/java/mysql-connector-java.jar',
+  }
 
- # mysql_grant { 'bob@localhost/statedb.states':
- #   ensure     => 'present',
- #   options    => ['GRANT'],
- #   privileges => ['ALL'],
- #   table      => 'statedbl.states',
- #   user       => 'bob@localhost',
- # }
+  ->
+   
+  mysql_user { "${::cdh51metastore::mysqluser}@localhost":
+    ensure     => 'present',
+    password   => $::cdh51metastore::mysqlpassword,
+  }
+
+  ->
+
+  mysql_grant { "${::cdh51metastore::mysqluser}@localhost/metastore":
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => 'metastore.*',
+    user       => "${::cdh51metastore::mysqluser}@localhost",
+  }
 
 }
-
-
-
-# $ ln -s /usr/share/java/mysql-connector-java.jar /usr/lib/hive/lib/mysql-connector-java.jar
