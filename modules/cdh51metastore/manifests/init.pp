@@ -13,4 +13,9 @@ class cdh51metastore (
   contain cdh51metastore::config
   contain cdh51metastore::service
 
+  Class['cdh51metastore::install'] ->
+  Class['cdh51metastore::mysqlserver'] ->
+  Class['cdh51metastore::config'] ->
+  Class['cdh51metastore::service'] -> 
+
 }
