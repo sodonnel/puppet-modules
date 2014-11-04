@@ -6,7 +6,7 @@ class cdh51metastore::service {
     hasrestart  => true,
     hasstatus   => true,
     enable      => true,
-    subscribe   => File['/usr/lib/hive/conf/hive-site.xml']
+  #  subscribe   => File['/usr/lib/hive/conf/hive-site.xml']
     
   }
   

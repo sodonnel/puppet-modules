@@ -1,7 +1,7 @@
 class cdh51metastore (
   $metastorehostname = 'metastore',
   $mysqluser         = 'hive',
-  $mysqlpassword     = 'hive123'
+  $mysqlpassword     = '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C'
 )
 {
   
