@@ -6,17 +6,19 @@ class cdh51metastore::mysqlserver {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  ->
+
+  package { ['mysql-connector-java']:
+    ensure => present,
+  }
+
+  ->
+
   mysql::db { 'metastore':
     user     => 'metastoreuser',
     password => 'secret',
   #  host     => 'master.puppetlabs.vm',
-    sql        => '/tmp/metastore_create.sql',
-    require => File['/tmp/metastore_create.sql'],
-  }
-
-  file { "/tmp/metastore_create.sql":
-    ensure => present,
-    source => "puppet:///modules/cdh51metastore/metastore_create.sql",
+    sql        => '/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.12.0.mysql.sql',
   }
 
  #  mysql_user { 'bob@localhost':
@@ -36,3 +38,7 @@ class cdh51metastore::mysqlserver {
  # }
 
 }
+
+
+
+# $ ln -s /usr/share/java/mysql-connector-java.jar /usr/lib/hive/lib/mysql-connector-java.jar

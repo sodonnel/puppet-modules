@@ -1,7 +1,15 @@
 class base::service {
 
+  if $operatingsystemrelease =~ /^7.*/ {
+    $firewallservice = 'firewalld'
+  }
+  else {
+    $firewallservice = 'iptables'
+  }
+    
+  
   service { "firewalld":
-    name        => 'firewalld',
+    name        => $firewallservice,
     ensure      => stopped,
     hasrestart  => true,
     hasstatus   => true,
