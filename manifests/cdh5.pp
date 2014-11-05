@@ -15,5 +15,6 @@ node "metastore" {
   require localyumrepo
   require cdh51repo
   require cdh51metastore
-  Class['localyumrepo'] -> Class[cdh51repo] -> Class[cdh51metastore]
+  Class['localyumrepo'] -> Class[cdh51java] -> Class[cdh51repo] -> Class[cdh51metastore]
 }
+

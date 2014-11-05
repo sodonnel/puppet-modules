@@ -32,7 +32,7 @@ class cdh51metastore::mysqlserver {
    
   mysql_user { "${::cdh51metastore::mysqluser}@localhost":
     ensure        => 'present',
-    password_hash => $::cdh51metastore::mysqlpassword,
+    password_hash => $::cdh51metastore::mysqlpasswordhash,
   }
 
   ->
