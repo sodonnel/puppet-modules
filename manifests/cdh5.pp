@@ -1,6 +1,10 @@
-node "namenode" {
-  include base, cdh51namenode
+node /^namenode.*/ {
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51repo':     } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::namenode': }
 }
+
 
 node "resourcemanager" {
   include base, cdh51resourcemanager

@@ -1,6 +1,5 @@
-class cdh51resourcemanager::service {
+class cdh::resourcemanager::service {
 
-b
   service { "hadoop-mapreduce-historyserver":
     name        => 'hadoop-mapreduce-historyserver',
     ensure      => running,
@@ -28,6 +27,5 @@ b
     hasstatus   => true,
     enable      => true,
   }
-
   
 }

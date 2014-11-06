@@ -4,8 +4,8 @@ class cdh::config(
   $namenodehostname        = namenode,
   $resourcemanagerhostname = resourcemanager,
   $metastorehostname       = metastore,
-  $mysqlusername           = hive,
-  $mysqlpassword           = hive123,
+  $mysqlusername           = dummy,
+  $mysqlpassword           = dummy,
 )
 {
 
