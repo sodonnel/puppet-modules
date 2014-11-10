@@ -73,5 +73,22 @@
   <value>true</value>
 </property>
 
+<property>
+  <name>hive.support.concurrency</name>
+  <description>Enable Hive's Table Lock Manager Service</description>
+  <value>true</value>
+</property>d
+
+<property>
+  <name>hive.zookeeper.quorum</name>
+  <description>Zookeeper quorum used by Hive's Table Lock Manager</description>
+  <value><%= @metastorehostname -%></value>
+</property>
+
+<property>
+  <name>hive.server2.enable.impersonation</name>
+  <description>Enable user impersonation for HiveServer2</description>
+  <value>true</value>
+</property>
 
 </configuration>
