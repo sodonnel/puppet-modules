@@ -69,6 +69,42 @@
   </property>
 
   <property>
+    <description>Max available memory on each data node.</description>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value><%= @yarnavailablememory -%></value>
+  </property>
+
+  <property>
+    <description>Max available cores data node.</description>
+    <name>yarn.nodemanager.resource.cpu-vcores</name>
+    <value><%= @yarnavailablecores -%></value>
+  </property>
+
+  <property>
+    <description>Minimum allocation unit.</description>
+    <name>yarn.scheduler.minimum-allocation-mb</name>
+    <value>256</value>
+  </property>
+
+  <property>
+    <description>Max allocation unit.</description>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value><%= @yarnavailablememory -%></value>
+  </property>
+
+  <property>
+    <description>Application master allocation</description>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <description>Application Master JVM opts</description>
+    <name>yarn.app.mapreduce.am.command-opts</name>
+    <value>-Xmx410m</value>
+  </property>
+  
+  <property>
     <description>Classpath for typical applications.</description>
      <name>yarn.application.classpath</name>
      <value>

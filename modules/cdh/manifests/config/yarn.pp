@@ -5,6 +5,9 @@ class cdh::config::yarn {
   # History Server is assumed to be on resourcemanager
   $resourcemanagerhostname = $::cdh::config::resourcemanagerhostname
 
+  $yarnavailablememory = $::cdh::config::yarnavailablememory
+  $yarnavailablecores = $::cdh::config::yarnavailablecores
+
   file { "/etc/hadoop/conf/yarn-site.xml":
     ensure  => present,
     content => template("cdh/yarn-site.xml.erb"),

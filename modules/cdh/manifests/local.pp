@@ -1,8 +1,9 @@
 class cdh::local(
-  $hostname = localhost
+  $hostname = localhost,
+  $yarnavailablememory = 2560,
+  $yarnavailablecores  = 2,
 )
 {
-
 
   class {'cdh::config':
     includehive => true,
@@ -12,7 +13,8 @@ class cdh::local(
     metastorehostname       => $hostname,
     mysqlusername           => hive,
     mysqlpassword           => hive123,
-
+    yarnavailablememory     => $yarnavailablememory,
+    yarnavailablecores      => $yarnavailablecores,
   }
 
   class {'cdh::metastore::mysql':
@@ -57,7 +59,5 @@ class cdh::local(
   Class['cdh::datanode::service']           ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']
-  
-  
     
 }

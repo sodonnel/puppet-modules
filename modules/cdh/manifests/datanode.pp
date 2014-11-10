@@ -2,6 +2,8 @@ class cdh::datanode(
   $namenodehostname        = namenode,
   $resourcemanagerhostname = resourcemanager,
   $metastorehostname       = metastore,
+  $yarnavailablememory     = 3072,
+  $yarnavailablecores      = 2,
 )
 {
 
@@ -13,6 +15,8 @@ class cdh::datanode(
     namenodehostname        => $namenodehostname,
     resourcemanagerhostname => $resourcemanagerhostname,
     metastorehostname       => $metastorehostname,
+    yarnavailablememory     => $yarnavailablememory,
+    yarnavailablecores      => $yarnavailablecores,
   }
 
   contain cdh::datanode::install

@@ -38,6 +38,32 @@
     <name>mapreduce.jobhistory.webapp.address</name>
     <value><%= @resourcemanagerhostname -%>:19888</value>
   </property>
+
+  <!-- small cluster memory settings -->
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>256</value>
+  </property>
+
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <name>mapreduce.map.java.opts</name>
+    <value>-Xmx204m</value>
+  </property>
+
+  <property>
+    <name>mapreduce.reduce.java.opts</name>
+    <value>-Xmx410m</value>
+  </property>
+
+  
+  
+
+  
   
   
 </configuration>

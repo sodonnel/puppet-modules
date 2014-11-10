@@ -6,6 +6,8 @@ class cdh::config(
   $metastorehostname       = metastore,
   $mysqlusername           = dummy,
   $mysqlpassword           = dummy,
+  $yarnavailablememory     = 3072,
+  $yarnavailablecores      = 2,
 )
 {
 
