@@ -5,20 +5,38 @@ node /^namenode.*/ {
   class{ 'cdh::namenode': }
 }
 
-
-node "resourcemanager" {
-  include base, cdh51resourcemanager
-}
-
 node /^datanode.*/ {
-  include base, cdh51datanode, cdh51yarn
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51repo':     } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::datanode': }
 }
 
-
-node "metastore" {
-  require localyumrepo
-  require cdh51repo
-  require cdh51metastore
-  Class['localyumrepo'] -> Class[cdh51java] -> Class[cdh51repo] -> Class[cdh51metastore]
+node /^resourcemanager.*/ {
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51repo':     } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::resourcemanager': }
 }
 
+node /^metastore.*/ {
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51repo':     } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::metastore': }
+}
+
+node /^client.*/ {
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51repo':     } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::client': }
+}
+
+node /^standalone.*/ {
+  class{ 'localyumrepo':  } ->
+  class{ 'cdh51java':     } ->
+  class{ 'cdh::local':
+    hostname => standalone
+  }
+}
