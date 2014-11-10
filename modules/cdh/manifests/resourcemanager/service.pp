@@ -7,6 +7,11 @@ class cdh::resourcemanager::service {
     hasrestart  => true,
     hasstatus   => true,
     enable      => true,
+    subscribe   => [
+                    File['/etc/hadoop/conf/core-site.xml'],
+                    File['/etc/hadoop/conf/yarn-site.xml'],
+                    File['/etc/hadoop/conf/mapred-site.xml'],
+                    ]
   }
 
 
@@ -17,6 +22,11 @@ class cdh::resourcemanager::service {
     hasrestart  => true,
     hasstatus   => true,
     enable      => false,
+    subscribe   => [
+                    File['/etc/hadoop/conf/core-site.xml'],
+                    File['/etc/hadoop/conf/yarn-site.xml'],
+                    File['/etc/hadoop/conf/mapred-site.xml'],
+                    ]
   }
 
   service { "hadoop-yarn-resourcemanager":
@@ -26,6 +36,11 @@ class cdh::resourcemanager::service {
     hasrestart  => true,
     hasstatus   => true,
     enable      => true,
+    subscribe   => [
+                    File['/etc/hadoop/conf/core-site.xml'],
+                    File['/etc/hadoop/conf/yarn-site.xml'],
+                    File['/etc/hadoop/conf/mapred-site.xml'],
+                    ]  
   }
   
 }
