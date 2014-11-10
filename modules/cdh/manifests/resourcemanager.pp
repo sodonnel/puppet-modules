@@ -1,10 +1,13 @@
 class cdh::resourcemanager(
   $namenodehostname         = namenode,
-  $resourcemanagerhostname  = resourcemanager
+  $resourcemanagerhostname  = resourcemanager,
+  $hostentries              = {},
 )
 {
 
-  require cdh::hosts
+  class { 'cdh::hosts':
+    entries => $hostentries
+  }
 
   class {'cdh::config':
     namenodehostname         => $namenodehostname,
@@ -15,6 +18,7 @@ class cdh::resourcemanager(
   contain cdh::resourcemanager::config
   contain cdh::resourcemanager::service
 
+  Class['cdh::hosts']                    ->
   Class['cdh::resourcemanager::install'] ->
   Class['cdh::config']                   ->
   Class['cdh::resourcemanager::config']  ->

@@ -1,8 +1,13 @@
-class cdh::hosts {
+class cdh::hosts(
+  $entries = {}
+)
+{
 
-  file { '/etc/hosts':
-    ensure  => file,
-    source => "puppet:///modules/cdh/hosts",
+  file { "/etc/hosts":
+    ensure  => present,
+    content => template("cdh/hosts.erb"),
+    owner   => "root",
+    group   => "root",
   }
-  
+    
 }

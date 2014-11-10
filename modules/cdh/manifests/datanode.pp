@@ -4,10 +4,13 @@ class cdh::datanode(
   $metastorehostname       = metastore,
   $yarnavailablememory     = 3072,
   $yarnavailablecores      = 2,
+  $hostentries             = {},
 )
 {
 
-  require cdh::hosts
+  class { 'cdh::hosts':
+    entries => $hostentries
+  }
 
   class {'cdh::config':
     includehive             => true,
@@ -23,6 +26,7 @@ class cdh::datanode(
   contain cdh::datanode::config
   contain cdh::datanode::service
 
+  Class['cdh::hosts']                ->
   Class['cdh::datanode::install']    ->
   Class['cdh::config']               ->
   Class['cdh::datanode::config']     ->

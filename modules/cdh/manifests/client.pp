@@ -2,10 +2,13 @@ class cdh::client(
   $namenodehostname        = namenode,
   $resourcemanagerhostname = resourcemanager,
   $metastorehostname       = metastore,
+  $hostentries             = {},
 )
 {
 
-  require cdh::hosts
+  class { 'cdh::hosts':
+    entries => $hostentries
+  }
 
   class {'cdh::config':
     includehive             => true,
@@ -18,6 +21,7 @@ class cdh::client(
 
   contain cdh::client::install
 
+  Class['cdh::hosts']              ->
   Class['cdh::client::install']    ->
   Class['cdh::config']
   

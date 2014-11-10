@@ -4,10 +4,13 @@ class cdh::metastore(
   $mysqlusername           = 'hive',
   $mysqlpassword           = 'hive123',
   $mysqlpasswordhash       = '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C',
+  $hostentries             = {},
 )
 {
-  
-  require cdh::hosts
+
+  class { 'cdh::hosts':
+    entries => $hostentries
+  }
   
   class {'cdh::config':
     includehive             => true,
@@ -26,7 +29,8 @@ class cdh::metastore(
   contain cdh::metastore::mysql
   contain cdh::metastore::config
   contain cdh::metastore::service
-  
+
+  Class['cdh::hosts']               ->
   Class['cdh::metastore::install']  ->
   Class['cdh::metastore::mysql']    ->
   Class['cdh::config']              ->

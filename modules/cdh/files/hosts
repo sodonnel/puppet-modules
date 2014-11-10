@@ -1,8 +1,0 @@
-127.0.0.1	localhost	localhost.localdomain localhost4 localhost4.localdomain4
-::1	localhost	localhost.localdomain localhost6 localhost6.localdomain6
-192.168.57.5	puppet
-192.168.57.6    namenode
-192.168.57.7	datanode1
-192.168.57.8    datanode2
-192.168.57.9    resourcemanager
-192.168.57.9    historyserver
