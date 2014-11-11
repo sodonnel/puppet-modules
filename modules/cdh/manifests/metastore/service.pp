@@ -30,4 +30,16 @@ class cdh::metastore::service {
     subscribe   => File['/usr/lib/hive/conf/hive-site.xml']
   }
 
+  -> 
+
+  service { "oozie-server":
+    name        => 'oozie',
+    ensure      => running,
+    hasrestart  => true,
+    hasstatus   => true,
+    enable      => true,
+    subscribe   => File['/etc/oozie/conf/oozie-site.xml']
+  }
+
+  
 }

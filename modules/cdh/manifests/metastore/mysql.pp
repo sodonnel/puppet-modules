@@ -49,4 +49,30 @@ class cdh::metastore::mysql (
     user       => "${mysqluser}@localhost",
   }
 
+  ->
+
+  ### Setup for Oozie after here
+
+  file { '/var/lib/oozie/mysql-connector-java.jar':
+    ensure => 'link',
+    target => '/usr/share/java/mysql-connector-java.jar',
+  }
+
+  ->
+  
+  mysql::db { 'oozie':
+    user     => 'oozieuser',
+    password => 'secret',
+  }
+
+  ->
+   
+  mysql_grant { "${mysqluser}@localhost/oozie":
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => 'oozie.*',
+    user       => "${mysqluser}@localhost",
+  }
+  
 }

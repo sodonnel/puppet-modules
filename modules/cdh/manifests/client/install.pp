@@ -1,6 +1,6 @@
 class cdh::client::install {
 
-  package { [hadoop-client, hive]:
+  package { [hadoop-client, hive, oozie]:
     ensure => present,
   }
   

@@ -14,6 +14,7 @@ class cdh::metastore(
   
   class {'cdh::config':
     includehive             => true,
+    includeoozie            => true,
     namenodehostname        => $namenodehostname,
     metastorehostname       => $metastorehostname,
     mysqlusername           => $mysqlusername,

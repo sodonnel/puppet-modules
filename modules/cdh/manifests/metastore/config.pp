@@ -41,4 +41,38 @@ class cdh::metastore::config {
     timeout   => 0,
   }
 
+  ->
+
+  exec {'oozie-user':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hadoop fs -mkdir -p /user/oozie',
+    logoutput => on_failure,
+    unless    => 'hadoop fs -ls /user/oozie',
+    timeout   => 0,
+  }
+
+  ->
+
+  exec {'oozie-user-permissions':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hadoop fs -chown oozie:oozie /user/oozie',
+    logoutput => on_failure,
+    # The -P switch for grep turns on Perl regexes
+    unless    => 'hadoop fs -ls /user | grep /user/oozie | grep -P "oozie\s+oozie"',
+    timeout   => 0,
+  }
+  
+  ->
+
+  exec {'oozie-shared-lib':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'root',
+    command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz",
+    logoutput => on_failure,
+    unless    => 'hadoop fs -ls /user/oozie/share/lib',
+    timeout   => 0,
+  }
+
 }

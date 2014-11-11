@@ -6,8 +6,9 @@ class cdh::local(
 {
 
   class {'cdh::config':
-    includehive => true,
-    includeyarn => true,
+    includehive  => true,
+    includeyarn  => true,
+    includeoozie => true,
     namenodehostname        => $hostname,
     resourcemanagerhostname => $hostname,
     metastorehostname       => $hostname,

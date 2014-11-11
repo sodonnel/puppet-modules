@@ -1,6 +1,7 @@
 class cdh::config(
   $includehive             = false,
   $includeyarn             = false,
+  $includeoozie            = false,
   $namenodehostname        = namenode,
   $resourcemanagerhostname = resourcemanager,
   $metastorehostname       = metastore,
@@ -21,5 +22,9 @@ class cdh::config(
     contain cdh::config::hive
   }
   contain cdh::config::hdfs
+
+  if $includeoozie {
+    contain cdh::config::oozie
+  }
 
 }
