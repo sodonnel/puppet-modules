@@ -1,2 +1,5 @@
 # Emac temp files
 *~
+*.librarian
+*.tmp
+modules/cdh/spec/fixtures/modules/
