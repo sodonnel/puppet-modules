@@ -4,7 +4,7 @@ $hosts_entries = {
   datanode          => '192.168.57.7',
   resourcemanager   => '192.168.57.9',
   historyserver     => '192.168.57.9',
-  metastore         => '192.168.57.10',
+  metastore         => '192.168.57.10'x,
 }
 
 node /^namenode.*/ {
@@ -12,7 +12,7 @@ node /^namenode.*/ {
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::namenode':
-    $hostentries = $hosts_entries
+    hostentries => $hosts_entries
   }
 }
 
@@ -21,7 +21,7 @@ node /^datanode.*/ {
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::datanode':
-    $hostentries = $hosts_entries
+    hostentries => $hosts_entries
   }
 }
 
@@ -30,7 +30,7 @@ node /^resourcemanager.*/ {
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::resourcemanager':
-    $hostentries = $hosts_entries
+    hostentries => $hosts_entries
   }
 }
 
@@ -39,7 +39,7 @@ node /^metastore.*/ {
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::metastore':
-    $hostentries = $hosts_entries
+    hostentries => $hosts_entries
   }
 }
 
@@ -48,7 +48,7 @@ node /^client.*/ {
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::client':
-    $hostentries = $hosts_entries
+    hostentries => $hosts_entries
   }
 }
 

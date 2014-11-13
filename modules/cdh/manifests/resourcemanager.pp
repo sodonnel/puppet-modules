@@ -10,6 +10,7 @@ class cdh::resourcemanager(
   }
 
   class {'cdh::config':
+    includeyarn              => true,
     namenodehostname         => $namenodehostname,
     resourcemanagerhostname  => $resourcemanagerhostname
   }
