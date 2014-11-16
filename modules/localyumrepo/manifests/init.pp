@@ -1,8 +1,11 @@
-class localyumrepo {
+class localyumrepo(
+  $repourl = 'http://puppet/yumrepo'
+)
+{
 
   file { "/etc/yum.repos.d/local-yum.repo":
     ensure => present,
-    source => "puppet:///modules/localyumrepo/local-yum.repo",
+    content => template("localyumrepo/local-yum.repo.erb"),
     owner => "root",
     group => "root",
   }
