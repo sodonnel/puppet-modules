@@ -18,6 +18,32 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
+
+  <property>
+    <name>dfs.nameservices</name>
+    <value>mycluster</value>
+  </property>
+  
+  <property>
+    <name>dfs.ha.namenodes.mycluster</name>
+    <value>nn1</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.rpc-address.mycluster.nn1</name>
+    <value><%= @namenodehostname -%>:8020</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.mycluster.nn1</name>
+    <value><%= @namenodehostname -%>:50070</value>
+  </property>
+
+  <property>
+    <name>dfs.client.failover.proxy.provider.mycluster</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+  
   <property>
      <name>dfs.namenode.name.dir</name>
      <value>file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/name</value>
