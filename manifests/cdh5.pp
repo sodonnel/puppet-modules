@@ -4,7 +4,7 @@ $hosts_entries = {
   datanode          => '192.168.57.7',
   resourcemanager   => '192.168.57.9',
   historyserver     => '192.168.57.9',
-  metastore         => '192.168.57.10'
+  metastore         => '192.168.57.10',
 }
 
 node /^namenode.*/ {
@@ -57,13 +57,15 @@ node /^standalone.*/ {
     entries => {
       'standalone' => '192.168.16.6'
     }
-  } ->
+                          } -> 
   class{ 'localyumrepo':
-    repourl => 'http://192.168.16.5/yumrepo'
-  } ->
-  # class{ 'cdh51repo':    } ->
+    repourl => 'http://sl73sndbxwbd025/yumrepo'
+                          } ->
+ # class{ 'cdh51repo':    } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
     hostname => '192.168.16.6'
-  } ->
+                          } ->
+
+  class { 'dataplatform': }
 }

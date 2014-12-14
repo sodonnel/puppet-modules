@@ -13,6 +13,7 @@ class cdh::config(
 {
 
   contain cdh::config::hdfs
+  contain cdh::config::profile
 
   if $includeyarn {
     contain cdh::config::yarn

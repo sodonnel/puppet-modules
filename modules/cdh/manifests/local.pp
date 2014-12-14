@@ -23,7 +23,6 @@ class cdh::local(
     mysqlpasswordhash => '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C',
   }
 
-
   contain cdh::namenode::install
   contain cdh::namenode::format
   contain cdh::namenode::tmpdir
@@ -44,6 +43,13 @@ class cdh::local(
   contain cdh::metastore::config
   contain cdh::metastore::service
 
+  contain cdh::hue::install
+  class {'cdh::hue::config':
+    namenodehostname        => $hostname,
+    resourcemanagerhostname => $hostname,
+    metastorehostname       => $hostname,
+  }
+  contain cdh::hue::service
 
   Class['cdh::namenode::install']           ->
   Class['cdh::datanode::install']           ->
@@ -59,6 +65,9 @@ class cdh::local(
   Class['cdh::datanode::config']            ->
   Class['cdh::datanode::service']           ->
   Class['cdh::metastore::config']           ->
-  Class['cdh::metastore::service']
-    
+  Class['cdh::metastore::service']          ->
+  Class['cdh::hue::install']                ->
+  Class['cdh::hue::config']                 ->
+  Class['cdh::hue::service']
+
 }

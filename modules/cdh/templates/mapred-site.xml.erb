@@ -60,10 +60,11 @@
     <value>-Xmx410m</value>
   </property>
 
-  
-  
 
-  
-  
-  
+  <!-- only needed as our installer looks for this -->
+  <property>
+    <name>mapred.job.tracker</name>
+    <value><%= @resourcemanagerhostname -%>:8032</value>
+  </property>
+
 </configuration>

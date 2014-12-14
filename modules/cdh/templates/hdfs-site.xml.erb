@@ -28,12 +28,12 @@
     <name>dfs.ha.namenodes.mycluster</name>
     <value>nn1</value>
   </property>
-
+  
   <property>
     <name>dfs.namenode.rpc-address.mycluster.nn1</name>
     <value><%= @namenodehostname -%>:8020</value>
   </property>
-
+  
   <property>
     <name>dfs.namenode.http-address.mycluster.nn1</name>
     <value><%= @namenodehostname -%>:50070</value>
@@ -58,4 +58,10 @@
     <name>dfs.permissions.superusergroup</name>
     <value>hadoop</value>
   </property>
+
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+
 </configuration>
