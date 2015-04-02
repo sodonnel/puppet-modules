@@ -89,19 +89,24 @@
   <property>
     <description>Max allocation unit.</description>
     <name>yarn.scheduler.maximum-allocation-mb</name>
+    <!-- This was set to the total memory, but I found that resource manager
+    is quite generous, and gave lots of memory to a process and then other
+    jobs could not run
     <value><%= @yarnavailablememory -%></value>
+    -->
+    <value>256</value>
   </property>
 
   <property>
     <description>Application master allocation</description>
     <name>yarn.app.mapreduce.am.resource.mb</name>
-    <value>512</value>
+    <value>256</value>
   </property>
 
   <property>
     <description>Application Master JVM opts</description>
     <name>yarn.app.mapreduce.am.command-opts</name>
-    <value>-Xmx410m</value>
+    <value>-Xmx204m</value>
   </property>
   
   <property>

@@ -3,3 +3,5 @@
 *.librarian
 *.tmp
 modules/cdh/spec/fixtures/modules/
+.vagrant
+rpms

@@ -1,7 +1,7 @@
 class cdh::local(
   $hostname            = localhost,
-  $yarnavailablememory = 2560,
-  $yarnavailablecores  = 2,
+  $yarnavailablememory = 3840,
+  $yarnavailablecores  = 8,
 )
 {
 
