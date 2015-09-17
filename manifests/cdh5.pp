@@ -53,6 +53,8 @@ node /^client.*/ {
 }
 
 node /^standalone.*/ {
+  $hive_version = '1.1.0'
+
   class{ 'cdh::hosts':
     entries => {
       'standalone' => '192.168.33.6'

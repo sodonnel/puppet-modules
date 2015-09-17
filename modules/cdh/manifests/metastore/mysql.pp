@@ -22,7 +22,8 @@ class cdh::metastore::mysql (
     user     => 'metastoreuser',
     password => 'secret',
   #  host     => 'master.puppetlabs.vm',
-    sql      => '/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.13.0.mysql.sql',
+    sql      => "/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-${hive_version}.mysql.sql",
+    cwd => "/usr/lib/hive/scripts/metastore/upgrade/mysql",
   }
 
   ->

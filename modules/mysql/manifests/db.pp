@@ -9,7 +9,8 @@ define mysql::db (
   $grant       = 'ALL',
   $sql         = '',
   $enforce_sql = false,
-  $ensure      = 'present'
+  $ensure      = 'present',
+  $cwd         = undef,
 ) {
   #input validation
   validate_re($ensure, '^(present|absent)$',
@@ -49,6 +50,7 @@ define mysql::db (
     if $sql {
       exec{ "${dbname}-import":
         command     => "/usr/bin/mysql ${dbname} < ${sql}",
+        cwd         => $cwd,
         logoutput   => true,
         environment => "HOME=${::root_home}",
         refreshonly => $refresh,
