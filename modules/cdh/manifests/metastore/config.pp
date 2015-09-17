@@ -69,7 +69,10 @@ class cdh::metastore::config {
   exec {'oozie-shared-lib':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'root',
-    command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz",
+    # Prior to CDH 5.4?
+    # command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz",
+    # CDH 5.4 and later...
+    command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn",
     logoutput => on_failure,
     unless    => 'hadoop fs -ls /user/oozie/share/lib',
     timeout   => 0,
