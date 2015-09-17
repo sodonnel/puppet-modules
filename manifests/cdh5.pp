@@ -55,15 +55,12 @@ node /^client.*/ {
 node /^standalone.*/ {
   class{ 'cdh::hosts':
     entries => {
-      'standalone' => '192.168.57.6'
+      'standalone' => '192.168.33.6'
     }
                           } -> 
-  class{ 'localyumrepo':
-    repourl => 'http://192.168.57.5/yumrepo'
-                          } ->
   class{ 'cdh51repo':    } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
-    hostname => '192.168.57.6'
+    hostname => '192.168.33.6'
                           } 
 }
