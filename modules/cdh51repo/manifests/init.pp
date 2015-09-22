@@ -1,7 +1,10 @@
-class cdh51repo {
+class cdh51repo(
+  $cdh_version = '5.4.5',
+)
+ {
   file { "/etc/yum.repos.d/cloudera-cdh5.repo":
     ensure => present,
-    source => "puppet:///modules/cdh51repo/cloudera-cdh5.repo",
+    content => template("cdh51repo/cloudera-cdh5.repo"),
     owner => "root",
     group => "root",
   }

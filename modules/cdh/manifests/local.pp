@@ -26,6 +26,7 @@ class cdh::local(
   contain cdh::namenode::install
   contain cdh::namenode::format
   contain cdh::namenode::tmpdir
+  contain cdh::namenode::vagrantdir
   contain cdh::namenode::service
 
 
