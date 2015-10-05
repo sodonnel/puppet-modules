@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+/usr/sbin/kadmin.local -q "addprinc -pw vagrant root/admin"
+/usr/sbin/kadmin.local -q "addprinc -pw vagrant vagrant"
+
+touch /var/kerberos/created_principal
