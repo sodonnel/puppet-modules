@@ -1,0 +1,75 @@
+dn: uid=sam,ou=users,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: sam
+uid: sam
+uidNumber: 20000
+gidNumber: 1000
+homeDirectory: /home/sam
+loginShell: /bin/bash
+gecos: sam
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+
+dn: uid=bob,ou=users,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: bob
+uid: bob
+uidNumber: 20001
+gidNumber: 1000
+homeDirectory: /home/bob
+loginShell: /bin/bash
+gecos: bob
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+
+dn: uid=jim,ou=users,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: jim
+uid: jim
+uidNumber: 20002
+gidNumber: 1000
+homeDirectory: /home/jim
+loginShell: /bin/bash
+gecos: jim
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+
+dn: cn=staff,ou=groups,dc=<%= @basedn -%>,dc=com
+changetype: modify
+add: memberuid
+memberuid: sam
+
+dn: cn=staff,ou=groups,dc=<%= @basedn -%>,dc=com
+changetype: modify
+add: memberuid
+memberuid: bob
+
+dn: cn=staff,ou=groups,dc=<%= @basedn -%>,dc=com
+changetype: modify
+add: memberuid
+memberuid: jim
+
+dn: cn=hadoop-users,ou=groups,dc=<%= @basedn -%>,dc=com
+changetype: modify
+add: memberuid
+memberuid: bob
+
+dn: cn=hadoop-admin,ou=groups,dc=<%= @basedn -%>,dc=com
+changetype: modify
+add: memberuid
+memberuid: jim
