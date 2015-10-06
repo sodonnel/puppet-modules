@@ -60,11 +60,14 @@ class cdh::local(
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
   Class['cdh::namenode::service']           ->
-  Class['cdh::namenode::tmpdir']            ->
-  Class['cdh::resourcemanager::config']     ->
+  Class['cdh::namenode::vagrantdir']        ->
   Class['cdh::resourcemanager::service']    ->
   Class['cdh::datanode::config']            ->
   Class['cdh::datanode::service']           ->
+  # This needs to be moved down from after the namenode service
+  # as it tries to load libs etc which requires a datanode to be up.
+  Class['cdh::namenode::tmpdir']            ->
+  Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
   Class['cdh::hue::install']                ->
