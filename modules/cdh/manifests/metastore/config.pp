@@ -74,8 +74,9 @@ class cdh::metastore::config {
     # CDH 5.4 and later...
     command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn",
     logoutput => on_failure,
-    unless    => 'hadoop fs -ls /user/oozie/share/lib',
+    unless    => 'hadoop fs -ls /user/oozie/share/lib/lib_*',
     timeout   => 0,
   }
 
 }
+
