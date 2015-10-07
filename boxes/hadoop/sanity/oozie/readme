@@ -1,0 +1,9 @@
+Before running any oozie commands, export the OOZIE_URL:
+
+    http://localhost:11000/oozie
+
+Then you can run a workflow with
+
+    oozie job -config <property file> -run
+
+All the workflow.xml and support files need to be on HDFS for it to work.
