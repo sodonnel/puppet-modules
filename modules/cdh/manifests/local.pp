@@ -1,7 +1,7 @@
 class cdh::local(
   $hostname            = localhost,
-  $yarnavailablememory = 2560,
-  $yarnavailablecores  = 2,
+  $yarnavailablememory = 4096,
+  $yarnavailablecores  = 8,
 )
 {
 
@@ -51,6 +51,7 @@ class cdh::local(
     metastorehostname       => $hostname,
   }
   contain cdh::hue::service
+  contain cdh::sqoop1::install
 
   Class['cdh::namenode::install']           ->
   Class['cdh::datanode::install']           ->
@@ -72,6 +73,7 @@ class cdh::local(
   Class['cdh::metastore::service']          ->
   Class['cdh::hue::install']                ->
   Class['cdh::hue::config']                 ->
-  Class['cdh::hue::service']
+  Class['cdh::hue::service']                ->
+  Class['cdh::sqoop1::install']
 
 }
