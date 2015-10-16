@@ -1,8 +1,11 @@
 #!/bin/bash
 
+set -e
+
 rm -f /etc/hadoop/conf/*.keytab
 rm -f /etc/oozie/conf/*.keytab
 rm -f /etc/hue/conf/*.keytab
+rm -f /etc/hive/conf/*.keytab
 
 kadmin -p root/admin -w vagrant -q "delprinc -force hdfs/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force HTTP/$(hostname)"
