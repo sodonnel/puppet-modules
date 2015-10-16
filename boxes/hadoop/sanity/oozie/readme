@@ -1,6 +1,6 @@
 Before running any oozie commands, export the OOZIE_URL:
 
-    http://localhost:11000/oozie
+    http://standalone:11000/oozie
 
 Then you can run a workflow with
 

@@ -9,6 +9,7 @@ class cdh::config(
   $mysqlpassword           = dummy,
   $yarnavailablememory     = 3072,
   $yarnavailablecores      = 2,
+  $secure                  = false,
 )
 {
 
@@ -26,6 +27,10 @@ class cdh::config(
 
   if $includeoozie {
     contain cdh::config::oozie
+  }
+
+  if $secure {
+    contain cdh::config::kerberos
   }
 
 }

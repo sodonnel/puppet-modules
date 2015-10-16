@@ -18,7 +18,7 @@
 
   # Set this to a random string, the longer the better.
   # This is used for secure hashing in the session store.
-  secret_key=
+  secret_key=fgklertyisogmlesrjtlskgnslergj
 
   # Webserver listens on this address and port
   http_host=0.0.0.0
@@ -352,6 +352,12 @@
     ## hue_principal=hue/hostname.foo.com
     # Path to kinit
     ## kinit_path=/path/to/kinit
+    <% if @secure %>
+      hue_keytab=/etc/hue/conf/hue.keytab
+      hue_principal=hue/<%= @hueHost -%>@EXAMPLE.COM
+      kinit_path=/usr/bin/kinit
+   <% end %>
+
 
 
   # Configuration options for using OAuthBackend (core) login
@@ -585,8 +591,11 @@
       # Default port is 14000 for HttpFs.
       webhdfs_url=http://<%= @namenodehostname -%>:50070/webhdfs/v1
 
-      # Change this if your HDFS cluster is Kerberos-secured
+      # Change this if your HDFS cluster is Kerberos-secured      
       ## security_enabled=false
+      <% if @secure %>
+      security_enabled=true
+      <% end %>
 
       # Default umask for file and directory creation, specified in an octal value.
       ## umask=022
@@ -610,6 +619,10 @@
 
       # Change this if your YARN cluster is Kerberos-secured
       ## security_enabled=false
+      <% if @secure %>
+      security_enabled=true
+      <% end %>
+
 
       # URL of the ResourceManager API
       resourcemanager_api_url=http://<%= @resourcemanagerhostname -%>:8088
@@ -649,6 +662,10 @@
 
       # Change this if your MapReduce cluster is Kerberos-secured
       ## security_enabled=false
+      <% if @secure %>
+      security_enabled=true
+      <% end %>
+
 
     # HA support by specifying multiple clusters
     # e.g.
@@ -677,6 +694,10 @@
 
   # Requires FQDN in oozie_url if enabled
   ## security_enabled=false
+  <% if @secure %>
+  security_enabled=true
+  <% end %>
+
 
   # Location on HDFS where the workflows/coordinator are deployed when submitted.
   ## remote_deployement_dir=/user/hue/oozie/deployments

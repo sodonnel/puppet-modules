@@ -1,6 +1,7 @@
 class cdh::config::yarn {
 
   $namenodehostname        = $::cdh::config::namenodehostname
+  $secure                  = $::cdh::config::secure
 
   # History Server is assumed to be on resourcemanager
   $resourcemanagerhostname = $::cdh::config::resourcemanagerhostname
@@ -18,6 +19,13 @@ class cdh::config::yarn {
   file { "/etc/hadoop/conf/mapred-site.xml":
     ensure  => present,
     content => template("cdh/mapred-site.xml.erb"),
+    owner   => "root",
+    group   => "root",
+  }
+
+  file { "/etc/hadoop/conf/container-executor.cfg":
+    ensure  => present,
+    content => template("cdh/container-executor.cfg.erb"),
     owner   => "root",
     group   => "root",
   }

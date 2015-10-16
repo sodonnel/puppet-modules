@@ -91,4 +91,24 @@
   <value>true</value>
 </property>
 
+<% if @secure %>
+
+<property>
+  <name>hive.server2.authentication</name>
+  <value>KERBEROS</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.principal</name>
+  <value>hive/_HOST@EXAMPLE.COM</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.keytab</name>
+  <value>/etc/hive/conf/hive.keytab</value>
+</property>
+
+<% end %>
+
+
 </configuration>

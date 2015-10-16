@@ -58,7 +58,8 @@ node /^standalone.*/ {
 
   class{ 'cdh::hosts':
     entries => {
-      'standalone' => '192.168.33.6'
+      'standalone' => '192.168.33.6',
+      'kerberos.example.com' => '192.168.33.9'
     }
                           } -> 
   class{ 'cdh51repo':
@@ -66,6 +67,7 @@ node /^standalone.*/ {
                           } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
-    hostname => '192.168.33.6'
+    hostname => 'standalone',
+    secure   => true,
                           } 
 }

@@ -14,7 +14,7 @@ class cdh::namenode::tmpdir {
     user      => 'root',
     command   => '/usr/lib/hadoop/libexec/init-hdfs.sh',
     logoutput => on_failure,
-    unless    => 'hadoop fs -ls /tmp',
+    unless    => "su hdfs -c 'hadoop fs -ls /tmp'",
     timeout   => 0,
   }
 

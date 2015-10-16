@@ -2,8 +2,13 @@ class cdh::local(
   $hostname            = localhost,
   $yarnavailablememory = 4096,
   $yarnavailablecores  = 8,
+  $secure              = false,
 )
 {
+
+  if $secure == true  {
+    require kerberos::client
+  }
 
   class {'cdh::config':
     includehive  => true,
@@ -16,6 +21,7 @@ class cdh::local(
     mysqlpassword           => hive123,
     yarnavailablememory     => $yarnavailablememory,
     yarnavailablecores      => $yarnavailablecores,
+    secure                  => $secure,
   }
 
   class {'cdh::metastore::mysql':
@@ -49,6 +55,7 @@ class cdh::local(
     namenodehostname        => $hostname,
     resourcemanagerhostname => $hostname,
     metastorehostname       => $hostname,
+    secure                  => $secure,
   }
   contain cdh::hue::service
   contain cdh::sqoop1::install

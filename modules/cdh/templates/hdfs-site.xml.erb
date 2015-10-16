@@ -50,7 +50,7 @@
   </property>
 
   <property>
-     <name>dfs.namenode.data.dir</name>
+     <name>dfs.datanode.data.dir</name>
      <value>file:///data/1/dfs/dn</value>
   </property>
 
@@ -63,5 +63,60 @@
     <name>dfs.webhdfs.enabled</name>
     <value>true</value>
   </property>
+
+  <% if @secure == true %>
+  <property>
+    <name>dfs.block.access.token.enable</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.keytab.file</name>
+    <value>/etc/hadoop/conf/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.kerberos.principal</name>
+    <value>hdfs/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+    <value>HTTP/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.keytab.file</name>
+    <value>/etc/hadoop/conf/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.kerberos.principal</name>
+    <value>hdfs/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>dfs.web.authentication.kerberos.keytab</name>
+    <value>/etc/hadoop/conf/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>dfs.web.authentication.kerberos.principal</name>
+    <value>HTTP/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <!-- secure ports for datanode under security -->
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:1004</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:1006</value>
+  </property>
+  
+  <% end %>
+
 
 </configuration>

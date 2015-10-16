@@ -378,4 +378,62 @@
         <value>*</value>
     </property>
 
+    <!-- SECURITY -->
+
+    <% if @secure %>
+
+    <property>
+        <name>oozie.service.HadoopAccessorService.kerberos.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>local.realm</name>
+        <value>EXAMPLE.COM</value>
+    </property>
+    <property>
+        <name>oozie.service.HadoopAccessorService.keytab.file</name>
+        <value>/etc/oozie/conf/oozie.keytab</value>
+    </property>
+    <property>
+        <name>oozie.service.HadoopAccessorService.kerberos.principal</name>
+        <value>oozie/<%= @oozieHost -%>@EXAMPLE.COM</value>
+    </property>
+
+
+
+    <property>
+        <name>oozie.authentication.type</name>
+        <value>kerberos</value>
+    </property>
+    <property>
+        <name>oozie.authentication.token.validity</name>
+        <value>36000</value>
+    </property>
+    <!-- A random value will be used if this is blank. If using Oozie in a HA setup
+         the same value must be used across all instances -->
+    <!--
+    <property>
+        <name>oozie.authentication.signature.secret</name>
+        <value></value>
+    </property>
+    -->
+   <property>
+        <name>oozie.authentication.cookie.domain</name>
+        <value><%= @oozieHost -%></value>
+    </property>
+    <property>
+        <name>oozie.authentication.kerberos.principal</name>
+        <value>HTTP/<%= @oozieHost -%>@EXAMPLE.COM</value>
+    </property>
+    <property>
+        <name>oozie.authentication.kerberos.keytab</name>
+        <value>/etc/oozie/conf/oozie.keytab</value>
+    </property>
+   <property>
+        <name>oozie.authentication.kerberos.name.rules</name>
+        <value>DEFAULT</value>
+    </property>
+
+   <% end %>
+
 </configuration>
