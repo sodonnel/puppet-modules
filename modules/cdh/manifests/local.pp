@@ -64,6 +64,7 @@ class cdh::local(
   Class['cdh::datanode::install']           ->
   Class['cdh::resourcemanager::install']    ->
   Class['cdh::metastore::install']          ->
+  Class['cdh::hue::install']                ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
@@ -78,7 +79,6 @@ class cdh::local(
   Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
-  Class['cdh::hue::install']                ->
   Class['cdh::hue::config']                 ->
   Class['cdh::hue::service']                ->
   Class['cdh::sqoop1::install']
