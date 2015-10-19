@@ -1,0 +1,11 @@
+To test hiveserver2 is working correctly, connect using beeline, then issue a connect statement:
+
+    !connect jdbc:hive2://localhost:10000
+
+Then try listing tables or running a select.
+
+To connect to a secured cluster:
+
+    !connect jdbc:hive2://standalone:10000/default;principal=hive/standalone@EXAMPLE.COM
+
+Notice that the principal in the connection string is the principal of the hive2server. You need a kinit ticket before connecting

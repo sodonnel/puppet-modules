@@ -16,7 +16,7 @@ class cdh::search::config (
 
   if ($secure == true) {
 
-    exec {'kerberos-auth-hdfs':
+    exec {'kerberos-auth-hdfs-solr':
       path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
       user      => 'hdfs',
       command   => 'kinit hdfs/$(hostname) -kt /etc/hadoop/conf/hdfs.keytab',

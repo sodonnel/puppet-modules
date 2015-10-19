@@ -60,11 +60,17 @@ class cdh::local(
   contain cdh::hue::service
   contain cdh::sqoop1::install
 
+  class {'cdh::search':
+    secure => $secure,
+    namenodehostname => 'mycluster',
+  }
+
   Class['cdh::namenode::install']           ->
   Class['cdh::datanode::install']           ->
   Class['cdh::resourcemanager::install']    ->
   Class['cdh::metastore::install']          ->
   Class['cdh::hue::install']                ->
+  Class['cdh::search::install']             ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
@@ -79,6 +85,8 @@ class cdh::local(
   Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
+  Class['cdh::search::config']              ->
+  Class['cdh::search::service']             ->
   Class['cdh::hue::config']                 ->
   Class['cdh::hue::service']                ->
   Class['cdh::sqoop1::install']

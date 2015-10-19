@@ -68,6 +68,6 @@ node /^standalone.*/ {
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
     hostname => 'standalone',
-    secure   => true,
+    secure   => false,
                           } 
 }
