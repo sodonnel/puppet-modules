@@ -18,6 +18,14 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
+
+  <% if @secure %>
+  <property>
+    <name>hadoop.security.authentication</name>
+    <value>kerberos</value>
+  </property>
+  <% end %>
+  
   <property>
     <name>fs.defaultFS</name>
     <value>hdfs://mycluster</value>

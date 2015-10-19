@@ -39,12 +39,12 @@
 
 <property>
   <name>javax.jdo.option.ConnectionUserName</name>
-  <value><%= @mysqlusername -%></value>
+  <value>hive</value>
 </property>
 
 <property>
   <name>javax.jdo.option.ConnectionPassword</name>
-  <value><%= @mysqlpassword -%></value>
+  <value>hive123</value>
 </property>
 
 <property>
@@ -64,7 +64,7 @@
 
 <property>
   <name>hive.metastore.uris</name>
-  <value>thrift://<%= @metastorehostname -%>:9083</value>
+  <value>thrift://192.168.33.6:9083</value>
   <description>IP address (or fully-qualified domain name) and port of the metastore host</description>
 </property>
 
@@ -82,7 +82,7 @@
 <property>
   <name>hive.zookeeper.quorum</name>
   <description>Zookeeper quorum used by Hive's Table Lock Manager</description>
-  <value><%= @metastorehostname -%></value>
+  <value>192.168.33.6</value>
 </property>
 
 <property>
@@ -90,25 +90,5 @@
   <description>Enable user impersonation for HiveServer2</description>
   <value>true</value>
 </property>
-
-<% if @secure %>
-
-<property>
-  <name>hive.server2.authentication</name>
-  <value>KERBEROS</value>
-</property>
-
-<property>
-  <name>hive.server2.authentication.kerberos.principal</name>
-  <value>hive/_HOST@EXAMPLE.COM</value>
-</property>
-
-<property>
-  <name>hive.server2.authentication.kerberos.keytab</name>
-  <value>/etc/hive/conf/hive.keytab</value>
-</property>
-
-<% end %>
-
 
 </configuration>

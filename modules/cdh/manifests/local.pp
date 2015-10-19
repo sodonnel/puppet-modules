@@ -2,8 +2,13 @@ class cdh::local(
   $hostname            = localhost,
   $yarnavailablememory = 4096,
   $yarnavailablecores  = 8,
+  $secure              = false,
 )
 {
+
+  if $secure == true  {
+    require kerberos::client
+  }
 
   class {'cdh::config':
     includehive  => true,
@@ -16,6 +21,7 @@ class cdh::local(
     mysqlpassword           => hive123,
     yarnavailablememory     => $yarnavailablememory,
     yarnavailablecores      => $yarnavailablecores,
+    secure                  => $secure,
   }
 
   class {'cdh::metastore::mysql':
@@ -49,14 +55,22 @@ class cdh::local(
     namenodehostname        => $hostname,
     resourcemanagerhostname => $hostname,
     metastorehostname       => $hostname,
+    secure                  => $secure,
   }
   contain cdh::hue::service
   contain cdh::sqoop1::install
+
+  class {'cdh::search':
+    secure => $secure,
+    namenodehostname => 'mycluster',
+  }
 
   Class['cdh::namenode::install']           ->
   Class['cdh::datanode::install']           ->
   Class['cdh::resourcemanager::install']    ->
   Class['cdh::metastore::install']          ->
+  Class['cdh::hue::install']                ->
+  Class['cdh::search::install']             ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
@@ -71,7 +85,8 @@ class cdh::local(
   Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
-  Class['cdh::hue::install']                ->
+  Class['cdh::search::config']              ->
+  Class['cdh::search::service']             ->
   Class['cdh::hue::config']                 ->
   Class['cdh::hue::service']                ->
   Class['cdh::sqoop1::install']
