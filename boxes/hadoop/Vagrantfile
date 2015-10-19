@@ -13,6 +13,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box      = "base-box"
   config.vm.hostname = 'standalone'
 
+  $script = <<SCRIPT
+    echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain" > /etc/hosts
+    echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> /etc/hosts
+    echo "192.168.33.6  standalone"  >> /etc/hosts
+SCRIPT
+
+  config.vm.provision "shell", inline: $script
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -36,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.name = "CDH_Hadoop"
-    v.memory = 4096
+    v.memory = 5120
     v.cpus = 2
   end
 
