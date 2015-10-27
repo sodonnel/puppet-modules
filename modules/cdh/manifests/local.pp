@@ -1,9 +1,14 @@
 class cdh::local(
   $hostname            = localhost,
-  $yarnavailablememory = 3840,
+  $yarnavailablememory = 4096,
   $yarnavailablecores  = 8,
+  $secure              = false,
 )
 {
+
+  if $secure == true  {
+    require kerberos::client
+  }
 
   class {'cdh::config':
     includehive  => true,
@@ -16,6 +21,7 @@ class cdh::local(
     mysqlpassword           => hive123,
     yarnavailablememory     => $yarnavailablememory,
     yarnavailablecores      => $yarnavailablecores,
+    secure                  => $secure,
   }
 
   class {'cdh::metastore::mysql':
@@ -26,6 +32,7 @@ class cdh::local(
   contain cdh::namenode::install
   contain cdh::namenode::format
   contain cdh::namenode::tmpdir
+  contain cdh::namenode::vagrantdir
   contain cdh::namenode::service
 
 
@@ -48,26 +55,40 @@ class cdh::local(
     namenodehostname        => $hostname,
     resourcemanagerhostname => $hostname,
     metastorehostname       => $hostname,
+    secure                  => $secure,
   }
   contain cdh::hue::service
+  contain cdh::sqoop1::install
+
+  class {'cdh::search':
+    secure => $secure,
+    namenodehostname => 'mycluster',
+  }
 
   Class['cdh::namenode::install']           ->
   Class['cdh::datanode::install']           ->
   Class['cdh::resourcemanager::install']    ->
   Class['cdh::metastore::install']          ->
+  Class['cdh::hue::install']                ->
+  Class['cdh::search::install']             ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
   Class['cdh::namenode::service']           ->
-  Class['cdh::namenode::tmpdir']            ->
-  Class['cdh::resourcemanager::config']     ->
+  Class['cdh::namenode::vagrantdir']        ->
   Class['cdh::resourcemanager::service']    ->
   Class['cdh::datanode::config']            ->
   Class['cdh::datanode::service']           ->
+  # This needs to be moved down from after the namenode service
+  # as it tries to load libs etc which requires a datanode to be up.
+  Class['cdh::namenode::tmpdir']            ->
+  Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
-  Class['cdh::hue::install']                ->
+  Class['cdh::search::config']              ->
+  Class['cdh::search::service']             ->
   Class['cdh::hue::config']                 ->
-  Class['cdh::hue::service']
+  Class['cdh::hue::service']                ->
+  Class['cdh::sqoop1::install']
 
 }

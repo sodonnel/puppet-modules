@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+ldapadd -x -w vagrant -D "cn=Manager,dc=<%= @basedn -%>,dc=com" -f /etc/openldap/slapd.d/${1}.ldif
+
+touch /etc/openldap/slapd.d/${1}_loaded

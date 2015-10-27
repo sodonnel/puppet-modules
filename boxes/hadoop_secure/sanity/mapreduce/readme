@@ -1,0 +1,3 @@
+The PI example should be installed by default on the cluster, so run it with the following command to ensure mapreduce works ok:
+
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 10 100

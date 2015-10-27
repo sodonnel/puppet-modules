@@ -1,0 +1,15 @@
+dn: dc=<%= @basedn -%>,dc=com
+objectClass: dcObject
+objectClass: organization
+o: <%= @basedn -%>.com
+dc: <%= @basedn %>
+
+dn: ou=users,dc=<%= @basedn -%>,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: ou=groups,dc=<%= @basedn -%>,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: groups

@@ -1,0 +1,14 @@
+dn: cn=staff,ou=groups,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1000
+
+dn: cn=hadoop-users,ou=groups,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1001
+
+dn: cn=hadoop-admin,ou=groups,dc=<%= @basedn -%>,dc=com
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1002

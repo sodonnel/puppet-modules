@@ -61,10 +61,27 @@
   </property>
 
 
-  <!-- only needed as our installer looks for this -->
+  <% if @secure %>
+  <!-- SECURITY -->
   <property>
-    <name>mapred.job.tracker</name>
-    <value><%= @resourcemanagerhostname -%>:8032</value>
+    <name>mapreduce.jobhistory.principal</name>
+    <value>mapred/_HOST@EXAMPLE.COM</value>
   </property>
+
+  <property>
+    <name>mapreduce.jobhistory.webapp.spnego-principal</name>
+    <value>HTTP/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.keytab</name>
+    <value>/etc/hadoop/conf/mapred.keytab</value>
+  </property>
+
+  <property>
+    <name>mapreduce.jobhistory.webapp.spnego-keytab-file</name>
+    <value>/etc/hadoop/conf/mapred.keytab</value>
+  </property>
+  <% end %>
 
 </configuration>

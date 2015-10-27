@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.57.6"
+  config.vm.network "private_network", ip: "192.168.33.6"
 
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path   = "manifests"

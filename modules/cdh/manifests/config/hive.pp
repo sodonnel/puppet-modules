@@ -5,6 +5,8 @@ class cdh::config::hive {
   $mysqlpassword     = $::cdh::config::mysqlpassword
   $mysqlpasswordhash = $::cdh::config::mysqlpasswordhash
 
+  $secure           = $::cdh::config::secure
+
 
   file { "/usr/lib/hive/conf/hive-site.xml":
     ensure  => present,
