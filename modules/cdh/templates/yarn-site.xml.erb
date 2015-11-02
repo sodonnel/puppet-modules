@@ -24,6 +24,13 @@
   </property>
 
   <property>
+    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>
+
+  <!-- Leave logs for failed jobs in the node local disk for
+       this number of seconds -->
+  <property>
     <name>yarn.nodemanager.delete.debug-delay-sec</name>
     <value>3600</value>
   </property>
@@ -31,11 +38,6 @@
   <property>
     <name>yarn.resourcemanager.hostname</name>
     <value><%= @resourcemanagerhostname -%></value>
-  </property>
-
-  <property>
-    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
-    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
   </property>
 
   <property>
@@ -53,6 +55,7 @@
     <value>3600</value>
   </property>
 
+  <!-- Intermediate output and dist caches uses these. Comma seperated list -->
   <property>
     <description>List of directories to store localized files in.</description>
     <name>yarn.nodemanager.local-dirs</name>
@@ -60,6 +63,7 @@
     <!--  <value>file:///data/1/yarn/localvar/lib/hadoop-yarn/cache/${user.name}/nm-local-dir</value> -->
   </property>
 
+  <!-- With aggregation enabled these are deleted after they are moved to HDFS -->
   <property>
     <description>Where to store container logs.</description>
     <name>yarn.nodemanager.log-dirs</name>
@@ -93,24 +97,13 @@
   <property>
     <description>Max allocation unit.</description>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <!-- This was set to the total memory, but I found that resource manager
-    is quite generous, and gave lots of memory to a process and then other
-    jobs could not run
     <value><%= @yarnavailablememory -%></value>
-    -->
-    <value>256</value>
   </property>
 
   <property>
-    <description>Application master allocation</description>
-    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <description>Minimum increment setting - set to same as min-allocation</description>
+    <name>yarn.scheduler.increment-allocation-mb</name>
     <value>256</value>
-  </property>
-
-  <property>
-    <description>Application Master JVM opts</description>
-    <name>yarn.app.mapreduce.am.command-opts</name>
-    <value>-Xmx204m</value>
   </property>
   
   <property>

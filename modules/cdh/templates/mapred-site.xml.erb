@@ -60,6 +60,18 @@
     <value>-Xmx204m</value>
   </property>
 
+  <property>
+    <description>Application master allocation</description>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>256</value>
+  </property>
+
+  <property>
+    <description>Application Master JVM opts</description>
+    <name>yarn.app.mapreduce.am.command-opts</name>
+    <value>-Xmx204m</value>
+  </property>
+
 
   <% if @secure %>
   <!-- SECURITY -->

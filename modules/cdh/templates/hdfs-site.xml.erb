@@ -43,7 +43,11 @@
     <name>dfs.client.failover.proxy.provider.mycluster</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
   </property>
-  
+
+
+  <!-- This should be a list of directories in a real cluster
+       one of which should be an NFS mount if NN HA is not setup.
+       The mount options should be 'tcp,soft,intr,timeo=10,retrans=10' -->
   <property>
      <name>dfs.namenode.name.dir</name>
      <value>file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/name</value>
@@ -63,6 +67,55 @@
     <name>dfs.webhdfs.enabled</name>
     <value>true</value>
   </property>
+
+<!-- Settings useful for Impala -->
+
+  <property>
+    <name>dfs.client.read.shortcircuit</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.domain.socket.path</name>
+    <value>/var/run/hadoop-hdfs/dn._PORT</value>
+  </property>
+
+  <property>
+    <name>dfs.client.file-block-storage-locations.timeout.millis</name>
+    <value>10000</value>
+  </property>
+
+  <!-- This exposes the disk on a datanode on which a block resides -->
+  <property>
+    <name>dfs.datanode.hdfs-blocks-metadata.enabled</name>
+    <value>true</value>
+  </property>
+
+<!-- end impala -->
+
+<!-- Recommendations  -->
+  
+  <!-- recommend 25% of space on each volume with a min of 10GB
+       value is in bytes
+  <property>
+     <name>dfs.datanode.du.reserved</name>
+     <value></value>
+   </property>
+  -->  
+
+  <!-- This is a client setting. Default used to be 64MB, is not 128MB -->
+  <property>
+     <name>dfs.blocksize</name>
+     <value>1134217728</value>
+  </property>
+
+  <!-- This is a client setting. Default is 3
+  <property>
+     <name>dfs.replication</name>
+     <value>3</value>
+  </property>
+  -->
+
 
   <% if @secure == true %>
   <property>
