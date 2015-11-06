@@ -76,24 +76,28 @@
     <value>hdfs://mycluster/var/log/hadoop-yarn/apps</value>
   </property>
 
+  <!-- Default is 8GB -->
   <property>
     <description>Max available memory on each data node.</description>
     <name>yarn.nodemanager.resource.memory-mb</name>
     <value><%= @yarnavailablememory -%></value>
   </property>
 
+  <!-- Recommend num physical cores minus 1. Default 8. -->
   <property>
     <description>Max available cores data node.</description>
     <name>yarn.nodemanager.resource.cpu-vcores</name>
     <value><%= @yarnavailablecores -%></value>
   </property>
 
+  <!-- Default 1024 -->
   <property>
     <description>Minimum allocation unit.</description>
     <name>yarn.scheduler.minimum-allocation-mb</name>
     <value>256</value>
   </property>
 
+  <!-- Biggest memory allocation a container can request. Recommend 4096 -->
   <property>
     <description>Max allocation unit.</description>
     <name>yarn.scheduler.maximum-allocation-mb</name>
@@ -105,6 +109,21 @@
     <name>yarn.scheduler.increment-allocation-mb</name>
     <value>256</value>
   </property>
+
+
+  <!-- Nodemanager monitors containers memory usage. Default true, recommend true -->
+  <property>
+    <name>yarn.nodemanager.pmem-check-enabled</name>
+    <value>true</value>
+  </property>
+
+    <!-- Nodemanager monitors containers virtual memory usage. Default false, recommend false -->
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+  </property>
+
+  
   
   <property>
     <description>Classpath for typical applications.</description>

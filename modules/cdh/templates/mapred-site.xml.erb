@@ -40,16 +40,26 @@
   </property>
 
   <!-- small cluster memory settings -->
+  <!-- Default 1024. Recommend setting to 4096. Should not be higher than YARN max allocation -->
   <property>
     <name>mapreduce.map.memory.mb</name>
     <value>256</value>
   </property>
 
+  <!-- Default 1024. Recommend setting to 4096. Should not be higher than YARN max allocation -->
   <property>
     <name>mapreduce.reduce.memory.mb</name>
     <value>256</value>
   </property>
 
+  <!-- Default 1536. Recommend 1024 -->
+  <property>
+    <description>Application master allocation</description>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>256</value>
+  </property>
+
+  <!-- Recommend heapsizes to be 75% of mapreduce.map/reduce.memory.mb -->
   <property>
     <name>mapreduce.map.java.opts</name>
     <value>-Xmx204m</value>
@@ -61,17 +71,67 @@
   </property>
 
   <property>
-    <description>Application master allocation</description>
-    <name>yarn.app.mapreduce.am.resource.mb</name>
-    <value>256</value>
-  </property>
-
-  <property>
     <description>Application Master JVM opts</description>
     <name>yarn.app.mapreduce.am.command-opts</name>
     <value>-Xmx204m</value>
   </property>
 
+  <!-- Size of RAM buffer before mapper writes keys to disk. Recommend 25% of HEAP (-Xmx).
+       Default 100MB -->
+  <property>
+    <name>mapreduce.task.io.sort.mb</name>
+    <value>50</value>
+  </property>
+
+  <!-- number of streams to merge at once when sorting files. Default 10, recommend 64 -->
+  <property>
+    <name>mapreduce.task.io.sort.factor</name>
+    <value>64</value>
+  </property>
+  
+
+  <!-- Determines whether intermediate data from mappers should be compressed
+       before network transfer. Default false, recommend true -->
+  <property>
+    <name>mapreduce.map.output.compress</name>
+    <value>true</value>
+  </property>
+
+  <!-- Compression codec used for intermediate data. Default is 'DefaultCodec'
+       Recommend SnappyCodec -->
+  <property>
+    <name>mapreduce.map.output.compress.codec</name>
+    <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+  </property>
+
+  <!-- Percentage of map tasks that must be completed before RM
+       will schedule reducers. Default 0.05. Recommend 0.8 -->
+  <property>
+    <name>mapreduce.job.reduce.slowstart.completedmaps</name>
+    <value>0.8</value>
+  </property>
+
+  <!-- Num threads a reducer can use in parallel to fetch mapper output.
+       Default 5. Recommend ln(cluster nodes) * 4 with a min of 10 -->
+  <property>
+    <name>mapreduce.reduce.shuffle.parallelcopies</name>
+    <value>5</value>
+  </property>
+
+  <!-- Speculative Execution -->
+  <!-- Default true, recommend true -->
+  <property>
+    <name>mapreduce.map.speculative</name>
+    <value>true</value>
+  </property>
+  <!-- Default true, recommend false -->
+  <property>
+    <name>mapreduce.reduce.speculative</name>
+    <value>false</value>
+  </property>
+   
+  
+ 
 
   <% if @secure %>
   <!-- SECURITY -->
