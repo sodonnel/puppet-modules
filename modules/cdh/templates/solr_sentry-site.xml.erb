@@ -1,0 +1,19 @@
+<configuration>
+
+ <property>
+    <name>hive.sentry.provider</name>
+    <value>org.apache.sentry.provider.file.HadoopGroupResourceAuthorizationProvider</value>
+  </property>
+
+  <property>
+    <name>sentry.solr.provider.resource</name>
+    <value>hdfs://mycluster/user/hdfs/solr_sentry.ini</value>
+    <!--
+        If the HDFS configuration files (core-site.xml, hdfs-site.xml)
+        pointed to by SOLR_HDFS_CONFIG in /etc/default/solr
+        point to HDFS, the path will be in HDFS;
+        alternatively you could specify a full path,
+        e.g.:hdfs://namenode:port/path/to/authz-provider.ini
+    -->
+  </property>
+</configuration>
