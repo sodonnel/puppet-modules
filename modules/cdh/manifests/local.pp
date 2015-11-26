@@ -29,6 +29,11 @@ class cdh::local(
     mysqlpasswordhash => '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C',
   }
 
+  class {'cdh::metastore::config':
+    secure   => $secure,
+  }
+
+
   contain cdh::namenode::install
   contain cdh::namenode::format
   contain cdh::namenode::tmpdir
@@ -63,6 +68,13 @@ class cdh::local(
   class {'cdh::search':
     secure => $secure,
     namenodehostname => 'mycluster',
+    zookeeper_ensemble => "${hostname}:2181/solr"
+  }
+
+  class {'cdh::hbase':
+    secure => $secure,
+    namenodehostname => 'mycluster',
+    zookeeper_ensemble => "${hostname}:2181"
   }
 
   Class['cdh::namenode::install']           ->
@@ -71,6 +83,7 @@ class cdh::local(
   Class['cdh::metastore::install']          ->
   Class['cdh::hue::install']                ->
   Class['cdh::search::install']             ->
+  Class['cdh::hbase::install']              ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
   Class['cdh::namenode::format']            ->
@@ -87,6 +100,8 @@ class cdh::local(
   Class['cdh::metastore::service']          ->
   Class['cdh::search::config']              ->
   Class['cdh::search::service']             ->
+  Class['cdh::hbase::config']               ->
+  Class['cdh::hbase::service']              ->
   Class['cdh::hue::config']                 ->
   Class['cdh::hue::service']                ->
   Class['cdh::sqoop1::install']

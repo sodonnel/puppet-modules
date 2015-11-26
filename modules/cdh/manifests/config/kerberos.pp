@@ -32,4 +32,15 @@ class cdh::config::kerberos {
     timeout   => 0,
   }
 
+  ->
+  # Hack to allow root to run hdfs ls command to check if directories
+  # exist for some steps
+  exec {'kerberos-auth-root':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'root',
+    command   => 'kinit hdfs/$(hostname) -kt /etc/hadoop/conf/hdfs.keytab',
+    logoutput => on_failure,
+    timeout   => 0,
+  }
+
 }

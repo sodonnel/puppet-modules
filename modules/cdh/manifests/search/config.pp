@@ -14,6 +14,14 @@ class cdh::search::config (
   }
 
 
+  file { "/etc/solr/conf/log4j.properties":
+    ensure  => present,
+    content => template("cdh/solr_log4j.erb"),
+    owner   => "root",
+    group   => "root",
+  }
+
+
   if ($secure == true) {
 
     exec {'kerberos-auth-hdfs-solr':
@@ -41,7 +49,27 @@ class cdh::search::config (
       owner => 'solr',
       mode  => '600',
     }
-    
+
+    # SOLR is sharing the hdfs HTTP keytab
+
+    ->
+
+    file { "/etc/solr/conf/jaas.conf":
+      ensure  => present,
+      content => template("cdh/solr_jaas.conf.erb"),
+      owner   => "root",
+      group   => "root",
+    }
+
+    ->
+
+    file { "/etc/solr/conf/sentry-site.xml":
+      ensure  => present,
+      content => template("cdh/solr_sentry-site.xml.erb"),
+      owner   => "root",
+      group   => "root",
+    }
+
   }
 
 

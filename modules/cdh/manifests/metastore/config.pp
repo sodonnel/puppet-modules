@@ -1,4 +1,58 @@
-class cdh::metastore::config {
+class cdh::metastore::config(
+  $secure = false
+){
+
+  $secured = $secure
+  $hostname = $fqdn
+  
+
+  file { "/etc/zookeeper/conf/zoo.cfg":
+    ensure  => present,
+    content => template("cdh/zoo.cfg.erb"),
+    owner   => "root",
+    group   => "root",
+    mode    => "644",
+  }
+
+  if ($secured == true) {
+
+    file { "/etc/zookeeper/conf/java.env":
+      ensure  => present,
+      content => template("cdh/java.env.erb"),
+      owner   => "root",
+      group   => "root",
+      mode    => "644",
+    }
+
+    file { "/etc/zookeeper/conf/jaas.conf":
+      ensure  => present,
+      content => template("cdh/jaas.conf.erb"),
+      owner   => "root",
+      group   => "root",
+      mode    => "644",
+    }
+
+    ->
+
+    exec {'zookeeper-generate-keytab':
+      path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+      user      => 'root',
+      command   => 'kadmin -p root/admin -w vagrant -q "ktadd -k /etc/zookeeper/conf/zookeeper.keytab zookeeper/$(hostname)"',
+      logoutput => on_failure,
+      unless    => "ls /etc/zookeeper/conf/zookeeper.keytab",
+      timeout   => 0,
+    }
+
+    ->
+
+    file {'/etc/zookeeper/conf/zookeeper.keytab':
+      owner => 'zookeeper',
+      mode  => '600',
+    }
+
+    
+  }
+
 
   exec {'hive-user':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
@@ -72,7 +126,7 @@ class cdh::metastore::config {
     # Prior to CDH 5.4?
     # command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz",
     # CDH 5.4 and later...
-    command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn",
+    command   => "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn",
     logoutput => on_failure,
     unless    => 'hadoop fs -ls /user/oozie/share/lib/lib_*',
     timeout   => 0,

@@ -15,6 +15,7 @@ kadmin -p root/admin -w vagrant -q "delprinc -force oozie/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force hue/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force solr/$(hostname)"
+kadmin -p root/admin -w vagrant -q "delprinc -force zookeeper/$(hostname)"
 
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hdfs/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey HTTP/$(hostname)"
@@ -24,6 +25,7 @@ kadmin -p root/admin -w vagrant -q "addprinc -randkey oozie/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hue/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey solr/$(hostname)"
+kadmin -p root/admin -w vagrant -q "addprinc -randkey zookeeper/$(hostname)"
 
 kadmin -p root/admin -w vagrant -q "xst -k /etc/hadoop/conf/hdfs-unmerged.keytab hdfs/$(hostname)"
 kadmin -p root/admin -w vagrant -q "xst -k /etc/hadoop/conf/http-unmerged.keytab HTTP/$(hostname)"
@@ -38,7 +40,9 @@ echo -e "rkt /etc/hadoop/conf/oozie-unmerged.keytab\nrkt /etc/hadoop/conf/http-u
 
 rm -f /etc/hadoop/conf/*-unmerged.keytab
 
-chmod 640 /etc/hadoop/conf/hdfs.keytab
+# This is 644 so that solr can share the HTTP keytab
+# in pseudo dist mode
+chmod 644 /etc/hadoop/conf/hdfs.keytab
 chown hdfs:hadoop /etc/hadoop/conf/hdfs.keytab
 
 chmod 640 /etc/hadoop/conf/yarn.keytab
