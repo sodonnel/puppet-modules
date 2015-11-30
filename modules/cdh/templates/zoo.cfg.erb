@@ -32,4 +32,6 @@ dataLogDir=/var/lib/zookeeper
 <% if @secured == true %>
 authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
 jaasLoginRenew=3600000
+kerberos.removeHostFromPrincipal=true
+kerberos.removeRealmFromPrincipal=true
 <% end %>
