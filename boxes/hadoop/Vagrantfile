@@ -9,17 +9,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box      = "base-box"
-  config.vm.hostname = 'standalone'
+  # cdh_version => hive_version
+  cdh_versions = {
+    '5.5.0' => '1.1.0',
+    '5.5.1' => '1.1.0',
+    '5.4.7' => '1.1.0'
+  }
 
+  cdh_version = cdh_versions.keys.first
+  if cdh_versions.has_key?(ENV['CDH_VERSION'])
+    cdh_version = ENV['CDH_VERSION']
+  end
+  hive_version = cdh_versions[cdh_version]
+  
+  puts "Going to start #{cdh_version}"
+  
   $script = <<SCRIPT
     echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain" > /etc/hosts
     echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> /etc/hosts
     echo "192.168.33.6  standalone"  >> /etc/hosts
 SCRIPT
-
-  config.vm.provision "shell", inline: $script
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -33,19 +42,29 @@ SCRIPT
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.6"
 
-  config.vm.provision "puppet" do |puppet|
-    puppet.manifests_path   = "../../manifests"
-    puppet.manifest_file    = "cdh5.pp"
-    puppet.module_path      = "../../modules"
-    puppet.options          = "--verbose"
-  end
-
-  config.vm.provider "virtualbox" do |v|
-    v.name = "CDH_Hadoop"
-    v.memory = 5120
-    v.cpus = 2
+  config.vm.define "cdh_#{cdh_version}" do |cm|
+    cm.vm.box = "base-box"
+    cm.vm.network "private_network", ip: "192.168.33.6"
+    cm.vm.network "forwarded_port", guest: 8888, host: 8888
+    cm.vm.hostname = 'standalone'
+    cm.vm.provider "virtualbox" do |vb|
+      vb.name = "cdh_#{cdh_version}"
+      vb.memory = 5120
+      vb.cpus   = 2
+    end
+    cm.vm.synced_folder "../..", "/puppet_modules"
+    cm.vm.provision "shell", inline: $script
+    cm.vm.provision "puppet" do |puppet|
+      puppet.facter = {
+        "cdh_version"  => cdh_version,
+        "hive_version" => hive_version
+      }
+      puppet.manifests_path   = "../../manifests"
+      puppet.manifest_file    = "cdh5.pp"
+      puppet.module_path      = "../../modules"
+      puppet.options          = "--verbose"
+    end
   end
 
   # Create a public network, which generally matched to bridged network.
@@ -61,7 +80,7 @@ SCRIPT
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../..", "/puppet_modules"
+
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

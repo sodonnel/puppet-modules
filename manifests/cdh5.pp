@@ -53,8 +53,11 @@ node /^client.*/ {
 }
 
 node /^standalone.*/ {
-  $hive_version = '1.1.0'
-  $cdh_version  = '5.4.5'
+  # These two variables must be declared in facter.
+  # When running through vagrant, they are set in Facter automatically.
+  # If not running via vagrant they need to be set manually.
+  # $hive_version = '1.1.0'
+  # $cdh_version  = '5.4.7'
 
   class{ 'cdh::hosts':
     entries => {
