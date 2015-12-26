@@ -37,6 +37,62 @@
   <value><%= @zookeeper -%></value>
 </property>
 
+<property>
+   <name>hbase.replication</name>
+   <value>true</value>
+</property>
+
+ <!-- Source ratio of 100% makes sure that each SEP consumer is actually
+       used (otherwise, some can sit idle, especially with small clusters) -->
+<property>
+  <name>replication.source.ratio</name>
+  <value>1.0</value>
+</property>
+
+<!-- Maximum number of hlog entries to replicate in one go. If this is
+     large, and a consumer takes a while to process the events, the
+     HBase rpc call will time out. -->
+<property>
+  <name>replication.source.nb.capacity</name>
+  <value>1000</value>
+</property>
+
+
+<!-- These parameters are best left to default, but tweak them for
+     experimenting with WAL rolls etc -->
+<!-- how often to roll WAL. Default is 1hr 3600000 -->
+<!--
+<property>
+  <name>hbase.regionserver.logroll.period</name>
+  <value>60000</value>
+</property>
+-->
+
+<!-- flush memstore when it gets to this size. Default is 134217728 (128MB?) -->
+<!--
+<property>
+  <name>hbase.hregion.memstore.flush.size</name>
+  <value>10000000</value>
+  <description>
+    Memstore will be flushed to disk if size of the memstore
+    exceeds this number of bytes. Value is checked by a thread that runs
+    every hbase.server.thread.wakefrequency.
+  </description>
+</property>
+-->
+
+<!-- Time oldWALs are kept after they are nolonger required. Default 600000 (10 mins) -->
+<!--
+<property>
+  <name>hbase.master.logcleaner.ttl</name>
+  <value>30000</value>
+  <description>
+    Memstore will be flushed to disk if size of the memstore
+    exceeds this number of bytes. Value is checked by a thread that runs
+    every hbase.server.thread.wakefrequency.
+  </description>
+</property>
+-->
 
 <% if @isSecure %>
 
