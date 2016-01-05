@@ -4,6 +4,14 @@ class cdh::metastore::config(
 
   $secured = $secure
   $hostname = $fqdn
+
+  if $cdh_version  =~ /^5\.3/ {
+    # $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
+  }  
+  else {
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn"
+  }
   
 
   file { "/etc/zookeeper/conf/zoo.cfg":
@@ -126,7 +134,7 @@ class cdh::metastore::config(
     # Prior to CDH 5.4?
     # command   => "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz",
     # CDH 5.4 and later...
-    command   => "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn",
+    command   => $oozie_lib_command,
     logoutput => on_failure,
     unless    => 'hadoop fs -ls /user/oozie/share/lib/lib_*',
     timeout   => 0,
