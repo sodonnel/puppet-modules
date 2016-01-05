@@ -4,6 +4,16 @@ class cdh::metastore::mysql (
 )
 {
 
+  if $cdh_version  =~ /^5\.3/ {
+    $hive_version = '0.13.0'
+  }  
+  elsif $cdh_version  =~ /^5\.4/ {
+    $hive_version = '1.1.0'
+  }
+  elsif $cdh_version  =~ /^5\.5/ {
+    $hive_version = '1.1.0'
+  }
+
   class { '::mysql::server':
     root_password    => 'root123',
     service_enabled  => true,
