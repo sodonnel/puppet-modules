@@ -9,20 +9,36 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  # cdh_version => hive_version
   cdh_versions = {
-    '5.5.0' => '1.1.0',
-    '5.5.1' => '1.1.0',
-    '5.4.7' => '1.1.0'
+    '5.5.1' => '',
+    '5.5.0' => '',
+    '5.4.9' => '',
+    '5.4.8' => '',
+    '5.4.7' => '',
+    '5.4.6' => '',
+    '5.4.5' => '',
+    '5.4.4' => '',
+    '5.4.3' => '',
+    '5.4.2' => '',
+    '5.4.1' => '',
+    '5.4.0' => '',
+    '5.3.8' => '',
+    '5.3.7' => '',
+    '5.3.6' => '',
+    '5.3.5' => '',
+    '5.3.4' => '',
+    '5.3.3' => '',
+    '5.3.2' => '',
+    '5.3.1' => '',
+    '5.3.0' => ''
   }
 
   cdh_version = cdh_versions.keys.first
   if cdh_versions.has_key?(ENV['CDH_VERSION'])
     cdh_version = ENV['CDH_VERSION']
   end
-  hive_version = cdh_versions[cdh_version]
   
-  puts "Going to start #{cdh_version}"
+  puts "CDH version is: #{cdh_version}"
   
   $script = <<SCRIPT
     echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain" > /etc/hosts
@@ -58,7 +74,6 @@ SCRIPT
     cm.vm.provision "puppet" do |puppet|
       puppet.facter = {
         "cdh_version"  => cdh_version,
-        "hive_version" => hive_version
       }
       puppet.manifests_path   = "../../manifests"
       puppet.manifest_file    = "cdh5.pp"
