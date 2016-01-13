@@ -57,6 +57,12 @@ node /^standalone.*/ {
   # When running through vagrant, they are set in Facter automatically.
   # If not running via vagrant they need to be set manually.
   # $cdh_version  = '5.3.8'
+  if $cdh_secure == 'true' {
+    require 'kerberos'
+    $hadoop_security = true
+  } else {
+    $hadoop_security = false
+  }
 
   class{ 'cdh::hosts':
     entries => {
@@ -70,6 +76,6 @@ node /^standalone.*/ {
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
     hostname => 'standalone',
-    secure   => false,
+    secure   => $hadoop_security,
                           } 
 }

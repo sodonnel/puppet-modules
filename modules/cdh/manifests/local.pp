@@ -6,10 +6,6 @@ class cdh::local(
 )
 {
 
-  if $secure == true  {
-    require kerberos::client
-  }
-
   class {'cdh::config':
     includehive  => true,
     includeyarn  => true,
