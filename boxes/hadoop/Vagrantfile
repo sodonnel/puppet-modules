@@ -51,7 +51,6 @@ SCRIPT
 
   vm_name = "cdh_#{secure_cluster == 'true' ? 'secure_' : '' }#{cdh_version}#{!vm_additional_name.empty? ? '_'+vm_additional_name : ''}"
   puts "Operating on #{vm_name}"
-  exit(1)
 
   config.vm.define vm_name do |cm|
     cm.vm.box = "base-box"
