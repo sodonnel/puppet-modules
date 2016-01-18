@@ -52,6 +52,14 @@ class cdh::hbase::config (
       group   => "root",
     }
 
+    ->
+
+    file { "/etc/hbase/conf/zk-client-jaas.conf":
+      ensure  => present,
+      content => template("cdh/hbase-zk-client-jaas.conf.erb"),
+      owner   => "root",
+      group   => "root",
+    }
 
   }
 

@@ -136,8 +136,11 @@ export HBASE_OPTS="-XX:+UseConcMarkSweepGC"
 # The reason for changing default to RFA is to avoid the boundary case of filling out disk space as
 # DRFA doesn't put any cap on the log size. Please refer to HBase-5655 for more context.
 <% if @isSecure %>
-export HBASE_OPTS="$HBASE_OPTS -Djava.security.auth.login.config=/etc/hbase/conf/zk-jaas.conf"
+export HBASE_OPTS="$HBASE_OPTS -Djava.security.auth.login.config=/etc/hbase/conf/zk-client-jaas.conf"
+export HBASE_MASTER_OPTS="-Djava.security.auth.login.config=/etc/hbase/conf/zk-jaas.conf"
+export HBASE_REGIONSERVER_OPTS="-Djava.security.auth.login.config=/etc/hbase/conf/zk-jaas.conf"
 <% else %>
 # export HBASE_OPTS="$HBASE_OPTS -Djava.security.auth.login.config=/etc/hbase/conf/zk-jaas.conf"
 <% end %>
 export HBASE_MANAGES_ZK=false
+
