@@ -1,0 +1,70 @@
+# Start shell
+
+hbase shell
+
+# Create a table
+
+create 'tab1', 'cf1', 'cf2'
+
+If you have a secured hbase, you need to issue grants to users before they can do anything.
+
+You can issue grants using the hbase user (super user), but as its a service unix account you have to use sudo -u to access it.
+
+First authenticate using the keytab:
+
+sudo -u hbase kinit hbase/standalone -kt /etc/hbase/conf/hbase.keytab 
+
+Then run the shell as hbase user:
+
+sudo -u hbase hbase shell
+
+Finally issue grants in the shell
+
+grant 'vagrant', 'RWC'
+
+# Put a row
+
+put 'tab1', '1', 'cf1:c1', 'c1data'
+put 'tab1', '1', 'cf1:c2', 'c2data'
+put 'tab1', '2', 'cf1:c1', 'c1data2'
+put 'tab1', '2', 'cf1:c2', 'c2data2'
+
+
+# Create a table in Hive that points to hbase
+
+CREATE EXTERNAL TABLE hbase_test(key int, c1 string, c2 string) 
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key,cf1:c1,cf1:c2")
+TBLPROPERTIES ("hbase.table.name" = "tab1");
+
+
+# Query a table in Hive that points to hbase
+
+set hive.root.logger=DEBUG,console;
+
+
+# These need to be set in either Hive site or in the shell for secure hadoop.
+# Note that you can just include the hbase-site.xml by adding it to the hive.aux.jars setting
+
+set hbase.security.authentication=kerberos;
+set hbase.rpc.engine=org.apache.hadoop.hbase.ipc.SecureRpcEngine;
+set hbase.master.kerberos.principal=hbase/_HOST@EXAMPLE.COM;
+set hbase.regionserver.kerberos.principal=hbase/_HOST@EXAMPLE.COM;
+set hbase.zookeeper.quorum=standalone;
+
+
+# You are supposed to need to add these JARs too, but in a non secured cluster I was able to get it working
+# without adding any of these.
+
+ADD JAR /usr/lib/hive/lib/zookeeper.jar;
+ADD JAR /usr/lib/hive/lib/hive-hbase-handler.jar;
+ADD JAR /usr/lib/hive/lib/guava-14.0.1.jar;
+ADD JAR /usr/lib/hive/lib/hbase-client.jar;
+ADD JAR /usr/lib/hive/lib/hbase-common.jar;
+ADD JAR /usr/lib/hive/lib/hbase-hadoop-compat.jar;
+ADD JAR /usr/lib/hive/lib/hbase-hadoop2-compat.jar;
+ADD JAR /usr/lib/hive/lib/hbase-protocol.jar;
+ADD JAR /usr/lib/hive/lib/hbase-server.jar;
+ADD JAR /usr/lib/hive/lib/htrace-core.jar;
+
+select * from hbase_test;
