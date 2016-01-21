@@ -147,7 +147,7 @@
 
     <property>
         <name>oozie.service.JPAService.jdbc.url</name>
-        <value>jdbc:mysql://localhost:3306/oozie</value>
+        <value>jdbc:mysql://<%= @mysqlhost -%>:3306/oozie</value>
         <description>
             JDBC URL.
         </description>
@@ -380,7 +380,7 @@
 
     <!-- SECURITY -->
 
-    <% if @secure %>
+    <% if @secured %>
 
     <property>
         <name>oozie.service.HadoopAccessorService.kerberos.enabled</name>

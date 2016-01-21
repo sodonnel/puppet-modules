@@ -29,6 +29,10 @@ clientPort=2181
 # the directory where the transaction logs are stored.
 dataLogDir=/var/lib/zookeeper
 
+<% @quorm_list.each_with_index do |q, i| -%>
+server.<%= i+1 -%>=<%= q -%>:2888:3888
+<% end -%>
+
 <% if @secured == true %>
 authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
 jaasLoginRenew=3600000

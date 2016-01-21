@@ -64,12 +64,6 @@ class cdh::metastore::mysql (
 
   ### Setup for Oozie after here
 
-  file { '/var/lib/oozie/mysql-connector-java.jar':
-    ensure => 'link',
-    target => '/usr/share/java/mysql-connector-java.jar',
-  }
-
-  ->
   
   mysql::db { 'oozie':
     user     => 'oozieuser',
