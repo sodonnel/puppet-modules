@@ -21,6 +21,16 @@ class cdh::oozie::config(
     $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn"
   }
 
+
+  file { '/etc/oozie/conf/oozie.keytab':
+    ensure => 'present',
+    source => 'file:///etc/hadoop/conf/oozie.keytab',
+    owner  => 'oozie',
+    mode   => '600',
+  }
+
+  ->
+
   file { '/var/lib/oozie/mysql-connector-java.jar':
     ensure => 'link',
     target => '/usr/share/java/mysql-connector-java.jar',
