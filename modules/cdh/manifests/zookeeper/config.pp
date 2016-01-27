@@ -7,14 +7,6 @@ class cdh::zookeeper::config(
   $hostname = $fqdn
   $quorm_list = $quorm
 
-  file { "/etc/zookeeper/conf/zoo.cfg":
-    ensure  => present,
-    content => template("cdh/zoo.cfg.erb"),
-    owner   => "root",
-    group   => "root",
-    mode    => "644",
-  }
-
   if ($secured == true) {
 
     file { "/etc/zookeeper/conf/java.env":
@@ -24,6 +16,8 @@ class cdh::zookeeper::config(
       group   => "root",
       mode    => "644",
     }
+
+    ->
 
     file { "/etc/zookeeper/conf/jaas.conf":
       ensure  => present,
@@ -53,6 +47,16 @@ class cdh::zookeeper::config(
 
     
   }
+
+  file { "/etc/zookeeper/conf/zoo.cfg":
+    ensure  => present,
+    content => template("cdh/zoo.cfg.erb"),
+    owner   => "root",
+    group   => "root",
+    mode    => "644",
+  }
+
+  ->
 
 
   file { [ '/var/lib/zookeeper' ]:

@@ -90,8 +90,8 @@ class cdh::local(
   Class['cdh::search::install']             ->
   Class['cdh::hbase::install']              ->
   Class['cdh::metastore::mysql']            ->
-  Class['cdh::zookeeper']                   ->
   Class['cdh::config']                      ->
+  Class['cdh::zookeeper']                   ->
   Class['cdh::namenode::format']            ->
   Class['cdh::namenode::service']           ->
   Class['cdh::namenode::vagrantdir']        ->
