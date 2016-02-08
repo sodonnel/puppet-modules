@@ -1,12 +1,3 @@
-$hosts_entries = {
-  puppet            => '192.168.57.5',
-  namenode          => '192.168.57.6',
-  datanode          => '192.168.57.7',
-  resourcemanager   => '192.168.57.9',
-  historyserver     => '192.168.57.9',
-  metastore         => '192.168.57.10',
-}
-
 node /^master.*/ {
 
   $cdh_version  = '5.5.1'
@@ -48,6 +39,7 @@ node /^master.*/ {
 
   ->
 
+  ### !! Remember MYSQL is currently bound up in this package :(
   class{ 'cdh::metastore':
     namenodehostname        => 'master',
     metastorehostname       => 'master',
@@ -55,6 +47,17 @@ node /^master.*/ {
     mysqlpassword           => 'hive123',
     mysqlpasswordhash       => '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C', # hive123
   }
+
+  ->
+
+  class{ 'cdh::oozie':
+    secure  => false,
+    dbhost  => 'localhost',
+    dbuser  => 'oozieuser',
+    dbpass  => 'secret',
+    enabled => true
+  }
+
 }
 
 

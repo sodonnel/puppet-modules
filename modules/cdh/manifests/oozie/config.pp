@@ -21,15 +21,17 @@ class cdh::oozie::config(
     $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn"
   }
 
+  if $secure  == true {
 
-  file { '/etc/oozie/conf/oozie.keytab':
-    ensure => 'present',
-    source => 'file:///etc/hadoop/conf/oozie.keytab',
-    owner  => 'oozie',
-    mode   => '600',
+    file { '/etc/oozie/conf/oozie.keytab':
+      ensure => 'present',
+      source => 'file:///etc/hadoop/conf/oozie.keytab',
+      owner  => 'oozie',
+      mode   => '600',
+    }
+
   }
 
-  ->
 
   file { '/var/lib/oozie/mysql-connector-java.jar':
     ensure => 'link',
