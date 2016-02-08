@@ -9,6 +9,17 @@ class cdh::namenode::tmpdir {
 #    timeout   => 0,
 #  }
 
+
+  exec {'namenode-waitonsafemode':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => 'hdfs dfsadmin -safemode wait',
+    logoutput => on_failure,
+    timeout   => 0,
+  }
+
+  ->
+
   exec {'namenode-tmpdir':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'root',

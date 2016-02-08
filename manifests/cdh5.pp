@@ -7,17 +7,52 @@ $hosts_entries = {
   metastore         => '192.168.57.10',
 }
 
-node /^namenode.*/ {
-  class{ 'localyumrepo':  } ->
+node /^master.*/ {
+
+#  $cdh_version  = '5.5.1'
+#  $cdh_secure = 'false'
+
+  class { 'cdh::config':
+    includehive             => false,
+    includeyarn             => true,
+    namenodehostname        => 'master',
+    resourcemanagerhostname => 'master',
+    metastorehostname       => 'master',
+    mysqlusername           => 'dummy',
+    mysqlpassword           => 'dummy',
+    yarnavailablememory     => 3072,
+    yarnavailablecores      => 2,
+    secure                  => false,
+  } 
+
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
+
   class{ 'cdh::namenode':
-    hostentries => $hosts_entries
+    namenodehostname => 'master'
   }
+  ->
+  class{ cdh::resourcemanager:
+    namenodehostname         => 'master',
+    resourcemanagerhostname  =>  'master'
+  }
+
 }
 
-node /^datanode.*/ {
-  class{ 'localyumrepo':  } ->
+node /^dn.*/ {
+  class { 'cdh::config':
+    includehive             => false,
+    includeyarn             => true,
+    namenodehostname        => 'master',
+    resourcemanagerhostname => 'master',
+    metastorehostname       => 'master',
+    mysqlusername           => 'dummy',
+    mysqlpassword           => 'dummy',
+    yarnavailablememory     => 3072,
+    yarnavailablecores      => 2,
+    secure                  => false,
+  }
+
   class{ 'cdh51repo':     } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::datanode':
@@ -25,23 +60,6 @@ node /^datanode.*/ {
   }
 }
 
-node /^resourcemanager.*/ {
-  class{ 'localyumrepo':  } ->
-  class{ 'cdh51repo':     } ->
-  class{ 'cdh51java':     } ->
-  class{ 'cdh::resourcemanager':
-    hostentries => $hosts_entries
-  }
-}
-
-node /^metastore.*/ {
-  class{ 'localyumrepo':  } ->
-  class{ 'cdh51repo':     } ->
-  class{ 'cdh51java':     } ->
-  class{ 'cdh::metastore':
-    hostentries => $hosts_entries
-  }
-}
 
 node /^client.*/ {
   class{ 'localyumrepo':  } ->
@@ -52,11 +70,27 @@ node /^client.*/ {
   }
 }
 
+
+node /^basic/ {
+  class{ 'cdh51repo':
+    cdh_version => $cdh_version    
+                          } ->
+
+
+  class{ 'cdh::zookeeper::install': } ->
+  class{ 'cdh::zookeeper::config':
+      quorm => ['basic', 'basic2', 'basic3']
+  } ->
+  class{ 'cdh::zookeeper::service':
+  }
+}
+
 node /^standalone.*/ {
   # These two variables must be declared in facter.
   # When running through vagrant, they are set in Facter automatically.
   # If not running via vagrant they need to be set manually.
-  # $cdh_version  = '5.3.8'
+  $cdh_version  = '5.5.1'
+  $cdh_secure = 'true'
   if $cdh_secure == 'true' {
     require 'kerberos'
     $hadoop_security = true

@@ -55,6 +55,12 @@
     <value>3600</value>
   </property>
 
+  <!-- Keep trying to reconnect forever. 900second is the default -->
+  <property>
+    <name>yarn.nodemanager.resourcemanager.connect.wait.secs</name>
+    <value>-1</value>
+  </property>
+
   <!-- Intermediate output and dist caches uses these. Comma seperated list -->
   <property>
     <description>List of directories to store localized files in.</description>
