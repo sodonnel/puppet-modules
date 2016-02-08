@@ -9,8 +9,8 @@ $hosts_entries = {
 
 node /^master.*/ {
 
-#  $cdh_version  = '5.5.1'
-#  $cdh_secure = 'false'
+  $cdh_version  = '5.5.1'
+  $cdh_secure = 'false'
 
   class { 'cdh::config':
     includehive             => false,
@@ -18,8 +18,8 @@ node /^master.*/ {
     namenodehostname        => 'master',
     resourcemanagerhostname => 'master',
     metastorehostname       => 'master',
-    mysqlusername           => 'dummy',
-    mysqlpassword           => 'dummy',
+    mysqlusername           => 'hive',
+    mysqlpassword           => 'hive123',
     yarnavailablememory     => 3072,
     yarnavailablecores      => 2,
     secure                  => false,
@@ -31,17 +31,41 @@ node /^master.*/ {
   class{ 'cdh::namenode':
     namenodehostname => 'master'
   }
+  
   ->
+   
   class{ cdh::resourcemanager:
     namenodehostname         => 'master',
     resourcemanagerhostname  =>  'master'
   }
 
+  ->
+
+  class{  'cdh::zookeeper':
+    secure => false,
+    quorm  => ['master'],
+  }
+
+  ->
+
+  class{ 'cdh::metastore':
+    namenodehostname        => 'master',
+    metastorehostname       => 'master',
+    mysqlusername           => 'hive',
+    mysqlpassword           => 'hive123',
+    mysqlpasswordhash       => '*FB73BCDD6050E0F3F73E0262950F4D9E0092769C', # hive123
+  }
 }
 
+
 node /^dn.*/ {
+
+  $cdh_version  = '5.5.1'
+  $cdh_secure = 'false'
+
+
   class { 'cdh::config':
-    includehive             => false,
+    includehive             => true,
     includeyarn             => true,
     namenodehostname        => 'master',
     resourcemanagerhostname => 'master',
@@ -58,6 +82,7 @@ node /^dn.*/ {
   class{ 'cdh::datanode':
     hostentries => $hosts_entries
   }
+
 }
 
 
