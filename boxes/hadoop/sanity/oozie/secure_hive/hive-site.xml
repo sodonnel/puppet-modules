@@ -82,7 +82,7 @@
 <property>
   <name>hive.zookeeper.quorum</name>
   <description>Zookeeper quorum used by Hive's Table Lock Manager</description>
-  <value>192.168.33.6</value>
+  <value>standalone</value>
 </property>
 
 <property>
@@ -90,5 +90,52 @@
   <description>Enable user impersonation for HiveServer2</description>
   <value>true</value>
 </property>
+
+<!-- Basic setting for KMS that is running on localhost -->
+<!--
+<property>
+  <name>dfs.encryption.key.provider.uri</name>
+  <value>kms://http@localhost:16000/kms</value>
+  </property>
+  -->
+
+
+
+<property>
+  <name>hive.server2.authentication</name>
+  <value>KERBEROS</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.principal</name>
+  <value>hive/_HOST@EXAMPLE.COM</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.keytab</name>
+  <value>/etc/hive/conf/hive.keytab</value>
+</property>
+
+<property>
+  <name>hive.metastore.sasl.enabled</name>
+  <value>true</value>
+  <description>If true, the metastore thrift interface will be secured with SASL. Clients must authenticate with Kerberos.</description>
+</property>
+
+<property>
+  <name>hive.metastore.kerberos.keytab.file</name>
+  <value>/etc/hive/conf/hive.keytab</value>
+  <description>The path to the Kerberos Keytab file containing the metastore thrift server's service principal.</description>
+</property>
+
+<property>
+  <name>hive.metastore.kerberos.principal</name>
+  <value>hive/_HOST@EXAMPLE.COM</value>
+  <description>The service principal for the metastore thrift server. The special string _HOST will be replaced automatically with the correct host name.</description>
+</property>
+
+
+
+
 
 </configuration>

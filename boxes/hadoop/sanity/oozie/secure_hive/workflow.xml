@@ -1,0 +1,49 @@
+<workflow-app name="hive-sanity-wf" xmlns="uri:oozie:workflow:0.4">
+
+<credentials>
+    <credential name='hive_credentials' type='hcat'>
+          <property>
+              <name>hcat.metastore.uri</name>
+              <value>thrift://standalone:9083</value>
+          </property>
+          <property>
+              <name>hcat.metastore.principal</name>
+              <value>hive/_HOST@EXAMPLE.COM</value>
+          </property>
+     </credential>
+</credentials>
+
+
+    <start to="myfirsthivejob" />
+    <action name="myfirsthivejob" cred="hive_credentials">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+          <job-tracker>${jobTracker}</job-tracker>
+          <name-node>${nameNode}</name-node>
+        <!--    <prepare>
+                <delete path="${jobOutput}"/>
+            </prepare>  -->
+            <job-xml>${hiveSite}</job-xml>
+            <configuration>
+                <!-- properties can be specified here or in the hql script -->
+                <property>
+                    <name>mapred.compress.map.output</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+            <script>${hiveScript}</script>
+            <!-- This is how you pass hivevar parameter into the script -->
+     <!--       <param>InputDir=/home/tucu/input-data</param>
+            <param>OutputDir=${jobOutput}</param>  -->
+        </hive>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name='end' />
+
+</workflow-app>
+
+

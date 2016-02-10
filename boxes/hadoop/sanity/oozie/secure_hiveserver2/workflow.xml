@@ -1,0 +1,36 @@
+<workflow-app name="hive-sanity-wf" xmlns="uri:oozie:workflow:0.4">
+
+<credentials>
+         <credential name='hiveserver2_credentials' type='hive2'>
+            <property>
+               <name>hive2.server.principal</name>
+               <value>hive/standalone@EXAMPLE.COM</value>
+            </property>
+            <property>
+               <name>hive2.jdbc.url</name>
+               <value>jdbc:hive2://standalone:10000/default</value>
+            </property>
+         </credential>
+      </credentials>
+
+    <start to="myfirsthivejob" />
+
+<action name="myfirsthivejob" cred="hiveserver2_credentials">
+  <hive2 xmlns="uri:oozie:hive2-action:0.1">
+    <job-tracker>${jobTracker}</job-tracker>
+    <name-node>${nameNode}</name-node>
+    <jdbc-url>jdbc:hive2://standalone:10000/default</jdbc-url>
+    <script>${hiveScript}</script>
+  </hive2> 
+  <ok to="end"/>
+  <error to="fail"/>
+</action>
+
+    <kill name="fail">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name='end' />
+
+</workflow-app>
+
+
