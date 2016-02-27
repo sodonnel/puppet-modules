@@ -37,6 +37,14 @@
   <value><%= @zookeeper -%></value>
 </property>
 
+<!-- This will be a very long number of retries as it backs off exponentially after each fail.
+     This setting is here so that the master has time to build (and create zk) before RS timesout
+     trying to connect -->
+<property>
+  <name>zookeeper.recovery.retry</name>
+  <value>10000</value>
+</property>
+
 <property>
    <name>hbase.replication</name>
    <value>true</value>

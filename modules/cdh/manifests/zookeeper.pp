@@ -1,12 +1,14 @@
 class cdh::zookeeper(
-  $secure = false, # Setup for kerberos or not
-  $quorm  = [],    # pass the hostnames as a list, eg ['host1', 'host2', 'host3']
-  $enabled = true  # True to start the service and ensure it is running
+  $secure = false,    # Setup for kerberos or not
+  $quorm  = [],       # pass the hostnames as a list, eg ['host1', 'host2', 'host3']
+  $instance_id = '1', # The server ID require for multi node ZK quorms
+  $enabled = true     # True to start the service and ensure it is running
 ){
 
   class { 'cdh::zookeeper::config':
     secure => $secure,
-    quorm  => $quorm
+    quorm  => $quorm,
+    instance_id => $instance_id,
   }
   
   class {'cdh::zookeeper::service':

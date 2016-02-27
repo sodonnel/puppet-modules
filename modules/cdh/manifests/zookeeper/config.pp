@@ -1,11 +1,13 @@
 class cdh::zookeeper::config(
   $secure = false,
   $quorm  = [], # pass the hostnames as a list, eg ['host1', 'host2', 'host3']
+  $instance_id = '1',
 ){
 
   $secured = $secure
   $hostname = $fqdn
   $quorm_list = $quorm
+  $zkid       = $instance_id
 
   if ($secured == true) {
 
@@ -68,7 +70,8 @@ class cdh::zookeeper::config(
 
   ->
 
-  # Initialize the zookeeper data directory
+  # Initialize the zookeeper data directory. This wipes the datadir
+  # including deleting the myid file!
   exec {'zookeeper-initialize':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'zookeeper',
@@ -77,6 +80,17 @@ class cdh::zookeeper::config(
     creates   => '/var/lib/zookeeper/version-2',
     timeout   => 0,
   }
+
+  ->
+
+  file { [ '/var/lib/zookeeper/myid' ]:
+    ensure => 'present',
+    owner  => 'zookeeper',
+    group  => 'zookeeper',
+    mode   => '644',
+    content => template("cdh/myid.erb"),
+  }
+
 
 }
 

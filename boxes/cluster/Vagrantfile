@@ -67,7 +67,31 @@ SCRIPT
       puppet.module_path      = "../../modules"
       puppet.options          = "--verbose"
     end
-  end   
+  end
+
+  config.vm.define "dn3" do |cm|
+    cm.vm.box = "base-box"
+    cm.vm.network "private_network", ip: "192.168.33.8"
+    cm.vm.hostname = 'dn3'
+    cm.vm.provider "virtualbox" do |vb|
+      vb.name = 'dn3'
+      vb.memory = 2048
+      vb.cpus   = 2
+    end
+    cm.vm.synced_folder "../..", "/puppet_modules"
+    cm.vm.provision "shell", inline: $script
+    cm.vm.provision "puppet" do |puppet|
+      puppet.facter = {
+        "cdh_version"  => cdh_version,
+        "cdh_secure"   => secure_cluster
+      }
+      puppet.manifests_path   = "../../manifests"
+      puppet.manifest_file    = "cdh5.pp"
+      puppet.module_path      = "../../modules"
+      puppet.options          = "--verbose"
+    end
+  end
+
 
 
 #  config.vm.define "dn2" do |cm|

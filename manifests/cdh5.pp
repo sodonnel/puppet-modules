@@ -1,7 +1,7 @@
 node /^master.*/ {
 
-  $cdh_version  = '5.5.1'
-  $cdh_secure = 'false'
+  # $cdh_version  = '5.5.1'
+  # $cdh_secure = 'false'
 
   class { 'cdh::config':
     includehive             => false,
@@ -34,7 +34,8 @@ node /^master.*/ {
 
   class{  'cdh::zookeeper':
     secure => false,
-    quorm  => ['master'],
+    quorm  => ['master', 'dn1'],
+    instance_id => '1',
   }
 
   ->
@@ -55,16 +56,27 @@ node /^master.*/ {
     dbhost  => 'localhost',
     dbuser  => 'oozieuser',
     dbpass  => 'secret',
-    enabled => true
+    enabled => false
   }
 
+  ->
+
+  class{ 'cdh::hbase':
+    namenodehostname        => 'mycluster',
+    zookeeper_ensemble      => 'master:2181,dn1:2181',
+    masterenabled           =>  true,
+    regionenabled           => false,
+    thriftenabled           => true,
+    secure                  => false
+  }
+  
 }
 
 
 node /^dn.*/ {
 
-  $cdh_version  = '5.5.1'
-  $cdh_secure = 'false'
+  # $cdh_version  = '5.5.1'
+  # $cdh_secure = 'false'
 
 
   class { 'cdh::config':
@@ -84,6 +96,39 @@ node /^dn.*/ {
   class{ 'cdh51java':     } ->
   class{ 'cdh::datanode':
     hostentries => $hosts_entries
+  }
+
+
+ if $hostname == 'dn1' {
+    class{  'cdh::zookeeper':
+      secure => false,
+      quorm  => ['master', 'dn1'],
+      instance_id => '2',
+    }
+ }
+
+ if $hostname == 'dn2' {
+    class{  'cdh::zookeeper':
+      secure => false,
+      quorm  => ['master', 'dn1'],
+      instance_id => '3',
+    }
+ }
+
+
+  class{ 'cdh::hbase':
+    namenodehostname        => 'mycluster',
+    zookeeper_ensemble      => 'master:2181,dn1:2181',
+    masterenabled           =>  false,
+    regionenabled           => true,
+    thriftenabled           => true,
+    secure                  => false
+  }
+
+  if (($hostname == 'dn1') or ($hostname == 'dn2')) {
+    Class['cdh::datanode']  -> Class['cdh::zookeeper'] -> Class['cdh::hbase']
+  } else {
+    Class['cdh::datanode']  -> Class['cdh::hbase']
   }
 
 }
@@ -117,8 +162,8 @@ node /^standalone.*/ {
   # These two variables must be declared in facter.
   # When running through vagrant, they are set in Facter automatically.
   # If not running via vagrant they need to be set manually.
-  $cdh_version  = '5.5.1'
-  $cdh_secure = 'true'
+  # $cdh_version  = '5.5.1'
+  # $cdh_secure = 'true'
   if $cdh_secure == 'true' {
     require 'kerberos'
     $hadoop_security = true
