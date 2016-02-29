@@ -5,7 +5,9 @@ class cdh::zookeeper::config(
 ){
 
   $secured = $secure
-  $hostname = $fqdn
+  # Should not use fqdn - use hostname instead. $hostname is builtin
+  # which is why this line is commented out
+  # $hostname = $fqdn
   $quorm_list = $quorm
   $zkid       = $instance_id
 

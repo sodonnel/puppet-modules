@@ -5,7 +5,7 @@ class cdh::hue::config(
   $secure                  = false,
 )
 {
-  $hueHost = $fqdn
+  $hueHost = $hostname
 
   file { "/etc/hue/conf/hue.ini":
     ensure  => present,

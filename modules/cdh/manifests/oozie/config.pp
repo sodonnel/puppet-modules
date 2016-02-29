@@ -10,7 +10,7 @@ class cdh::oozie::config(
   $mysqlhost     = $dbhost
   $mysqlusername = $dbuser
   $mysqlpassword = $dbpass
-  $oozieHost     = $fqdn
+  $oozieHost     = $hostname
 
 
   if $cdh_version  =~ /^5\.3/ {

@@ -3,7 +3,7 @@ class cdh::metastore::config(
 ){
 
   $secured = $secure
-  $hostname = $fqdn
+  $hostname = $hostname
 
   exec {'hive-user':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],

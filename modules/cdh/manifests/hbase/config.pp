@@ -4,7 +4,9 @@ class cdh::hbase::config (
   $secure                  = false,
 ) {
 
-  $hostname  = $fqdn
+  # Should not use $fqdn - use hosname instead and it is builtin
+  # which is why it is commented out here
+  # $hostname  = $fqdn
   $namenode  = $namenodehostname
   $zookeeper = $zookeeper_ensemble
   $isSecure  = $secure
