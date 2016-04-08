@@ -8,25 +8,25 @@ class cdh::datanode(
 )
 {
 
-  class { 'cdh::hosts':
-    entries => $hostentries
-  }
+#  class { 'cdh::hosts':
+#    entries => $hostentries
+#  }
 
-  class {'cdh::config':
-    includehive             => true,
-    includeyarn             => true,
-    namenodehostname        => $namenodehostname,
-    resourcemanagerhostname => $resourcemanagerhostname,
-    metastorehostname       => $metastorehostname,
-    yarnavailablememory     => $yarnavailablememory,
-    yarnavailablecores      => $yarnavailablecores,
-  }
+#  class {'cdh::config':
+#    includehive             => true,
+#    includeyarn             => true,
+#    namenodehostname        => $namenodehostname,
+#    resourcemanagerhostname => $resourcemanagerhostname,
+#    metastorehostname       => $metastorehostname,
+#    yarnavailablememory     => $yarnavailablememory,
+#    yarnavailablecores      => $yarnavailablecores,
+#  }
 
   contain cdh::datanode::install
   contain cdh::datanode::config
   contain cdh::datanode::service
 
-  Class['cdh::hosts']                ->
+#  Class['cdh::hosts']                ->
   Class['cdh::datanode::install']    ->
   Class['cdh::config']               ->
   Class['cdh::datanode::config']     ->

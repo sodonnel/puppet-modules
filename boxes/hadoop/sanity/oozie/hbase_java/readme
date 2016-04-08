@@ -1,0 +1,21 @@
+Create an emp table in hbase, with a 'personal' column family.
+
+Create a value in the table for columns 'name' and 'city'
+
+Compile the code in lib/SodonnellHbase.java by setting the classpath:
+
+export CLASSPATH=$(hbase classpath):.
+
+Then you can prove it work by running it in java:
+
+java SodonnellHbase
+
+Bundle the code into a JAR.
+
+The oozie workflow can then run it - NOTE - in the workflow you seem to need both the job-xml and the file tag, both specifying the hbase-site.xml
+
+Also note, in the job.properties, you need:
+
+oozie.action.sharelib.for.java=pig
+
+Otherwise you get class not found exceptions when you run the hbase classes in oozie. There is not sharelib for hbase, but the pig one seems to contain all the required bits.

@@ -5,7 +5,7 @@
   <hive2 xmlns="uri:oozie:hive2-action:0.1">
     <job-tracker>${jobTracker}</job-tracker>
     <name-node>${nameNode}</name-node>
-    <jdbc-url>jdbc:hive2://localhost:10000/default</jdbc-url>
+    <jdbc-url>jdbc:hive2://standalone:10000/default</jdbc-url>
     <script>${hiveScript}</script>
   </hive2> 
   <ok to="end"/>

@@ -147,7 +147,7 @@
 
     <property>
         <name>oozie.service.JPAService.jdbc.url</name>
-        <value>jdbc:mysql://localhost:3306/oozie</value>
+        <value>jdbc:mysql://<%= @mysqlhost -%>:3306/oozie</value>
         <description>
             JDBC URL.
         </description>
@@ -380,7 +380,7 @@
 
     <!-- SECURITY -->
 
-    <% if @secure %>
+    <% if @secured %>
 
     <property>
         <name>oozie.service.HadoopAccessorService.kerberos.enabled</name>
@@ -432,7 +432,18 @@
    <property>
         <name>oozie.authentication.kerberos.name.rules</name>
         <value>DEFAULT</value>
-    </property>
+   </property>
+
+   <!-- these are needed if you have a secure hcat store -->
+   <property>
+      <name>oozie.credentials.credentialclasses</name>
+      <value>
+         hcat=org.apache.oozie.action.hadoop.HCatCredentials,
+         hbase=org.apache.oozie.action.hadoop.HbaseCredentials,
+         hive2=org.apache.oozie.action.hadoop.Hive2Credentials
+      </value>
+   </property>
+   
 
    <% end %>
 

@@ -29,20 +29,12 @@
 
 <property>
   <name>hbase.rootdir</name>
-  <value>hdfs://<%= @namenode -%>/hbase</value>
+  <value>hdfs://mycluster/hbase</value>
 </property>
 
 <property>
   <name>hbase.zookeeper.quorum</name>
-  <value><%= @zookeeper -%></value>
-</property>
-
-<!-- This will be a very long number of retries as it backs off exponentially after each fail.
-     This setting is here so that the master has time to build (and create zk) before RS timesout
-     trying to connect -->
-<property>
-  <name>zookeeper.recovery.retry</name>
-  <value>10000</value>
+  <value>standalone:2181</value>
 </property>
 
 <property>
@@ -102,7 +94,7 @@
 </property>
 -->
 
-<% if @isSecure %>
+
 
 <property>
   <name>hbase.security.authentication</name>
@@ -159,6 +151,6 @@
   <value>/etc/hbase/conf/hbase.keytab</value>
 </property>
 
-<% end %>
+
 
 </configuration>

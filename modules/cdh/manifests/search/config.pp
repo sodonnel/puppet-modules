@@ -4,7 +4,9 @@ class cdh::search::config (
   $secure                  = false,
 ) {
 
-  $hostname = $fqdn
+  # Should not use fqdn - use hostname instead. $hostname is builtin
+  # which is why this line is commented out
+  # $hostname = $fqdn
 
   file { "/etc/default/solr":
     ensure  => present,

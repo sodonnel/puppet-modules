@@ -1,0 +1,31 @@
+<workflow-app name="secure_hbase" xmlns="uri:oozie:workflow:0.4">
+  <credentials>
+    <credential name="hb" type="hbase">
+    </credential>
+  </credentials>
+    <start to="mr-toolrunner"/>
+    <kill name="Kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <action name="mr-toolrunner" cred="hb">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <job-xml>/user/vagrant/workflows/hbase_java/hbase-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name></name>
+                    <value></value>
+                </property>
+            </configuration>
+            <main-class>SodonnellHbase</main-class>
+            <java-opts></java-opts>
+            <arg>RELATED</arg>
+            <file>/user/vagrant/workflows/hbase_java/hbase-site.xml#hbase-site.xml</file>
+          <!--  <file>/user/kawaa/oozie-workflow/common.properties#common.properties</file> -->
+        </java>
+        <ok to="End"/>
+        <error to="Kill"/>
+    </action>
+    <end name="End"/>
+</workflow-app>

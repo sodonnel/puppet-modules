@@ -9,7 +9,6 @@ class cdh::local(
   class {'cdh::config':
     includehive  => true,
     includeyarn  => true,
-    includeoozie => true,
     namenodehostname        => $hostname,
     resourcemanagerhostname => $hostname,
     metastorehostname       => $hostname,
@@ -29,6 +28,16 @@ class cdh::local(
     secure   => $secure,
   }
 
+  class {'cdh::zookeeper':
+    secure   => $secure,
+  }
+
+  class {'cdh::oozie':
+    secure   => $secure,
+  }
+
+  contain cdh::zookeeper
+  contain cdh::oozie
 
   contain cdh::namenode::install
   contain cdh::namenode::format
@@ -82,6 +91,7 @@ class cdh::local(
   Class['cdh::hbase::install']              ->
   Class['cdh::metastore::mysql']            ->
   Class['cdh::config']                      ->
+  Class['cdh::zookeeper']                   ->
   Class['cdh::namenode::format']            ->
   Class['cdh::namenode::service']           ->
   Class['cdh::namenode::vagrantdir']        ->
@@ -94,6 +104,7 @@ class cdh::local(
   Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
+  Class['cdh::oozie']                       ->
   Class['cdh::search::config']              ->
   Class['cdh::search::service']             ->
   Class['cdh::hbase::config']               ->

@@ -1,5 +1,0 @@
-To pull data from mysql as installed on this VM:
-
-    sqoop import --connect jdbc:mysql://localhost/information_schema --username root --password root123 --table TABLES --append --as-avrodatafile --target-dir sqoop_dir -m 1
-
-If you get an error about 'cannot issue query when stream already open' then it is because the mysql-java-connector jar is an old fault verion. Ensure the newest version is in /usr/lib/sqoop/lib

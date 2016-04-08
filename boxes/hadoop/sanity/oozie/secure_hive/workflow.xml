@@ -1,7 +1,21 @@
-<workflow-app name="hive-sanity-wf" xmlns="uri:oozie:workflow:0.1">
-    <start to="myfirsthivejob" />
+<workflow-app name="hive-sanity-wf" xmlns="uri:oozie:workflow:0.4">
 
-    <action name="myfirsthivejob">
+<credentials>
+    <credential name='hive_credentials' type='hcat'>
+          <property>
+              <name>hcat.metastore.uri</name>
+              <value>thrift://standalone:9083</value>
+          </property>
+          <property>
+              <name>hcat.metastore.principal</name>
+              <value>hive/_HOST@EXAMPLE.COM</value>
+          </property>
+     </credential>
+</credentials>
+
+
+    <start to="myfirsthivejob" />
+    <action name="myfirsthivejob" cred="hive_credentials">
         <hive xmlns="uri:oozie:hive-action:0.2">
           <job-tracker>${jobTracker}</job-tracker>
           <name-node>${nameNode}</name-node>

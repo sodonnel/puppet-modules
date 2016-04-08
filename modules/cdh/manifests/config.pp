@@ -1,12 +1,11 @@
 class cdh::config(
   $includehive             = false,
   $includeyarn             = false,
-  $includeoozie            = false,
   $namenodehostname        = namenode,
   $resourcemanagerhostname = resourcemanager,
   $metastorehostname       = metastore,
-  $mysqlusername           = dummy,
-  $mysqlpassword           = dummy,
+  $mysqlusername           = hive,
+  $mysqlpassword           = hive123,
   $yarnavailablememory     = 3072,
   $yarnavailablecores      = 2,
   $secure                  = false,
@@ -24,10 +23,6 @@ class cdh::config(
     contain cdh::config::hive
   }
   contain cdh::config::hdfs
-
-  if $includeoozie {
-    contain cdh::config::oozie
-  }
 
   if $secure {
     contain cdh::config::kerberos

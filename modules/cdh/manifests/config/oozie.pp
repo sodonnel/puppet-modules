@@ -3,7 +3,7 @@ class cdh::config::oozie {
   $mysqlusername     = $::cdh::config::mysqlusername
   $mysqlpassword     = $::cdh::config::mysqlpassword
   $secure            = $::cdh::config::secure
-  $oozieHost         = $fqdn
+  $oozieHost         = $hostname
 
   file { "/etc/oozie/conf/oozie-site.xml":
     ensure  => present,

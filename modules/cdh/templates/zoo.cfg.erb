@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-maxClientCnxns=50
+maxClientCnxns=100
 # The number of milliseconds of each tick
 tickTime=2000
 # The number of ticks that the initial
 # synchronization phase can take
-initLimit=10
+initLimit=5000
 # The number of ticks that can pass between
 # sending a request and getting an acknowledgement
 syncLimit=5
@@ -28,6 +28,10 @@ dataDir=/var/lib/zookeeper
 clientPort=2181
 # the directory where the transaction logs are stored.
 dataLogDir=/var/lib/zookeeper
+
+<% @quorm_list.each_with_index do |q, i| -%>
+server.<%= i+1 -%>=<%= q -%>:2888:3888
+<% end -%>
 
 <% if @secured == true %>
 authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
