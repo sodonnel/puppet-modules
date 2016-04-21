@@ -7,10 +7,7 @@ class cdh::metastore::mysql (
   if $cdh_version  =~ /^5\.3/ {
     $hive_version = '0.13.0'
   }  
-  elsif $cdh_version  =~ /^5\.4/ {
-    $hive_version = '1.1.0'
-  }
-  elsif $cdh_version  =~ /^5\.5/ {
+  elsif $cdh_version  =~ /^5\.(4|5|6|7|8)/ {
     $hive_version = '1.1.0'
   }
 
