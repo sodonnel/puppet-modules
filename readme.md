@@ -141,6 +141,39 @@ The following componets are installed on the VM, and I've tested them in some wa
 * Cloudera Manager is not used or installed
 * I have seen problems when logged into a VM access the 192.168.33.x IP addresses in the hosts web browser. There is probably something that can be changed in the VPN settings, but I have not looked into it.
 
+### Cloudera Manager
+
+This box boots a small cluster of VMs that you can then use to setup a cluster with Cloudera Manager. It creates the following hosts:
+
+* cm - IP 192.168.33.20, 3GB RAM
+* node1 - IP 192.168.33.21, 2GB RAM
+* node2 - IP 192.168.33.22, 2GB RAM
+* node3 - IP 192.168.33.23, 2GB RAM
+
+On a machine with 16GB RAM, this setup works OK, but if you want to run a cluster with lots of services, you will probably find 2GB for the nodes is not enough. If you edit the vagrant file, you can tweak the RAM per node and the number of nodes booted.
+
+Cloudera Manager is installed on the cm host. You can control the version of CM installed by specifying the version in the CM_VERSION environment variable, eg:
+
+    $ export CM_VERSION=5.5.2
+
+The default version if 5.5.2. Similar to the Hadoop box, you can also pass an additional name to the group of VMs, allowing you to build several clusters at the same version, eg:
+
+    $ export CM_VERSION=5.5.2_cluster1
+    $ export CM_VERSION=5.5.2_testabc
+
+After the install completes, point your browser at http://192.168.33.20:7180 and login with admin/admin. You can then use CM to add the hosts and install the cluster. Note that Java is installed on all the hosts, so you don't need to install the Oracle JDK when installing the cluster.
+
+#### Vagrant ssh
+
+In a single machine environment, running vagrant ssh will log you into the machine. In a multi-machine environment, you need to specify the machine you want to log onto. To avoid this, the cm host is configured as the primary machine, so if you run `vagrant ssh` you will log into the cm host. Then you can get to the other hosts with `ssh node2` (password is vagrant). If you want to go directly to a node other than cm, you need to run `vagrant ssh cm_5.5.2_node1` which is not very convenient.
+
+#### Kerberos
+
+Kerberos is installed onto all the hosts, with the KDC running on cm. If you want to kerberize a cluster built with CM, simply follow the wizard in CM. You should use 'cm' as the KDC host, 'EXAMPLE.COM' as the realm and 'root/admin@EXAMPLE.COM', password 'vagrant' When it asks for a principal with admin priviledges.
+
+There is a simple user principal vagrant@EXAMPLE.COM created too, witha a password of vagrant.
+
+
 ### Cluster (Hadoop Cluster)
 
 This is still under development - the aim is to get it to a point where you can start a real distributed cluster across 5 VMs - one as the master node (Namenode, Resource Manager, Hive Metastore etc) and 4 datanodes. Ideally it should allow the Hadoop version to be selected in the same way as the Hadoop box, and allow it to be secured or unsecured.

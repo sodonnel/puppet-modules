@@ -1,4 +1,6 @@
-class kerberos::client {
+class kerberos::client(
+  $kdc_hostname = standalone
+){
 
   package { [krb5-libs, krb5-workstation]:
     ensure => present,

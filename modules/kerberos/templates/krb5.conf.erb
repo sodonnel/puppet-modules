@@ -13,8 +13,8 @@
 
 [realms]
  EXAMPLE.COM = {
-  kdc = standalone
-  admin_server = standalone
+  kdc = <%= @kdc_hostname %>
+  admin_server = <%= @kdc_hostname %>
  }
 
 [domain_realm]
