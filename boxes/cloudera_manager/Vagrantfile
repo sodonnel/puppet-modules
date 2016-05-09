@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     version_string = default_version
   end
 
-  version_string =~ /^(\d\.\d\.\d)_*(.*)$/i
+  version_string =~ /^(\d+\.\d+\.\d+)_*(.*)$/i
 
   unless $1
     warn "CM Version #{$1} is not in the format X.Y.Z[_id]"

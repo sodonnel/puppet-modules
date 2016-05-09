@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     version_string = default_version
   end
 
-  version_string =~ /^(s*)(\d\.\d\.\d)_*(.*)$/i
+  version_string =~ /^(s*)(\d+\.\d+\.\d+)_*(.*)$/i
 
   unless $2
     warn "CDH Version #{$2} is not in the format [s]X.Y.Z[_id]"
