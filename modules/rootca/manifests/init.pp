@@ -1,9 +1,12 @@
-class rootca {
+class rootca(
+  $ca_root = '/root/ca',
+)
+{
 
   # Credit to https://jamielinux.com/docs/openssl-certificate-authority/sign-server-and-client-certificates.html
   # for the steps used to create this manifest
 
-  $root = '/root/testca'
+  $root = $ca_root
 
   file { $root:
     ensure => 'directory',
