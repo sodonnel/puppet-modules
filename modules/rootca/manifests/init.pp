@@ -210,4 +210,14 @@ class rootca(
     cwd     => "${root}",
   }
 
+  ->
+
+  file { "${root}/generate_and_sign_cert.sh":
+    ensure  => present,
+    content => template("rootca/generate_and_sign_cert.sh.erb"),
+    owner   => "root",
+    group   => "root",
+    mode    => "755",
+  }
+
 }

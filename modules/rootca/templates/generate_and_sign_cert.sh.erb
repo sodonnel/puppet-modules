@@ -1,0 +1,45 @@
+# Generate a Private key and CSR for a domain name, then sign the cert and
+# write out a Java keystore file for it.
+#
+# If a cert for the given domain has already been generated, this script will error
+
+set -e
+
+# set the CDW to the location of this script
+cd "$(dirname "$0")"
+
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied - require the fqdn of the host you want to generate a certificate for"
+    exit 1
+fi
+
+fqdn=$1
+
+# Generate the private key and CSR
+openssl req \
+    -new \
+    -newkey rsa:2048 \
+    -sha256 \
+    -nodes \
+    -subj "/C=GB/ST=England/L=London/O=hadoop_inc/OU=server_cert/CN=$fqdn" \
+    -keyout intermediate/private/$fqdn.key.pem \
+    -out intermediate/csr/$fqdn.csr.pem
+
+# Generate the actual cert
+openssl ca -config intermediate/openssl.cnf -batch \
+      -extensions server_cert -days 375 -notext -md sha256 \
+      -in intermediate/csr/$fqdn.csr.pem \
+      -out intermediate/certs/$fqdn.cert.pem
+
+# Generate a pkcs12 file that contains the private key, cert and trust chain
+openssl pkcs12 -export -in intermediate/certs/$fqdn.cert.pem -inkey intermediate/private/$fqdn.key.pem \
+  -passin pass:vagrant -out intermediate/private/$fqdn.p12 \
+  -name $fqdn -CAfile intermediate/certs/ca-chain.cert.pem \
+  -caname Hadoop_inc_intermed -passout pass:vagrant -chain
+
+# Using the pkcs12 file, create a java keystore
+keytool -importkeystore -deststorepass vagrant -destkeystore intermediate/private/$fqdn.keystore \
+  -srckeystore intermediate/private/$fqdn.p12 \
+  -srcstoretype PKCS12 -alias $fqdn \
+  -srcstorepass vagrant
