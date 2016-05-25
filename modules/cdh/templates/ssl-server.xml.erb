@@ -1,0 +1,47 @@
+<configuration>
+
+  <property>
+    <name>ssl.server.keystore.type</name>
+    <value>jks</value>
+  </property>
+
+  <property>
+    <name>ssl.server.keystore.location</name>
+    <value>/opt/cloudera/security/cdh.keystore</value>
+  </property>
+
+  <property>
+    <name>ssl.server.keystore.password</name>
+    <value>vagrant</value>
+  </property>
+
+
+  <property>
+    <name>ssl.server.keystore.keypassword</name>
+    <value>vagrant</value>
+    <description>Must be specified.  </description>
+  </property>
+
+
+  <!-- truststore -->
+  <property>
+    <name>ssl.server.truststore.type</name>
+    <value>jks</value>
+  </property>
+
+  <property>
+    <name>ssl.server.truststore.location</name>
+    <value>/opt/cloudera/security/cdh.truststore</value>
+  </property>
+
+  <property>
+    <name>ssl.server.truststore.password</name>
+    <value>vagrant</value>
+  </property>
+
+  <property>
+    <name>ssl.server.truststore.reload.interval</name>
+    <value>10000</value>
+  </property>
+
+</configuration>

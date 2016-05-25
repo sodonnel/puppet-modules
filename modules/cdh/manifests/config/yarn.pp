@@ -2,6 +2,7 @@ class cdh::config::yarn {
 
   $namenodehostname        = $::cdh::config::namenodehostname
   $secure                  = $::cdh::config::secure
+  $encryption              = $::cdh::config::encryption
 
   # History Server is assumed to be on resourcemanager
   $resourcemanagerhostname = $::cdh::config::resourcemanagerhostname

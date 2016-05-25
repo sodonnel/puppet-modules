@@ -154,6 +154,15 @@
     <name>mapreduce.jobhistory.webapp.spnego-keytab-file</name>
     <value>/etc/hadoop/conf/mapred.keytab</value>
   </property>
+
+  <% if @encryption %>
+    <property>
+      <name>mapreduce.shuffle.ssl.enabled</name>
+      <value>true</value>
+      <final>true</final>
+    </property>
+  <% end %>
+  
   <% end %>
 
 </configuration>

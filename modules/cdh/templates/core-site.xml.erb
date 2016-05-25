@@ -92,14 +92,57 @@
     <value>*</value>
   </property>
 
+  <% if @encryption %>
+
+    <property>
+      <name>hadoop.ssl.require.client.cert</name>
+      <value>false</value>
+      <final>true</final>
+    </property>
+
+    <property>
+      <name>hadoop.ssl.hostname.verifier</name>
+      <value>DEFAULT</value>
+      <final>true</final>
+    </property>
+
+    <property>
+      <name>hadoop.ssl.keystores.factory.class</name>
+      <value>org.apache.hadoop.security.ssl.FileBasedKeyStoresFactory</value>
+      <final>true</final>
+    </property>
+
+    <property>
+      <name>hadoop.ssl.server.conf</name>
+      <value>ssl-server.xml</value>
+      <final>true</final>
+    </property>
+
+    <property>
+      <name>hadoop.ssl.client.conf</name>
+      <value>ssl-client.xml</value>
+      <final>true</final>
+    </property>
+
+    <property>
+      <name>hadoop.ssl.enabled</name>
+      <value>true</value>
+    </property>
+
+    <property>
+      <name>hadoop.rpc.protection</name>
+      <value>privacy</value>
+    </property>
+    
+    <% end %>
+
   <!-- Basic settings for KMS running locally 
     To get it working uncomment the TWO parameters below and then:
 
     yum install hadoop-kms hadoop-kms-server
 
     service hadoop-kms-server start
-  -->
-  
+  -->  
   <!-- <property>
     <name>hadoop.security.key.provider.path</name>
     <value>kms://http@localhost:16000/kms</value>

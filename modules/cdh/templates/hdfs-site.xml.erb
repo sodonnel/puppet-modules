@@ -188,6 +188,67 @@
     <name>dfs.datanode.http.address</name>
     <value>0.0.0.0:1006</value>
   </property>
+
+  <% if @encryption == true %>
+
+  <property>
+    <name>dfs.https.enable</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.http.policy</name>
+    <value>HTTPS_ONLY</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.https-address.mycluster.nn1</name>
+    <value>standalone:50470</value>
+  </property>
+
+  <!-- With encryption enabled, this does not need to be
+       on a priv port, so put it back to the default 50010 -->
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:50010</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.https.address</name>
+    <value>standalone:50475</value>
+  </property>
+
+
+  <!-- The next 4 are for data transport encryption -->
+
+  <!-- If this is not set, you get an error about the DN being unable to start on
+       non priv ports unless HTTPS and SASL protection are on. This seems to need to
+       be set with or without dfs.encrypt.data.transfer although the docs suggest
+       dfs.encrypt.data.transfer override that setting -->
+  <property>
+    <name>dfs.data.transfer.protection</name>
+    <value>privacy</value>
+  </property>
+  
+  <property>
+    <name>dfs.encrypt.data.transfer</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.encrypt.data.transfer.cipher.suites</name>
+    <value>AES/CTR/NoPadding</value>
+  </property>
+
+  <!-- Ideally this should be 256, but it needs the Java unlimited strength encryption
+       libraries installed -->
+  <property>
+    <name>dfs.encrypt.data.transfer.cipher.key.bitlength</name>
+    <value>128</value>
+  </property>
+  
+  
+  <% end %>
   
   <% end %>
 
