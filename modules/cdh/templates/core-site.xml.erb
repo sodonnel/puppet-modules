@@ -92,10 +92,24 @@
     <value>*</value>
   </property>
 
-  <!-- Basic settings for KMS running locally -->
+  <!-- Basic settings for KMS running locally 
+    To get it working uncomment the TWO parameters below and then:
+
+    yum install hadoop-kms hadoop-kms-server
+
+    service hadoop-kms-server start
+  -->
+  
   <!-- <property>
     <name>hadoop.security.key.provider.path</name>
     <value>kms://http@localhost:16000/kms</value>
-  </property> -->
+  </property> 
+
+  <property>
+    <name>dfs.encryption.key.provider.uri</name>
+    <value>kms://http@localhost:16000/kms</value>
+  </property>
+
+  -->
     
 </configuration>
