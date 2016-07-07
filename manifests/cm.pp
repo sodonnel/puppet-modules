@@ -12,6 +12,7 @@ node /^cm.*/ {
   class{ 'kerberos':
     kdc_hostname => 'cm'
   }                         ->
+  class { 'rootca':       } ->
   class{ 'cloudera_manager': }
 }
 
