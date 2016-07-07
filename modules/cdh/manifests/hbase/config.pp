@@ -1,5 +1,5 @@
 class cdh::hbase::config (
-  $namenodehostname        = 'mycluster',
+  $namenodehostname        = 'namenode',
   $zookeeper_ensemble      = 'localhost:2181',
   $secure                  = false,
 ) {

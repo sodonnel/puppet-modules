@@ -34,6 +34,7 @@ class cdh::local(
 
   class {'cdh::oozie':
     secure   => $secure,
+    namenodehostname => $hostname,
   }
 
   contain cdh::zookeeper
@@ -72,13 +73,13 @@ class cdh::local(
 
   class {'cdh::search':
     secure => $secure,
-    namenodehostname => 'mycluster',
+    namenodehostname => $hostname,
     zookeeper_ensemble => "${hostname}:2181/solr"
   }
 
   class {'cdh::hbase':
     secure => $secure,
-    namenodehostname => 'mycluster',
+    namenodehostname => $hostname,
     zookeeper_ensemble => "${hostname}:2181"
   }
 

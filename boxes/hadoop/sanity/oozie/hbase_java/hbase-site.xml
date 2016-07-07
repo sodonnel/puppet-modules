@@ -29,7 +29,7 @@
 
 <property>
   <name>hbase.rootdir</name>
-  <value>hdfs://mycluster/hbase</value>
+  <value>hdfs://standalone/hbase</value>
 </property>
 
 <property>

@@ -28,7 +28,7 @@
   
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://mycluster</value>
+    <value>hdfs://<%= @namenodehostname -%>:8020</value>
   </property>
 
   <!-- Time before trash is deleted in minutes. Recommend 1440 (1 day) -->
