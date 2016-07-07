@@ -55,7 +55,8 @@ SCRIPT
   config.vm.define vm_name, primary: true do |cm|
     cm.vm.box = "base-box"
     cm.vm.network "private_network", ip: "192.168.33.20"
-    cm.vm.network "forwarded_port", guest: 8888, host: 8888
+    cm.vm.network "forwarded_port", guest: 7180, host: 7180
+    cm.vm.network "forwarded_port", guest: 7183, host: 7183
     cm.vm.hostname = 'cm'
     cm.vm.provider "virtualbox" do |vb|
       vb.name =   vm_name
