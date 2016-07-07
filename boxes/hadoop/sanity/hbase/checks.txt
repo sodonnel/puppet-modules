@@ -68,3 +68,12 @@ ADD JAR /usr/lib/hive/lib/hbase-server.jar;
 ADD JAR /usr/lib/hive/lib/htrace-core.jar;
 
 select * from hbase_test;
+
+
+# Custom Filter
+
+Good example in chapter 04 of HBase definitive guide which has a git repo:
+
+To use the filter in HBase shell:
+
+scan 'tab1', { FILTER => CustomFilter.new(Bytes.toBytes("val-05.05")) }
