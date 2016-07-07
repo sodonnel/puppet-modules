@@ -7,7 +7,7 @@
 
   <property>
     <name>sentry.solr.provider.resource</name>
-    <value>hdfs://mycluster/user/hdfs/solr_sentry.ini</value>
+    <value>hdfs://<%= @namenodehostname -%>/user/hdfs/solr_sentry.ini</value>
     <!--
         If the HDFS configuration files (core-site.xml, hdfs-site.xml)
         pointed to by SOLR_HDFS_CONFIG in /etc/default/solr

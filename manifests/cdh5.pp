@@ -56,13 +56,14 @@ node /^master.*/ {
     dbhost  => 'localhost',
     dbuser  => 'oozieuser',
     dbpass  => 'secret',
-    enabled => false
+    enabled => false,
+    namenodehostname => 'master',
   }
 
   ->
 
   class{ 'cdh::hbase':
-    namenodehostname        => 'mycluster',
+    namenodehostname        => 'master',
     zookeeper_ensemble      => 'master:2181,dn1:2181',
     masterenabled           =>  true,
     regionenabled           => false,
@@ -117,7 +118,7 @@ node /^dn.*/ {
 
 
   class{ 'cdh::hbase':
-    namenodehostname        => 'mycluster',
+    namenodehostname        => 'master',
     zookeeper_ensemble      => 'master:2181,dn1:2181',
     masterenabled           =>  false,
     regionenabled           => true,

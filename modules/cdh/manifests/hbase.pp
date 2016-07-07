@@ -1,5 +1,5 @@
 class cdh::hbase(
-  $namenodehostname        = 'mycluster',
+  $namenodehostname        = 'namenode',
   $zookeeper_ensemble      = 'localhost:2181',
   $masterenabled           = true,
   $regionenabled           = true,

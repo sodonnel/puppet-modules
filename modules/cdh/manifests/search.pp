@@ -1,5 +1,5 @@
 class cdh::search(
-  $namenodehostname        = mycluster,
+  $namenodehostname        = namenode,
   $zookeeper_ensemble      = 'localhost:2181/solr',
   $enabled                 = true,
   $secure                  = false,

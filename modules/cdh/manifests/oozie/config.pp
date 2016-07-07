@@ -3,6 +3,7 @@ class cdh::oozie::config(
   $dbhost    = 'localhost',
   $dbuser    = 'oozieuser',
   $dbpass    = 'secret',
+  $namenodehostname = 'namenode',
 ){
 
 
@@ -15,10 +16,10 @@ class cdh::oozie::config(
 
   if $cdh_version  =~ /^5\.3/ {
     # $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
-    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
   }  
   else {
-    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://mycluster -locallib /usr/lib/oozie/oozie-sharelib-yarn"
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn"
   }
 
   if $secure  == true {
