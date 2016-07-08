@@ -160,16 +160,28 @@ node /^basic/ {
 }
 
 node /^standalone.*/ {
-  # These two variables must be declared in facter.
+  # These three variables must be declared in facter.
   # When running through vagrant, they are set in Facter automatically.
   # If not running via vagrant they need to be set manually.
   # $cdh_version  = '5.5.1'
   # $cdh_secure = 'true'
+  # $cdh_encryption = 'true'
+  
   if $cdh_secure == 'true' {
     require 'kerberos'
     $hadoop_security = true
   } else {
     $hadoop_security = false
+  }
+  if $cdh_encryption == 'true' {
+    $hadoop_encryption = true
+  } else {
+    $hadoop_encryption = false
+  }
+  
+
+  if $cdh_encryption == 'true' {
+    require 'rootca'
   }
 
   class{ 'cdh::hosts':
@@ -183,7 +195,8 @@ node /^standalone.*/ {
                           } ->
   class{ 'cdh51java':     } ->
   class{ 'cdh::local':
-    hostname => 'standalone',
-    secure   => $hadoop_security,
+    hostname   => 'standalone',
+    secure     => $hadoop_security,
+    encryption => $hadoop_encryption,
                           } 
 }

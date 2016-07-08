@@ -9,6 +9,7 @@ class cdh::config(
   $yarnavailablememory     = 3072,
   $yarnavailablecores      = 2,
   $secure                  = false,
+  $encryption              = false,
 )
 {
 

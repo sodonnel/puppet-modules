@@ -3,6 +3,7 @@ class cdh::local(
   $yarnavailablememory = 4096,
   $yarnavailablecores  = 8,
   $secure              = false,
+  $encryption          = false,
 )
 {
 
@@ -17,6 +18,7 @@ class cdh::local(
     yarnavailablememory     => $yarnavailablememory,
     yarnavailablecores      => $yarnavailablecores,
     secure                  => $secure,
+    encryption              => $encryption,
   }
 
   class {'cdh::metastore::mysql':

@@ -212,6 +212,16 @@ class rootca(
 
   ->
 
+  exec { 'create_java_truststore_for_ca':
+    command => 'keytool -importcert -noprompt -keystore intermediate/certs/ca.truststore -alias CA-cert -storepass vagrant -file certs/ca.cert.pem',
+    path    => ['/usr/java/default/bin', '/usr/bin'],
+    user    => 'root',
+    creates => "${root}/intermediate/certs/ca.truststore",
+    cwd     => "${root}",
+  }
+
+  ->
+
   file { "${root}/generate_and_sign_cert.sh":
     ensure  => present,
     content => template("rootca/generate_and_sign_cert.sh.erb"),
