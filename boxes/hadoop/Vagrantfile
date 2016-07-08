@@ -26,8 +26,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   vm_additional_name = $3
   
   secure_cluster = 'false'
+  enable_ssl     = 'false'
+
+  # To get a secure cluster without SSL, toggle enabled_ssl
+  # below to false
   if $1.upcase == 'S'
     secure_cluster = 'true'
+    enable_ssl     = 'true'
   end
   
   $script = <<SCRIPT
@@ -66,8 +71,9 @@ SCRIPT
     cm.vm.provision "shell", inline: $script
     cm.vm.provision "puppet" do |puppet|
       puppet.facter = {
-        "cdh_version"  => cdh_version,
-        "cdh_secure"   => secure_cluster
+        "cdh_version"     => cdh_version,
+        "cdh_secure"      => secure_cluster,
+        "cdh_encryption"  => enable_ssl
       }
       puppet.manifests_path   = "../../manifests"
       puppet.manifest_file    = "cdh5.pp"

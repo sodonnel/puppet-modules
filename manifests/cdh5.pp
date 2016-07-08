@@ -165,7 +165,7 @@ node /^standalone.*/ {
   # If not running via vagrant they need to be set manually.
   # $cdh_version  = '5.5.1'
   # $cdh_secure = 'true'
-   $cdh_encryption = 'true'
+  # $cdh_encryption = 'true'
   
   if $cdh_secure == 'true' {
     require 'kerberos'
