@@ -1,6 +1,6 @@
 class cdh::namenode::install {
   
-  package { [hadoop-hdfs-namenode]:
+  package { [hadoop-hdfs-namenode, hadoop-hdfs-secondarynamenode]:
     ensure => present,
   }
  
