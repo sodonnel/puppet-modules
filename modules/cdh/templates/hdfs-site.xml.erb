@@ -28,6 +28,17 @@
   </property>
 
   <property>
+     <name>dfs.namenode.checkpoint.dir</name>
+     <value>file:///var/lib/hadoop-hdfs/cache/hdfs/dfs/secondname</value>
+  </property>
+
+  <!-- default is 3600 seconds, ie 1 hour -->
+  <property>
+     <name>dfs.namenode.checkpoint.period</name>
+     <value>3600</value>
+  </property>
+  
+  <property>
      <name>dfs.datanode.data.dir</name>
      <value>file:///data/1/dfs/dn</value>
   </property>
@@ -157,6 +168,21 @@
     <name>dfs.namenode.kerberos.internal.spnego.principal</name>
     <value>HTTP/_HOST@EXAMPLE.COM</value>
   </property>
+
+  <property>
+    <name>dfs.secondary.namenode.keytab.file</name>
+    <value>/etc/hadoop/conf/hdfs.keytab</value>
+  </property>
+
+  <property>
+    <name>dfs.secondary.namenode.kerberos.principal</name>
+    <value>hdfs/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>dfs.secondary.namenode.kerberos.internal.spnego.principal</name>
+    <value>HTTP/_HOST@EXAMPLE.COM</value>
+  </property>  
 
   <property>
     <name>dfs.datanode.keytab.file</name>
