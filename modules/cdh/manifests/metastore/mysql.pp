@@ -76,5 +76,23 @@ class cdh::metastore::mysql (
     table      => 'oozie.*',
     user       => "${mysqluser}@localhost",
   }
-  
+
+  ->
+
+  mysql::db { 'sentry':
+    user     => 'sentry',
+    password => 'sentry',
+  }
+
+  ->
+   
+  mysql_grant { "${mysqluser}@localhost/sentry":
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => 'sentry.*',
+    user       => "${mysqluser}@localhost",
+  }
+
+
 }

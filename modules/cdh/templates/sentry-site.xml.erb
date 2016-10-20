@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property>
+        <name>sentry.service.security.mode</name>
+        <value>kerberos</value>
+    </property>
+    <property>
+        <name>sentry.service.admin.group</name>
+        <value>admin1,hive</value>
+    </property>
+    <property>
+        <name>sentry.service.allow.connect</name>
+        <value>impala,hive,solr,hdfs</value>
+    </property>
+    <property>
+        <name>sentry.store.jdbc.url</name>
+        <value>jdbc:mysql://localhost/sentry</value>
+    </property>
+    <property>
+        <name>sentry.store.jdbc.driver</name>
+        <value>com.mysql.jdbc.Driver</value>
+    </property>
+   <property>
+        <name>sentry.store.jdbc.password</name>
+        <value>sentry</value>
+    </property>
+   <property>
+        <name>sentry.store.jdbc.user</name>
+        <value>sentry</value>
+    </property>
+
+  <property>
+    <name>sentry.hive.provider.backend</name>
+    <value>org.apache.sentry.provider.db.SimpleDBProviderBackend</value>
+  </property>
+
+   <property>
+    <name>sentry.service.client.server.rpc-port</name>
+    <value>8038</value>
+  </property>
+  <property>
+    <name>sentry.service.client.server.rpc-address</name>
+    <value>standalone</value>
+  </property>
+  <property>
+    <name>sentry.service.client.server.rpc-connection-timeout</name>
+    <value>200000</value>
+  </property>
+
+
+  <property>
+    <name>sentry.store.group.mapping</name>
+    <value>org.apache.sentry.provider.common.HadoopGroupMappingService</value>
+  </property>
+  <property>
+    <name>sentry.hive.server</name>
+    <value>server1</value>
+  </property>
+
+  <property>
+    <name>sentry.service.server.keytab</name>
+    <value>/etc/sentry/conf/sentry.keytab</value>
+  </property>
+
+  <property>
+    <name>sentry.service.server.principal</name>
+    <value>sentry/_HOST@EXAMPLE.COM</value>
+  </property>
+
+
+  <!-- hdfs sync plugin -->
+
+  <property>
+    <name>sentry.service.processor.factories</name>
+    <value>org.apache.sentry.provider.db.service.thrift.SentryPolicyStoreProcessorFactory,org.apache.sentry.hdfs.SentryHDFSServiceProcessorFactory</value>
+  </property>
+
+<property>
+  <name>sentry.policy.store.plugins</name>
+  <value>org.apache.sentry.hdfs.SentryPlugin</value>
+</property>
+
+</configuration>
+

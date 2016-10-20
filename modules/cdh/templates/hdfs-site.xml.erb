@@ -88,10 +88,10 @@
    </property>
   -->  
 
-  <!-- This is a client setting. Default used to be 64MB, is not 128MB -->
+  <!-- This is a client setting. Default used to be 64MB, is now 128MB -->
   <property>
      <name>dfs.blocksize</name>
-     <value>1134217728</value>
+     <value>134217728</value>
   </property>
 
   <!-- This is a client setting. Default is 3
@@ -277,6 +277,51 @@
   <% end %>
   
   <% end %>
+
+  <!-- Sentry config
+
+  <property>
+    <name>dfs.namenode.acls.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.authorization.provider.class</name>
+    <value>org.apache.sentry.hdfs.SentryAuthorizationProvider</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>sentry.authorization-provider.hdfs-path-prefixes</name>
+    <value>/user/hive/warehouse</value>
+  </property>
+
+  <property>
+    <name>sentry.hdfs.service.security.mode</name>
+    <value>kerberos</value>
+  </property>
+
+  <property>
+    <name>sentry.hdfs.service.server.principal</name>
+    <value>sentry/_HOST@EXAMPLE.COM</value>
+  </property>
+
+  <property>
+    <name>sentry.hdfs.service.client.server.rpc-port</name>
+    <value>8038</value>
+  </property>
+
+  <property>
+    <name>sentry.hdfs.service.client.server.rpc-address</name>
+    <value>standalone</value>
+  </property>
+
+
+  -->
 
 
 </configuration>

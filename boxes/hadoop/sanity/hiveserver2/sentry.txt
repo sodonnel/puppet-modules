@@ -1,0 +1,52 @@
+# Enable
+
+To enable on this VM do the following:
+
+1) Uncomment the sentry section from hdfs-site.xml and hive-site.xml
+
+2) service sentry-store start
+
+3) Restart services:
+
+service hadoop-hdfs-namenode restart
+service hive-metastore restart
+service hive-server2 restart
+
+4) Set the permissions on the hive warehouse directory:
+
+hadoop fs -chown -R hive:hive /user/hive/warehouse
+hadoop fs -chmod -R 771 /user/hive/warehouse
+
+# Create an admin group
+
+Hive is configured as an admin group, so get a hive ticket and then connect to beeline:
+
+    kinit -kt /etc/hive/conf/hive.keytab hive/standalone
+    beeline
+    !connect jdbc:hive2://standalone:10000/default;principal=hive/standalone@EXAMPLE.COM
+
+
+create role admin
+grant all on server server1 to roles admin;
+grant admin to group hive;
+
+Now when you connect as Hive you can do just about anything.
+
+# Useful commands
+
+SHOW ROLES
+SHOW CURRENT ROLES
+SHOW ROLE GRANT GROUP group_name
+SHOW GRANT ROLE role_name
+
+Grant to SERVER, DATABASE, TABLE, COLUMN.
+
+You can grant ALL, SELECT, INSERT.
+
+Create a table in DB - need all on DATABASE I think.
+
+To read any table in a DB, grant select on database xxx to role xxx
+
+
+
+

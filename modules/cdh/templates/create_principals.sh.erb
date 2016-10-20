@@ -17,6 +17,7 @@ kadmin -p root/admin -w vagrant -q "delprinc -force hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force solr/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force zookeeper/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force hbase/$(hostname)"
+kadmin -p root/admin -w vagrant -q "delprinc -force sentry/$(hostname)"
 
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hdfs/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey HTTP/$(hostname)"
@@ -28,6 +29,7 @@ kadmin -p root/admin -w vagrant -q "addprinc -randkey hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey solr/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey zookeeper/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hbase/$(hostname)"
+kadmin -p root/admin -w vagrant -q "addprinc -randkey sentry/$(hostname)"
 
 kadmin -p root/admin -w vagrant -q "xst -k /etc/hadoop/conf/hdfs-unmerged.keytab hdfs/$(hostname)"
 kadmin -p root/admin -w vagrant -q "xst -k /etc/hadoop/conf/http-unmerged.keytab HTTP/$(hostname)"
@@ -65,6 +67,11 @@ kadmin -p root/admin -w vagrant -q "ktadd -k /etc/hive/conf/hive.keytab hive/$(h
 
 chmod 600 /etc/hive/conf/hive.keytab
 chown hive:hadoop /etc/hive/conf/hive.keytab
+
+kadmin -p root/admin -w vagrant -q "ktadd -k /etc/sentry/conf/sentry.keytab sentry/$(hostname)"
+
+chmod 600 /etc/sentry/conf/sentry.keytab
+chown sentry:hadoop /etc/sentry/conf/sentry.keytab
 
 
 touch /root/keytabs_generated
