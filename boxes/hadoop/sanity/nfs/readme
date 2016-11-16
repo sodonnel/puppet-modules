@@ -1,0 +1,70 @@
+# To get the nfs service running on the VM:
+
+yum install nfs-utils nfs-utils-lib hadoop-hdfs-nfs3
+
+service nfs stop
+service rpcbind stop
+
+## Add the following to hdfs-site.xml
+
+<property>
+    <name>dfs.namenode.accesstime.precision</name>
+    <value>3600000</value>
+    <description>The access time for an HDFS file is precise up to this value. The default value is 1 hour.
+    Setting a value of 0 disables access times for HDFS.</description>
+</property>
+
+<property>
+  <name>dfs.nfs3.dump.dir</name>
+  <value>/tmp/.hdfs-nfs</value>
+</property>
+
+
+
+## Add the following to core-site.cml
+
+<property>
+   <name>hadoop.proxyuser.hdfs.groups</name>
+   <value>*</value>
+   <description>
+     Set this to '*' to allow the gateway user to proxy any group.
+   </description>
+</property>
+<property>
+    <name>hadoop.proxyuser.hdfs.hosts</name>
+    <value>*</value>
+    <description>
+     Set this to '*' to allow requests from any hosts to be proxied.
+    </description>
+</property>
+
+
+## You need to start the hdfs portmap service. I think this should have a service but the CDH RPM seems to be missing:
+
+hdfs portmap &
+bg
+
+## Now start the nfs server:
+
+service hadoop-hdfs-nfs3 start
+
+## These commands will show info about the NFS service:
+
+rpcinfo -p standalone
+showmount -e standalone
+
+## Mount the NFS share
+
+mount -t  nfs -o vers=3,proto=tcp,nolock standalone:/ /hdfs_nfs_mount
+
+
+## Generating files
+
+To generate a large file to test copies:
+
+dd if=/dev/urandom of=500m.img bs=500M count=1
+
+Note, that I tried to generate a file like below, but it fails when copying as Linux seems to try to do random writes. I am not sure why - perhaps its a sparse file?
+
+dd if=/dev/zero of=100m.img bs=1 count=0 seek=100M
+
