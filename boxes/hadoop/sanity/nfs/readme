@@ -68,3 +68,18 @@ Note, that I tried to generate a file like below, but it fails when copying as L
 
 dd if=/dev/zero of=100m.img bs=1 count=0 seek=100M
 
+
+
+# FUSE
+
+Fuse seems to be faster and more stable than NFS. With -obig_writes it seems to go almost as fast as hadoop fs -put
+
+yum install hadoop-hdfs-fuse
+
+mkdir /fuse
+
+hadoop-fuse-dfs dfs://standalone:8020 /fuse
+
+## Mount in fstab:
+
+hadoop-fuse-dfs#dfs://standalone:8020 /fuse fuse big_writes,rw,usetrash 2 0
