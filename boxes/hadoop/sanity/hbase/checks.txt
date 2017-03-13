@@ -6,6 +6,10 @@ hbase shell
 
 create 'tab1', 'cf1', 'cf2'
 
+# Create a table with a lot of empty regions
+
+create 't1', 'f1', {NUMREGIONS => 16, SPLITALGO => 'HexStringSplit'}
+
 If you have a secured hbase, you need to issue grants to users before they can do anything.
 
 You can issue grants using the hbase user (super user), but as its a service unix account you have to use sudo -u to access it.
