@@ -32,8 +32,11 @@ def list_non_empty_regions(admin, table)
       # tablename
       next unless r[1].get_name_as_string =~ /#{table}/
       if r[1].getStorefileSizeMB() > 0
-        puts r[1].get_name_as_string
-        non_empty.push r[1].get_name_as_string
+        if r[1].get_name_as_string =~ /\.([^\.]+)\.$/
+          non_empty.push $1
+        else
+          raise "Failed to get the encoded name for #{r[1].get_name_as_string}"
+        end
       end
     end
   end
@@ -58,7 +61,7 @@ puts "Total Table Regions: #{regions.length}"
 puts "Total non empty regions: #{non_empty_regions.length}"
 
 filtered_regions = regions.reject do |r|
-  non_empty_regions.include?(r.get_region_name_as_string)
+  non_empty_regions.include?(r.get_encoded_name)
 end
 
 puts "Total regions to consider for Merge: #{filtered_regions.length}"
