@@ -30,7 +30,7 @@ def list_non_empty_regions(admin, table)
 
       # Filter out any regions that don't match the requested
       # tablename
-      next unless r[1].get_name_as_string =~ /#{table}/
+      next unless r[1].get_name_as_string =~ /#{table}\,/
       if r[1].getStorefileSizeMB() > 0
         if r[1].get_name_as_string =~ /\.([^\.]+)\.$/
           non_empty.push $1
