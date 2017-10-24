@@ -19,6 +19,18 @@ service rpcbind stop
   <value>/tmp/.hdfs-nfs</value>
 </property>
 
+## For Kerberos add the following to hdfs-site.xml
+
+<property>
+<name>dfs.nfs.keytab.file</name>
+<value>/etc/hadoop/conf/hdfs.keytab</value> <!-- path to the HDFS or NFS gateway keytab -->
+</property>
+
+<property>
+<name>dfs.nfs.kerberos.principal</name>
+<value>hdfs/_HOST@EXAMPLE.COM</value>
+</property>
+
 
 
 ## Add the following to core-site.cml
@@ -69,6 +81,10 @@ Note, that I tried to generate a file like below, but it fails when copying as L
 dd if=/dev/zero of=100m.img bs=1 count=0 seek=100M
 
 
+## Kerberos
+
+You don't seem to require a ticket to access a NFS mount. It seems to rely on OS level security and the OS passes the current UID to the NFS Gateway.
+
 
 # FUSE
 
@@ -83,3 +99,7 @@ hadoop-fuse-dfs dfs://standalone:8020 /fuse
 ## Mount in fstab:
 
 hadoop-fuse-dfs#dfs://standalone:8020 /fuse fuse big_writes,rw,usetrash 2 0
+
+## Kerberos
+
+You don't need a ticket to mount the FUSE shared, but you do need a ticket to access it after it is mounted.
