@@ -25,15 +25,15 @@ It is import the box is named base-box in vagrant. Check the output of the follo
 
 5) There are two rpms that need to be downloaded and placed into the rpms directory inside this git repo:
 
- * [javajdk-1.7.0-79.x86_64.rpm](https://drive.google.com/file/d/0B_FGhp1HZfFfLXl3Y0xMaW9VU3M/view?usp=sharing)
- * [sqoopjdbc-1.0.0-1.x86_64.rpm](https://drive.google.com/open?id=0B_FGhp1HZfFfUUo4RmQ5SXdnNnc)
+* [javajdk-1.8.0-152.x86_64.rpm](https://drive.google.com/open?id=0B_FGhp1HZfFfd1lPb1JjbHdLU1E)
+* [sqoopjdbc-1.0.0-1.x86_64.rpm](https://drive.google.com/open?id=0B_FGhp1HZfFfUUo4RmQ5SXdnNnc)
 
-The first puts Java 1.7.0-79 onto the box and the other install the Sqoop JDBC driver for mysql.
+The first puts Java 1.8.0-152 onto the box and the other install the Sqoop JDBC driver for mysql.
 
 The rpms directory should look like:
 
     $ ls -1
-    javajdk-1.7.0-79.x86_64.rpm
+    javajdk-1.8.0-152.x86_64.rpm
     sqoopjdbc-1.0.0-1.x86_64.rpm
 
 That should be the setup down.
