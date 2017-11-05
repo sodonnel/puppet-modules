@@ -21,6 +21,7 @@ class cdh::sentry::config(
 
   ->
 
+  # TODO - this step is not re-runable. It will fail if the DB already has the tables loaded
   exec {'sentry-db-init':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'root',

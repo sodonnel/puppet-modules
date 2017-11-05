@@ -30,7 +30,7 @@ class cdh::metastore::mysql (
     password => 'secret',
   #  host     => 'master.puppetlabs.vm',
     sql      => "/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-${hive_version}.mysql.sql",
-    cwd => "/usr/lib/hive/scripts/metastore/upgrade/mysql",
+  #  cwd => "/usr/lib/hive/scripts/metastore/upgrade/mysql",
   }
 
   ->
@@ -49,7 +49,7 @@ class cdh::metastore::mysql (
 
   ->
 
-  mysql_grant { "${mysqluser}@localhost/metastore":
+  mysql_grant { "${mysqluser}@localhost/metastore.*":
     ensure     => 'present',
     options    => ['GRANT'],
     privileges => ['ALL'],
@@ -69,7 +69,7 @@ class cdh::metastore::mysql (
 
   ->
    
-  mysql_grant { "${mysqluser}@localhost/oozie":
+  mysql_grant { "${mysqluser}@localhost/oozie.*":
     ensure     => 'present',
     options    => ['GRANT'],
     privileges => ['ALL'],
@@ -86,7 +86,7 @@ class cdh::metastore::mysql (
 
   ->
    
-  mysql_grant { "${mysqluser}@localhost/sentry":
+  mysql_grant { "${mysqluser}@localhost/sentry.*":
     ensure     => 'present',
     options    => ['GRANT'],
     privileges => ['ALL'],
