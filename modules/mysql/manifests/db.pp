@@ -12,6 +12,7 @@ define mysql::db (
   Enum['absent', 'present'] $ensure           = 'present',
   $import_timeout                             = 300,
   $import_cat_cmd                             = 'cat',
+  $cwd                                        = undef,
 ) {
   #input validation
   $table = "${dbname}.*"
@@ -59,6 +60,7 @@ define mysql::db (
         require     => Mysql_grant["${user}@${host}/${table}"],
         subscribe   => Mysql_database[$dbname],
         timeout     => $import_timeout,
+	cwd         => $cwd
       }
     }
   }

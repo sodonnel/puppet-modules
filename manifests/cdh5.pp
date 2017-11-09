@@ -1,7 +1,7 @@
 node /^master.*/ {
 
-  # $cdh_version  = '5.5.1'
-  # $cdh_secure = 'false'
+#   $cdh_version  = '5.5.1'
+#   $cdh_secure = 'false'
 
   class { 'cdh::config':
     includehive             => false,
@@ -180,10 +180,6 @@ node /^standalone.*/ {
   }
   
 
-  if $cdh_encryption == 'true' {
-    require 'rootca'
-  }
-
   class{ 'cdh::hosts':
     entries => {
       'standalone' => '192.168.33.6',
@@ -194,6 +190,7 @@ node /^standalone.*/ {
     cdh_version => $cdh_version    
                           } ->
   class{ 'cdh51java':     } ->
+  class{ 'rootca':        } ->
   class{ 'cdh::local':
     hostname   => 'standalone',
     secure     => $hadoop_security,

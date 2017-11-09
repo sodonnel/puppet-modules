@@ -30,7 +30,7 @@ class cdh::metastore::mysql (
     password => 'secret',
   #  host     => 'master.puppetlabs.vm',
     sql      => "/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-${hive_version}.mysql.sql",
-  #  cwd => "/usr/lib/hive/scripts/metastore/upgrade/mysql",
+    cwd => "/usr/lib/hive/scripts/metastore/upgrade/mysql",
   }
 
   ->
