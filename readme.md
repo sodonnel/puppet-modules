@@ -6,15 +6,15 @@ This is a collection of puppet modules I have build up over some time, used main
 
 These scripts require a little bit of setup before they can be used.
 
-1) Install [Virtualbox 5.0.x](https://www.virtualbox.org/wiki/Downloads) - other versions may work, but I tested on 5.0.14
+1) Install [Virtualbox 5.2.0(https://www.virtualbox.org/wiki/Downloads) - other versions may work, but I tested on 5.2.0
 
-2) Install [Vagrant](https://www.vagrantup.com/downloads.html) - I have tested with 1.7.4
+2) Install [Vagrant](https://www.vagrantup.com/downloads.html) - I have tested with 2.0.1
 
 3) Download my base box for vagrant and install it. This box has a unix account vagrant, password vagrant. The root password is also vagrant, but the vagrant user has passwordless sudo setup, so it can do basically anything anyway. Some developer tools and Puppet are also installed on the base box.
 
-The box is on Google Drive - [download it](https://drive.google.com/open?id=0B_FGhp1HZfFfbVJKS1RLaDVwc2c) and then install the download into vagrant:
+The box is on Google Drive - [download it](https://drive.google.com/file/d/1WHVjx6cQ-7zxvIxSiV4-bQcHqxpZwqvM/view?usp=sharing) and then install the download into vagrant:
 
-vagrant box --name base-box add ~/Downloads/centos-6.7-base.box
+vagrant box --name base-box add ~/Downloads/centos-6.9-base.box
 
 It is import the box is named base-box in vagrant. Check the output of the following command looks like this:
 
@@ -36,7 +36,7 @@ The rpms directory should look like:
     javajdk-1.8.0-152.x86_64.rpm
     sqoopjdbc-1.0.0-1.x86_64.rpm
 
-That should be the setup down.
+That should be the setup done.
 
 ## The Box Environment
 
