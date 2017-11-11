@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  default_version = '5.5.1'
+  default_version = '5.13.0'
   version_string = ENV['CDH_VERSION']
   unless version_string
     warn "Using the default CDH_VERSION of #{default_version}"
