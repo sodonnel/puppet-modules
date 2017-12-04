@@ -12,7 +12,7 @@ These scripts require a little bit of setup before they can be used.
 
 3) Download my base box for vagrant and install it. This box has a unix account vagrant, password vagrant. The root password is also vagrant, but the vagrant user has passwordless sudo setup, so it can do basically anything anyway. Some developer tools and Puppet are also installed on the base box.
 
-The box is on Google Drive - [download it](https://drive.google.com/file/d/1WHVjx6cQ-7zxvIxSiV4-bQcHqxpZwqvM/view?usp=sharing) and then install the download into vagrant:
+The box is on Google Drive - [download it](https://drive.google.com/open?id=1988zwf-6aM2AeyiJuXVz6y_9m_iXn0no) and then install the download into vagrant:
 
 vagrant box --name base-box add ~/Downloads/centos-6.9-base.box
 
