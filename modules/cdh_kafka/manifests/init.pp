@@ -2,7 +2,10 @@ class cdh_kafka(
   $kafka_version = '3.0.0',
   $zookeeper_quorum = 'localhost:2181/kafka',
   $broker_instance  = 0,
-  $data_directories = ['/kafka-data/1', '/kafka-data/2']
+  $port             = 9092,
+  $metrics_http_port=24042,
+  $data_directories = ['/kafka-data/1', '/kafka-data/2'],
+  $broker_count     = 3
 )
 {
 
@@ -12,17 +15,31 @@ class cdh_kafka(
 
   class {'cdh_kafka::install':}         ->
 
-  class {'cdh_kafka::config':
+  cdh_kafka::broker { 'broker':
     zookeeper_quorum => $zookeeper_quorum,
     broker_id        => $broker_instance,
+    port             => $port,
+    metrics_http_port=>$metrics_http_port,
     data_directories => $data_directories,
-  }                                     ->
+  }
+
+  ->
 
   class {'cdh_kafka::service':}
 
+  $extra_brokers = $broker_count - 1
+  range("1", "$extra_brokers").each |$number| {
+    cdh_kafka::broker { "broker${number}":
+      zookeeper_quorum => $zookeeper_quorum,
+      broker_id        => $number + 0, # Hack to get it to convert string to int
+      port             => $port + $number,
+      metrics_http_port=>$metrics_http_port + $number,
+      data_directories => $data_directories,
+    }
+  }
+
   contain cdh_kafka::repo
   contain cdh_kafka::install
-  contain cdh_kafka::config
   contain cdh_kafka::service
 }
 
