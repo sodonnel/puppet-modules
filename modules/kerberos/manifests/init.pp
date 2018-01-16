@@ -2,7 +2,7 @@ class kerberos(
   $kdc_hostname = standalone
 ) {
 
-  package { [krb5-libs, krb5-server, krb5-workstation]:
+  package { [krb5-libs, krb5-server, krb5-workstation, rng-tools]:
     ensure => present,
   }
 
@@ -56,6 +56,16 @@ class kerberos(
     logoutput => on_failure,
     creates   => "/var/kerberos/created_principal",
     timeout   => 0,
+  }
+
+  ->
+
+  service { "rngd":
+    name        => rngd,
+    ensure      => running,
+    hasrestart  => true,
+    hasstatus   => true,
+    enable      => true,
   }
 
   ->

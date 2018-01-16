@@ -33,6 +33,17 @@ class cdh::zookeeper::config(
 
     ->
 
+    exec {'zookeeper-generate-principal':
+      path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+      user      => 'root',
+      command   => 'kadmin -p root/admin -w vagrant -q "addprinc -randkey zookeeper/$(hostname)"',
+      logoutput => on_failure,
+      unless    => "ls /etc/zookeeper/conf/zookeeper.keytab",
+      timeout   => 0,
+    }
+
+    ->
+
     exec {'zookeeper-generate-keytab':
       path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
       user      => 'root',
