@@ -1,10 +1,12 @@
 define cdh_kafka::broker(
-  $zookeeper_quorum = "localhost:2181/kafka",
+  $zookeeper_quorum = "standalone:2181/kafka",
+  $enable_kerberos  = false,
   $broker_id        = "0",
   $port             = '9092',
   $metrics_http_port= '24042',
   $data_directories = ['/kafka-data/1', '/kafka-data/2'],
 ) {
+
 
   # This is a hack to allow many brokers to run on one host. If the broker
   # id is passed as zero, its considered the default broker installed as a service

@@ -1,6 +1,7 @@
 class cdh_kafka(
   $kafka_version = '3.0.0',
-  $zookeeper_quorum = 'localhost:2181/kafka',
+  $enable_kerberos = false,
+  $zookeeper_quorum = 'standalone:2181/kafka',
   $broker_instance  = 0,
   $port             = 9092,
   $metrics_http_port=24042,
@@ -17,10 +18,17 @@ class cdh_kafka(
 
   cdh_kafka::broker { 'broker':
     zookeeper_quorum => $zookeeper_quorum,
+    enable_kerberos  => $enable_kerberos,
     broker_id        => $broker_instance,
     port             => $port,
     metrics_http_port=>$metrics_http_port,
     data_directories => $data_directories,
+  }
+
+  ->
+
+  class {'cdh_kafka::kerberos':
+    enable_kerberos  => $enable_kerberos
   }
 
   ->
@@ -31,6 +39,7 @@ class cdh_kafka(
   range("1", "$extra_brokers").each |$number| {
     cdh_kafka::broker { "broker${number}":
       zookeeper_quorum => $zookeeper_quorum,
+      enable_kerberos  => $enable_kerberos,
       broker_id        => $number + 0, # Hack to get it to convert string to int
       port             => $port + $number,
       metrics_http_port=>$metrics_http_port + $number,
@@ -40,6 +49,7 @@ class cdh_kafka(
 
   contain cdh_kafka::repo
   contain cdh_kafka::install
+  contain cdh_kafka::kerberos
   contain cdh_kafka::service
 }
 

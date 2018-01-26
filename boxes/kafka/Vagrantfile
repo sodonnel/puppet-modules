@@ -21,6 +21,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end 
   kafka_version = $2
   vm_additional_name = $3
+
+  secure_cluster = 'false'
+
+  if $1.upcase == 'S'
+    secure_cluster = 'true'
+  end
   
   $script = <<SCRIPT
     echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain" > /etc/hosts
@@ -41,11 +47,11 @@ SCRIPT
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
 
-  vm_name = "kafka_#{kafka_version}#{!vm_additional_name.empty? ? '_'+vm_additional_name : ''}"
+  vm_name = "kafka_#{secure_cluster == 'true' ? 'secure_' : '' }#{kafka_version}#{!vm_additional_name.empty? ? '_'+vm_additional_name : ''}"
   puts "Operating on #{vm_name}"
 
   config.vm.define vm_name do |cm|
-    cm.vm.box = "base-box"
+    cm.vm.box = "base-box-vb-5.2.0"
     cm.vm.network "private_network", ip: "192.168.33.6"
     cm.vm.network "forwarded_port", guest: 8888, host: 8888
     cm.vm.hostname = 'standalone'
@@ -58,7 +64,8 @@ SCRIPT
     cm.vm.provision "shell", inline: $script
     cm.vm.provision "puppet" do |puppet|
       puppet.facter = {
-        "kafka_version"     => kafka_version
+        "kafka_version"     => kafka_version,
+        "kafka_secure"      => secure_cluster
       }
       puppet.manifests_path   = "../../manifests"
       puppet.manifest_file    = "kafka.pp"
