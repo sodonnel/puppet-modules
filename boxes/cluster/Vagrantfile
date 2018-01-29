@@ -23,7 +23,7 @@ SCRIPT
   config.vm.provision "shell", inline: $script
 
   config.vm.define "dn1" do |cm|
-    cm.vm.box = "base-box"
+    cm.vm.box = "base-box-vb-5.2.0"
     cm.vm.network "private_network", ip: "192.168.33.6"
     cm.vm.hostname = 'dn1'
     cm.vm.provider "virtualbox" do |vb|
@@ -47,7 +47,7 @@ SCRIPT
   
 
   config.vm.define "master" do |cm|
-    cm.vm.box = "base-box"
+    cm.vm.box = "base-box-vb-5.2.0"
     cm.vm.network "private_network", ip: "192.168.33.5"
     cm.vm.hostname = 'master'
     cm.vm.provider "virtualbox" do |vb|
@@ -70,7 +70,7 @@ SCRIPT
   end
 
   config.vm.define "dn3" do |cm|
-    cm.vm.box = "base-box"
+    cm.vm.box = "base-box-vb-5.2.0"
     cm.vm.network "private_network", ip: "192.168.33.8"
     cm.vm.hostname = 'dn3'
     cm.vm.provider "virtualbox" do |vb|

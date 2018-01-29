@@ -48,7 +48,7 @@ SCRIPT
   puts "Operating on #{vm_name}"
 
   config.vm.define vm_name do |cm|
-    cm.vm.box = "base-box"
+    cm.vm.box = "base-box-vb-5.2.0"
     cm.vm.network "private_network", ip: "192.168.33.6"
     cm.vm.network "forwarded_port", guest: 8888, host: 8888
     cm.vm.hostname = 'standalone'
