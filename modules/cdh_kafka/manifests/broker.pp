@@ -1,6 +1,7 @@
 define cdh_kafka::broker(
   $zookeeper_quorum = "standalone:2181/kafka",
   $enable_kerberos  = false,
+  $enable_sentry    = false,
   $broker_id        = "0",
   $port             = '9092',
   $metrics_http_port= '24042',

@@ -6,6 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  # First handle the KAFKA_VERSION string
   default_version = '3.0.0'
   version_string = ENV['KAFKA_VERSION']
   unless version_string
@@ -27,7 +28,35 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if $1.upcase == 'S'
     secure_cluster = 'true'
   end
-  
+
+  # Check for the presence of an ENV variable to enable Sentry
+  include_sentry = 'false'
+  if ENV['INCLUDE_SENTRY'] == 'true'
+    warn "Senty will be included in the build"
+    include_sentry = 'true'
+  end
+
+  # Check for the presense of an ENV variable to control the CDH version
+  # This will control the version of Sentry and ZK installed
+  cdh_version = '5.14.0'
+  cdh_version_string = ENV['CDH_VERSION']
+  unless cdh_version_string
+    warn "Using the default CDH_VERSION of #{cdh_version}"
+    cdh_version_string = cdh_version
+  end
+
+  cdh_version_string =~ /^(\d+\.\d+\.\d+)$/i
+
+  unless $1
+    warn "CDH_VERSION #{cdh_version_string} is not in the format X.Y.Z"
+    exit(1)
+  end
+  cdh_version = $1
+
+#  warn "KAFKA_VERSION=#{kafka_version}"
+#  warn "INCLUDE_SENTRY=#{include_sentry}"
+#  warn "CDH_VERSION=#{cdh_version}"
+
   $script = <<SCRIPT
     echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain" > /etc/hosts
     echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> /etc/hosts
@@ -65,7 +94,9 @@ SCRIPT
     cm.vm.provision "puppet" do |puppet|
       puppet.facter = {
         "kafka_version"     => kafka_version,
-        "kafka_secure"      => secure_cluster
+        "kafka_secure"      => secure_cluster,
+        "sentry"    => include_sentry,
+        "cdh_version"       => cdh_version
       }
       puppet.manifests_path   = "../../manifests"
       puppet.manifest_file    = "kafka.pp"
