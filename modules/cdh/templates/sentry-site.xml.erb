@@ -6,12 +6,24 @@
     </property>
     <property>
         <name>sentry.service.admin.group</name>
-        <value>admin1,hive</value>
+        <value>admin1,hive,kafka</value>
     </property>
     <property>
         <name>sentry.service.allow.connect</name>
-        <value>impala,hive,solr,hdfs</value>
+        <value>impala,hive,solr,hdfs,kafka</value>
     </property>
+
+    <% if @use_embedded_db %>
+    <property>
+        <name>sentry.store.jdbc.url</name>
+        <value>jdbc:derby:;databaseName=/var/lib/sentry/sentry_store_db;create=true</value>
+    </property>
+    <property>
+        <name>sentry.store.jdbc.driver</name>
+        <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+    </property>
+    <% else %>
+    
     <property>
         <name>sentry.store.jdbc.url</name>
         <value>jdbc:mysql://localhost/sentry</value>
@@ -20,14 +32,16 @@
         <name>sentry.store.jdbc.driver</name>
         <value>com.mysql.jdbc.Driver</value>
     </property>
+    
+    <% end %>
    <property>
         <name>sentry.store.jdbc.password</name>
-        <value>sentry</value>
+        <value><%= @dbpass %></value>
     </property>
    <property>
         <name>sentry.store.jdbc.user</name>
-        <value>sentry</value>
-    </property>
+        <value><%= @dbuser %></value>
+   </property>
 
   <property>
     <name>sentry.hive.provider.backend</name>
@@ -72,7 +86,7 @@
 
   <property>
     <name>sentry.service.processor.factories</name>
-    <value>org.apache.sentry.provider.db.service.thrift.SentryPolicyStoreProcessorFactory,org.apache.sentry.hdfs.SentryHDFSServiceProcessorFactory</value>
+    <value>org.apache.sentry.provider.db.service.thrift.SentryPolicyStoreProcessorFactory,org.apache.sentry.hdfs.SentryHDFSServiceProcessorFactory,org.apache.sentry.provider.db.generic.service.thrift.SentryGenericPolicyProcessorFactory</value>
   </property>
 
 <property>

@@ -63,9 +63,6 @@ class cdh::local(
   contain cdh::metastore::config
   contain cdh::metastore::service
 
-  contain cdh::sentry::install
-  contain cdh::sentry::config
-
   contain cdh::hue::install
   class {'cdh::hue::config':
     namenodehostname        => $hostname,
@@ -86,6 +83,12 @@ class cdh::local(
     secure => $secure,
     namenodehostname => $hostname,
     zookeeper_ensemble => "${hostname}:2181"
+  }
+
+  # Only install Sentry is we are Secure. Its always secure
+  # so just use the secure = true to switch the install flag
+  class {'cdh::sentry':
+    install => $secure
   }
 
   Class['cdh::namenode::install']           ->
@@ -110,8 +113,7 @@ class cdh::local(
   Class['cdh::resourcemanager::config']     ->
   Class['cdh::metastore::config']           ->
   Class['cdh::metastore::service']          ->
-  Class['cdh::sentry::install']             ->
-  Class['cdh::sentry::config']              ->
+  Class['cdh::sentry']                      ->
   Class['cdh::oozie']                       ->
   Class['cdh::search::config']              ->
   Class['cdh::search::service']             ->
