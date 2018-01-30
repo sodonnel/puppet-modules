@@ -20,8 +20,4 @@ class cdh::sentry(
     }
   }
 
-  contain cdh::sentry::install
-  contain cdh::sentry::config
-  contain cdh::sentry::service
-
 }
