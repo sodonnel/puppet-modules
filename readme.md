@@ -14,12 +14,12 @@ These scripts require a little bit of setup before they can be used.
 
 The box is on Google Drive - [download it](https://drive.google.com/open?id=1988zwf-6aM2AeyiJuXVz6y_9m_iXn0no) and then install the download into vagrant:
 
-vagrant box --name base-box add ~/Downloads/centos-6.9-base.box
+vagrant box --name base-box-vb-5.2.0 add ~/Downloads/centos-6.9-base.box
 
 It is import the box is named base-box in vagrant. Check the output of the following command looks like this:
 
     $ vagrant box list
-    base-box       (virtualbox, 0)
+    base-box-vb-5.2.0       (virtualbox, 0)
 
 4) Clone this git repo
 
