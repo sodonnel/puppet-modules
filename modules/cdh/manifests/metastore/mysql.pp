@@ -11,15 +11,6 @@ class cdh::metastore::mysql (
     $hive_version = '1.1.0'
   }
 
-  if (true) {
-
-  # Why is this all inside an IF statement? Trying to build CDH from cdh::local has a mess
-  # of dependencies and everything is chained. For some reason, I found that the first
-  # two steps of this class were running, and then the rest were running later. This caused
-  # some dependency problems with other modules that require the DBs create here, and I did
-  # not what to put a hard dependency into puppet for it (sentry). This IF statement hack
-  # gets all the steps in the class to run in the correct order.
-
   class { '::mysql::server':
     root_password    => 'root123',
     service_enabled  => true,
@@ -101,7 +92,6 @@ class cdh::metastore::mysql (
     privileges => ['ALL'],
     table      => 'sentry.*',
     user       => "${mysqluser}@localhost",
-  }
   }
 
 }
