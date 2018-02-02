@@ -51,6 +51,15 @@ class cdh::config::hdfs {
 
   }
 
+  file { ["/etc/hadoop", "/etc/hadoop/conf"]:
+    ensure  => directory,
+    owner   => "root",
+    group   => "root",
+    mode    => "755",
+  }
+
+  ->
+
   file { "/etc/hadoop/conf/hdfs-site.xml":
     ensure  => present,
     content => template("cdh/hdfs-site.xml.erb"),

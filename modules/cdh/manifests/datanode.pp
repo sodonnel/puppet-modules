@@ -1,26 +1,7 @@
-class cdh::datanode(
-  $namenodehostname        = namenode,
-  $resourcemanagerhostname = resourcemanager,
-  $metastorehostname       = metastore,
-  $yarnavailablememory     = 3072,
-  $yarnavailablecores      = 2,
-  $hostentries             = {},
-)
+class cdh::datanode
 {
 
-#  class { 'cdh::hosts':
-#    entries => $hostentries
-#  }
-
-#  class {'cdh::config':
-#    includehive             => true,
-#    includeyarn             => true,
-#    namenodehostname        => $namenodehostname,
-#    resourcemanagerhostname => $resourcemanagerhostname,
-#    metastorehostname       => $metastorehostname,
-#    yarnavailablememory     => $yarnavailablememory,
-#    yarnavailablecores      => $yarnavailablecores,
-#  }
+  require cdh::config::hdfs
 
   contain cdh::datanode::install
   contain cdh::datanode::config

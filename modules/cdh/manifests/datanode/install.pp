@@ -1,6 +1,6 @@
 class cdh::datanode::install {
 
-  package { [hadoop-hdfs-datanode, hadoop-mapreduce, hadoop-yarn-nodemanager, hive]:
+  package { [hadoop-hdfs-datanode]:
     ensure => present,
   }
   
