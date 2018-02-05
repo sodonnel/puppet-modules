@@ -1,5 +1,10 @@
 class cdh::resourcemanager::config {
 
+  cdh::kinit { 'resourceManagerConfig':
+  }
+
+  ->
+
   exec {'yarn-history':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',

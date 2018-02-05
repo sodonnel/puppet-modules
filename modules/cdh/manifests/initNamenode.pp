@@ -14,16 +14,26 @@ class cdh::initNamenode
     timeout   => 0,
   }
 
-#  ->
-#
-#  exec {'namenode-tmpdir':
-#    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
-#    user      => 'root',
-#    command   => '/usr/lib/hadoop/libexec/init-hdfs.sh',
-#    logoutput => on_failure,
-#    unless    => "su hdfs -c 'hadoop fs -ls /tmp'",
-#    timeout   => 0,
-#  }
+  ->
+
+  file {'/tmp/init-hdfs.sh':
+    ensure => present,
+    content => template("cdh/init-hdfs.sh"),
+    owner   => 'hdfs',
+    group   => 'hdfs',
+    mode    => '755'
+  }
+
+  -> 
+
+  exec {'namenode-tmpdir':
+    path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
+    user      => 'hdfs',
+    command   => '/tmp/init-hdfs.sh',
+    logoutput => on_failure,
+    unless    => "su hdfs -c 'hadoop fs -ls /tmp'",
+    timeout   => 0,
+  }
 
   ->
 
@@ -48,4 +58,4 @@ class cdh::initNamenode
   }
 
 
-}
+} 
