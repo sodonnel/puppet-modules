@@ -31,8 +31,14 @@ class cdh::singlenode(
   Class['cdh::initNamenode'] ->
   Class['cdh::resourceManager'] ->
   Class['cdh::nodeManager']     ->
+  
   class{ 'cdh::zookeeper':
     secure => $secure,
+  }                             ->
+  class {'cdh::hbase':
+    secure => $secure,
+    zookeeper_ensemble => "${hostname}:2181"
   }
+
   
 }

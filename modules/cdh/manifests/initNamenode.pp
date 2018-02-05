@@ -31,7 +31,7 @@ class cdh::initNamenode
     user      => 'hdfs',
     command   => '/tmp/init-hdfs.sh',
     logoutput => on_failure,
-    unless    => "su hdfs -c 'hadoop fs -ls /tmp'",
+    unless    => "hadoop fs -ls /tmp",
     timeout   => 0,
   }
 
