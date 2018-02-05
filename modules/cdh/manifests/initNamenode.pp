@@ -1,6 +1,11 @@
 class cdh::initNamenode
 {
 
+  cdh::kinit { 'initNamenode':  
+  }
+
+  ->
+
   exec {'namenode-waitonsafemode':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',

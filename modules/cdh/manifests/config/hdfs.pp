@@ -23,7 +23,7 @@ class cdh::config::hdfs {
 
     exec { "generate_host_certificate":
       command => "/root/ca/generate_and_sign_cert.sh ${hostname}",
-      path    => ["/usr/bin", "/root/ca"],
+      path    => ["/usr/bin", "/root/ca", "/usr/java/default/bin"],
       creates => "/root/ca/intermediate/certs/${hostname}.cert.pem",
       user    => 'root',
       cwd     => "/root/ca",
