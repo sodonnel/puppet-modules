@@ -30,6 +30,9 @@ class cdh::singlenode(
   Class['cdh::datanode']     ->
   Class['cdh::initNamenode'] ->
   Class['cdh::resourceManager'] ->
-  Class['cdh::nodeManager']
+  Class['cdh::nodeManager']     ->
+  class{ 'cdh::zookeeper':
+    secure => $secure,
+  }
   
 }
