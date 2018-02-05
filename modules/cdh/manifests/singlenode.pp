@@ -24,13 +24,12 @@ class cdh::singlenode(
   contain cdh::datanode
   contain cdh::initNamenode
   contain cdh::resourceManager
+  contain cdh::nodeManager
 
   Class['cdh::namenode']     ->
   Class['cdh::datanode']     ->
   Class['cdh::initNamenode'] ->
-  Class['cdh::resourceManager']
+  Class['cdh::resourceManager'] ->
+  Class['cdh::nodeManager']
   
-
-
 }
-
