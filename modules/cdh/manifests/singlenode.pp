@@ -38,7 +38,10 @@ class cdh::singlenode(
   class {'cdh::hbase':
     secure => $secure,
     zookeeper_ensemble => "${hostname}:2181"
+  }                             ->
+  class {'cdh::hive':
+    secure => $secure,
+    metastorehostname => $hostname
   }
-
   
 }
