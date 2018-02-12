@@ -9,6 +9,7 @@ class cdh::sentry(
 
   if ($install) {
     class {'cdh::sentry::install':}     ->
+    class {'cdh::sentry::db':}          ->
     class {'cdh::sentry::config':
       dbhost          => $dbhost,
       dbuser          => $dbuser,

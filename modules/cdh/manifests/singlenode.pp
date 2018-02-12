@@ -42,6 +42,10 @@ class cdh::singlenode(
   class {'cdh::hive':
     secure => $secure,
     metastorehostname => $hostname
-  }
+  }                             ->
+  # Sentry only gets installed if we are secure. There is no non secure option.
+  class {'cdh::sentry':
+    install => $secure
+  }                             
   
 }
