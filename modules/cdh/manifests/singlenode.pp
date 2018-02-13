@@ -47,6 +47,7 @@ class cdh::singlenode(
   class {'cdh::sentry':
     install => $secure
   }                             ->
+  class {'cdh::sqoop1::install':} ->
   class {'cdh::oozie':
     secure           => $secure,
     namenodehostname => $hostname
@@ -56,5 +57,10 @@ class cdh::singlenode(
     zookeeper_ensemble  => "${hostname}:2181/solr",
     enabled             => true,
     secure              => $secure
-  }
+  }                             ->
+  class {'cdh::hue':
+    namenodehostname       => $hostname,
+    metastorehostname       => $hostname,
+    resourcemanagerhostname => $hostname
+  } 
 }
