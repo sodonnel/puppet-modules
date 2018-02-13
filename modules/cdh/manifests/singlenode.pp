@@ -46,6 +46,10 @@ class cdh::singlenode(
   # Sentry only gets installed if we are secure. There is no non secure option.
   class {'cdh::sentry':
     install => $secure
-  }                             
-  
+  }                             ->
+  class {'cdh::oozie':
+    secure           => $secure,
+    namenodehostname => $hostname
+  }
+
 }
