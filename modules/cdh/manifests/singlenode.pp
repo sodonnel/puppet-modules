@@ -50,6 +50,11 @@ class cdh::singlenode(
   class {'cdh::oozie':
     secure           => $secure,
     namenodehostname => $hostname
+  }                             ->
+  class {'cdh::search':
+    namenodehostname    => $hostname,
+    zookeeper_ensemble  => "${hostname}:2181/solr",
+    enabled             => true,
+    secure              => $secure
   }
-
 }
