@@ -136,12 +136,28 @@
     
     <% end %>
 
-  <!-- Basic settings for KMS running locally 
-    To get it working uncomment the TWO parameters below and then:
+    <!-- Basic settings for KMS running locally
 
-    yum install hadoop-kms hadoop-kms-server
+On CDH 5.14.0, for some reason I cannot get to the bottom if, kms-server just exits after about 30
+seconds and no errors are present in any log files I can find.
 
-    service hadoop-kms-server start
+However if I run the command from the command line it stays up and works fine.
+
+For some reason I have not figured out, this only works on non-secure (no Kerberos).
+
+
+To get it working uncomment the TWO parameters below and then:
+
+yum install hadoop-kms hadoop-kms-server
+
+Then edit /etc/hadoop-kms/conf/kms-site.xml and comment out the property:
+
+hadoop.security.keystore.java-keystore-provider.password-file
+
+Then run the following as root:
+
+sudo -u kms /usr/java/jdk1.8.0_152/bin/java -Djava.util.logging.config.file=/var/lib/hadoop-kms/tomcat-deployment/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Dproc_kms -Dkms.log.dir=/var/log/hadoop-kms/ -Djava.library.path=/usr/lib/hadoop/libexec/../lib/native/ -Djava.endorsed.dirs=/usr/lib/bigtop-tomcat/endorsed -classpath /usr/lib/bigtop-tomcat/bin/bootstrap.jar -Dcatalina.base=/var/lib/hadoop-kms/tomcat-deployment -Dcatalina.home=/usr/lib/bigtop-tomcat -Djava.io.tmpdir=/var/run/hadoop-kms org.apache.catalina.startup.Bootstrap kms start
+
   -->  
   <!-- <property>
     <name>hadoop.security.key.provider.path</name>
