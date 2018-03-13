@@ -1,21 +1,19 @@
 class cdh::hue(
+  $install                 = 'true',
   $namenodehostname        = namenode,
   $metastorehostname       = metastore,
   $resourcemanagerhostname = resourcemanager,
 ) 
 {
 
-  class{ 'cdh::hue::config':
-    namenodehostname        => $namenodehostname,
-    resourcemanagerhostname => $resourcemanagerhostname,
-    metastorehostname       => $metastorehostname,
+  if ($install == 'true') {
+    class{ 'cdh::hue::install': } ->
+    class{ 'cdh::hue::config':
+      namenodehostname        => $namenodehostname,
+      resourcemanagerhostname => $resourcemanagerhostname,
+      metastorehostname       => $metastorehostname,
+    }                             ->
+    class{ 'cdh::hue::service': }
   }
-
-  contain cdh::hue::install
-  contain cdh::hue::service
-
-  Class['cdh::hue::install']             ->
-  Class['cdh::hue::config']              ->
-  Class['cdh::hue::service']
 
 }

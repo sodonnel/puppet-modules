@@ -4,6 +4,9 @@ class cdh::singlenode(
   $yarnavailablecores  = 8,
   $secure              = false,
   $encryption          = false,
+  $install_hue         = true,
+  $install_oozie       = true,
+  $install_search      = true
 ) {
 
   class {'cdh::config':
@@ -18,19 +21,13 @@ class cdh::singlenode(
     yarnavailablecores      => $yarnavailablecores,
     secure                  => $secure,
     encryption              => $encryption,
-  }
+  }                             ->
 
-  contain cdh::namenode
-  contain cdh::datanode
-  contain cdh::initNamenode
-  contain cdh::resourceManager
-  contain cdh::nodeManager
-
-  Class['cdh::namenode']     ->
-  Class['cdh::datanode']     ->
-  Class['cdh::initNamenode'] ->
-  Class['cdh::resourceManager'] ->
-  Class['cdh::nodeManager']     ->
+  class{ 'cdh::namenode': }     ->
+  class{ 'cdh::datanode': }     ->
+  class{ 'cdh::initNamenode': } ->
+  class{ 'cdh::resourceManager': } ->
+  class{ 'cdh::nodeManager':     } ->
   
   class{ 'cdh::zookeeper':
     secure => $secure,
@@ -49,17 +46,20 @@ class cdh::singlenode(
   }                             ->
   class {'cdh::sqoop1::install':} ->
   class {'cdh::oozie':
+    install          => $install_oozie,
     secure           => $secure,
     namenodehostname => $hostname
   }                             ->
   class {'cdh::search':
+    install             => $install_search,
     namenodehostname    => $hostname,
     zookeeper_ensemble  => "${hostname}:2181/solr",
     enabled             => true,
     secure              => $secure
   }                             ->
   class {'cdh::hue':
-    namenodehostname       => $hostname,
+    install                 => $install_hue,
+    namenodehostname        => $hostname,
     metastorehostname       => $hostname,
     resourcemanagerhostname => $hostname
   } 
