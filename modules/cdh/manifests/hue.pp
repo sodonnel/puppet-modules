@@ -3,6 +3,7 @@ class cdh::hue(
   $namenodehostname        = namenode,
   $metastorehostname       = metastore,
   $resourcemanagerhostname = resourcemanager,
+  $secure                  = false,
 ) 
 {
 
@@ -12,6 +13,7 @@ class cdh::hue(
       namenodehostname        => $namenodehostname,
       resourcemanagerhostname => $resourcemanagerhostname,
       metastorehostname       => $metastorehostname,
+      secure                  => $secure,
     }                             ->
     class{ 'cdh::hue::service': }
   }

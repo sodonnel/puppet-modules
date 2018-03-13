@@ -61,6 +61,7 @@ class cdh::singlenode(
     install                 => $install_hue,
     namenodehostname        => $hostname,
     metastorehostname       => $hostname,
-    resourcemanagerhostname => $hostname
+    resourcemanagerhostname => $hostname,
+    secure                  => $secure
   } 
 }

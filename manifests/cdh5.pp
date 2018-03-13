@@ -167,9 +167,9 @@ node /^standalone.*/ {
 #   $cdh_secure = 'true'
 #   $cdh_encryption = 'true'
 
-#   $install_hue = true
-#   $install_oozie = true
-#   $install_search = true
+#   $install_hue = 'true'
+#   $install_oozie = 'true'
+#   $install_search = 'true'
   
   if $cdh_secure == 'true' {
     require 'kerberos'
