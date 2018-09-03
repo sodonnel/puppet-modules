@@ -27,7 +27,7 @@ Hive is configured as an admin group, so get a hive ticket and then connect to b
 
 
 create role admin
-grant all on server server1 to roles admin;
+grant all on server server1 to role admin;
 grant admin to group hive;
 
 Now when you connect as Hive you can do just about anything.
