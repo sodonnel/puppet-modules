@@ -3,7 +3,7 @@ class cdh::namenode
 
   require cdh::config::hdfs
 
-  if (cdh::config::secure) {
+  if ($cdh::config::secure) {
     require cdh::config::kerberos
   }
 
