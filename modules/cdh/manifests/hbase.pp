@@ -1,5 +1,4 @@
 class cdh::hbase(
-  $namenodehostname        = 'namenode',
   $zookeeper_ensemble      = 'localhost:2181',
   $masterenabled           = true,
   $regionenabled           = true,
@@ -8,8 +7,10 @@ class cdh::hbase(
 ) 
 {
 
+  # TODO - split master and RS so they can be installed on different nodes
+
   class{ 'cdh::hbase::config':
-    namenodehostname        => $namenodehostname,
+    namenodehostname        => $cdh::config::namenodehostname,
     zookeeper_ensemble      => $zookeeper_ensemble,
     secure                  => $secure,
   }

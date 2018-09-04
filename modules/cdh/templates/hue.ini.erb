@@ -27,6 +27,10 @@
   # Time zone name
   time_zone=America/Los_Angeles
 
+  # This is a path to the truststore, which is a concatenated list of pem files.
+  # With CA signed certs, you just need the root and intermediate CA in here (ca-chain.pem)
+  # ssl_cacerts=/etc/hue/truststore.pem
+
   # Enable or disable Django debug mode.
   django_debug_mode=false
 

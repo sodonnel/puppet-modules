@@ -1,7 +1,7 @@
 node /^master.*/ {
 
-#   $cdh_version  = '5.5.1'
-#   $cdh_secure = 'false'
+   $cdh_version  = '5.14.0'
+   $cdh_secure = 'false'
 
   class { 'cdh::config':
     includehive             => false,
@@ -163,9 +163,13 @@ node /^standalone.*/ {
   # These three variables must be declared in facter.
   # When running through vagrant, they are set in Facter automatically.
   # If not running via vagrant they need to be set manually.
-  # $cdh_version  = '5.5.1'
-  # $cdh_secure = 'true'
-  # $cdh_encryption = 'true'
+#   $cdh_version  = '5.14.0'
+#   $cdh_secure = 'true'
+#   $cdh_encryption = 'true'
+
+#   $install_hue = 'true'
+#   $install_oozie = 'true'
+#   $install_search = 'true'
   
   if $cdh_secure == 'true' {
     require 'kerberos'
@@ -191,9 +195,12 @@ node /^standalone.*/ {
                           } ->
   class{ 'cdh51java':     } ->
   class{ 'rootca':        } ->
-  class{ 'cdh::local':
+  class{ 'cdh::singlenode':
     hostname   => 'standalone',
     secure     => $hadoop_security,
     encryption => $hadoop_encryption,
+    install_hue    => $install_hue,
+    install_oozie  => $install_oozie,
+    install_search => $install_search
                           } 
 }

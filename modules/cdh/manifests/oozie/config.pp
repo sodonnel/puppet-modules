@@ -7,32 +7,42 @@ class cdh::oozie::config(
 ){
 
 
-  $secured       = $secure
-  $mysqlhost     = $dbhost
-  $mysqlusername = $dbuser
-  $mysqlpassword = $dbpass
-  $oozieHost     = $hostname
+  $secured       = $cdh::oozie::secure
+  $mysqlhost     = $cdh::oozie::dbhost
+  $mysqlusername = $cdh::oozie::dbuser
+  $mysqlpassword = $cdh::oozie::dbpass
+  $oozieHost     = $cdh::oozie::namenodehostname
 
 
   if $cdh_version  =~ /^5\.3/ {
     # $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${::cdh::config::namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
-    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${oozieHost} -locallib /usr/lib/oozie/oozie-sharelib-yarn.tar.gz"
   }  
   else {
-    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${namenodehostname} -locallib /usr/lib/oozie/oozie-sharelib-yarn"
+    $oozie_lib_command = "oozie-setup sharelib create -fs hdfs://${oozieHost} -locallib /usr/lib/oozie/oozie-sharelib-yarn"
   }
 
-  if $secure  == true {
+  if $secured  == true {
 
     file { '/etc/oozie/conf/oozie.keytab':
       ensure => 'present',
       source => 'file:///etc/hadoop/conf/oozie.keytab',
       owner  => 'oozie',
-      mode   => '600',
+      mode   => '644',
     }
 
   }
 
+  cdh::kinit { 'oozieConfig':
+  }
+
+  ->
+
+  cdh::kinit { 'oozieConfigRoot':
+    os_user => 'root'
+  }
+
+  ->
 
   file { '/var/lib/oozie/mysql-connector-java.jar':
     ensure => 'link',
@@ -84,6 +94,5 @@ class cdh::oozie::config(
     unless    => 'hadoop fs -ls /user/oozie/share/lib/lib_*',
     timeout   => 0,
   }
-
 
 }

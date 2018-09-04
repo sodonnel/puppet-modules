@@ -13,7 +13,7 @@ class cdh::search::config (
     content => template("cdh/solr_conf.erb"),
     owner   => "root",
     group   => "root",
-  }
+  }   ->
 
 
   file { "/etc/solr/conf/log4j.properties":
@@ -21,60 +21,14 @@ class cdh::search::config (
     content => template("cdh/solr_log4j.erb"),
     owner   => "root",
     group   => "root",
-  }
+  }  ->
 
-
-  if ($secure == true) {
-
-    exec {'kerberos-auth-hdfs-solr':
-      path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
-      user      => 'hdfs',
-      command   => 'kinit hdfs/$(hostname) -kt /etc/hadoop/conf/hdfs.keytab',
-      logoutput => on_failure,
-      timeout   => 0,
-    }
-
-    ->
-
-    exec {'solr-generate-keytab':
-      path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
-      user      => 'root',
-      command   => 'kadmin -p root/admin -w vagrant -q "ktadd -k /etc/solr/conf/solr.keytab solr/$(hostname)"',
-      logoutput => on_failure,
-      unless    => "ls /etc/solr/conf/solr.keytab",
-      timeout   => 0,
-    }
-
-    ->
-
-    file {'/etc/solr/conf/solr.keytab':
-      owner => 'solr',
-      mode  => '600',
-    }
-
-    # SOLR is sharing the hdfs HTTP keytab
-
-    ->
-
-    file { "/etc/solr/conf/jaas.conf":
-      ensure  => present,
-      content => template("cdh/solr_jaas.conf.erb"),
-      owner   => "root",
-      group   => "root",
-    }
-
-    ->
-
-    file { "/etc/solr/conf/sentry-site.xml":
-      ensure  => present,
-      content => template("cdh/solr_sentry-site.xml.erb"),
-      owner   => "root",
-      group   => "root",
-    }
-
-  }
-
-
+  class{ 'cdh::search::secure_config':
+    namenodehostname   => $namenodehostname,
+    zookeeper_ensemble => $zookeeper_ensemble,
+    secure             => $secure
+  } ->
+  
   exec {'solr-hdfs':
     path      => ['/usr/bin', '/bin', '/usr/local/bin' ],
     user      => 'hdfs',

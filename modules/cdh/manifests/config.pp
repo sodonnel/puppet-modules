@@ -13,20 +13,20 @@ class cdh::config(
 )
 {
 
-  contain cdh::config::hdfs
-  contain cdh::config::profile
+#  contain cdh::config::hdfs
+#  contain cdh::config::profile
 
-  if $includeyarn {
-    contain cdh::config::yarn
-  }
+#  if $includeyarn {
+#    contain cdh::config::yarn
+#  }
 
-  if $includehive {
-    contain cdh::config::hive
-  }
-  contain cdh::config::hdfs
-
-  if $secure {
-    contain cdh::config::kerberos
-  }
+#  if $includehive {
+#    contain cdh::config::hive
+#  }
+#  contain cdh::config::hdfs
+#
+#  if $secure {
+#    contain cdh::config::kerberos
+#  }
 
 }

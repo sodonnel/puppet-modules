@@ -1,4 +1,5 @@
 class cdh::search(
+  $install                 = 'true',
   $namenodehostname        = namenode,
   $zookeeper_ensemble      = 'localhost:2181/solr',
   $enabled                 = true,
@@ -6,22 +7,18 @@ class cdh::search(
 ) 
 {
 
-  class{ 'cdh::search::config':
-    namenodehostname        => $namenodehostname,
-    zookeeper_ensemble      => $zookeeper_ensemble,
-    secure                  => $secure,
+  if ($install == 'true') {
+    
+    class{ 'cdh::search::install':  } ->
+    class{ 'cdh::search::config':
+      namenodehostname        => $namenodehostname,
+      zookeeper_ensemble      => $zookeeper_ensemble,
+      secure                  => $secure,
+    }                                ->
+    class{ 'cdh::search::service':
+      enabled                 => $enabled,
+    }
+    
   }
-
-  class{ 'cdh::search::service':
-    enabled                 => $enabled,
-  }
-
-
-  contain cdh::search::install
-  contain cdh::search::service
-
-  Class['cdh::search::install']             ->
-  Class['cdh::search::config']              ->
-  Class['cdh::search::service']
 
 }

@@ -12,7 +12,6 @@ kadmin -p root/admin -w vagrant -q "delprinc -force HTTP/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force yarn/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force mapred/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force oozie/$(hostname)"
-kadmin -p root/admin -w vagrant -q "delprinc -force hue/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force solr/$(hostname)"
 kadmin -p root/admin -w vagrant -q "delprinc -force hbase/$(hostname)"
@@ -22,7 +21,6 @@ kadmin -p root/admin -w vagrant -q "addprinc -randkey HTTP/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey yarn/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey mapred/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey oozie/$(hostname)"
-kadmin -p root/admin -w vagrant -q "addprinc -randkey hue/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hive/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey solr/$(hostname)"
 kadmin -p root/admin -w vagrant -q "addprinc -randkey hbase/$(hostname)"
@@ -43,25 +41,20 @@ rm -f /etc/hadoop/conf/*-unmerged.keytab
 # This is 644 so that solr can share the HTTP keytab
 # in pseudo dist mode
 chmod 644 /etc/hadoop/conf/hdfs.keytab
-chown hdfs:hadoop /etc/hadoop/conf/hdfs.keytab
+#chown hdfs:hadoop /etc/hadoop/conf/hdfs.keytab
 
-chmod 640 /etc/hadoop/conf/yarn.keytab
-chown yarn:hadoop /etc/hadoop/conf/yarn.keytab
+chmod 644 /etc/hadoop/conf/yarn.keytab
+#chown yarn:hadoop /etc/hadoop/conf/yarn.keytab
 
-chmod 640 /etc/hadoop/conf/mapred.keytab
-chown mapred:hadoop /etc/hadoop/conf/mapred.keytab
+chmod 644 /etc/hadoop/conf/mapred.keytab
+#chown mapred:hadoop /etc/hadoop/conf/mapred.keytab
 
-chmod 640 /etc/hadoop/conf/oozie.keytab
-chown root:hadoop /etc/hadoop/conf/oozie.keytab
+chmod 644 /etc/hadoop/conf/oozie.keytab
+#chown root:hadoop /etc/hadoop/conf/oozie.keytab
 
-kadmin -p root/admin -w vagrant -q "ktadd -k /etc/hue/conf/hue.keytab hue/$(hostname)"
-
-chmod 600 /etc/hue/conf/hue.keytab
-chown hue:hadoop /etc/hue/conf/hue.keytab
-
-kadmin -p root/admin -w vagrant -q "ktadd -k /etc/hive/conf/hive.keytab hive/$(hostname)"
-
-chmod 600 /etc/hive/conf/hive.keytab
-chown hive:hadoop /etc/hive/conf/hive.keytab
+#kadmin -p root/admin -w vagrant -q "ktadd -k /etc/hive/conf/hive.keytab hive/$(hostname)"
+#
+#chmod 600 /etc/hive/conf/hive.keytab
+#chown hive:hadoop /etc/hive/conf/hive.keytab
 
 touch /root/keytabs_generated

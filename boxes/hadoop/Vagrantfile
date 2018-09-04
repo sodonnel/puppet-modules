@@ -73,7 +73,10 @@ SCRIPT
       puppet.facter = {
         "cdh_version"     => cdh_version,
         "cdh_secure"      => secure_cluster,
-        "cdh_encryption"  => enable_ssl
+        "cdh_encryption"  => enable_ssl,
+        "install_hue"     => 'false',
+        "install_search"  => 'false',
+        "install_oozie"   => 'false'
       }
       puppet.manifests_path   = "../../manifests"
       puppet.manifest_file    = "cdh5.pp"

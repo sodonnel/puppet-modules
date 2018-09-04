@@ -14,4 +14,10 @@ class cdh::hue::config(
     group   => "root",
   }
 
+  ->
+
+  class{ 'cdh::hue::secure_config':
+    secure => $secure
+  }
+
 }
