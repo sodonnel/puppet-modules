@@ -11,6 +11,18 @@
                 </property>
             </configuration>
             <exec>${EXEC}</exec>
+<!-- exec should only ever contain a simple filename - not a path. The file referenced in the <file> tag below can be a 
+     relative path if it is stored in the workflow directory on hdfs. Otherwise it can be an absolution path on hdfs
+     Any files mentioned in a <file> tag are copied to the container folder and given the name specified after the # symbol
+     in the file parameter. So the value after the # should be the same as the value in exec, as that is the file name to be executed.
+
+     eg:
+
+    ...
+    <exec>alias</exec>
+    <file>/path/to/some/script.sh#alias</file>
+    ...
+-->
             <argument>A</argument>
             <argument>B</argument>
             <file>${EXEC}#${EXEC}</file> <!--Copy the executable to compute node's current working directory -->
