@@ -20,4 +20,13 @@ class cdh::hue::config(
     secure => $secure
   }
 
+  ->
+
+  # This is needed due to a bug in the CDH startup script that incorrectly
+  # specifies the pid file location as /usr/lib/hue/pids/supervistor.pid
+  file { "/usr/lib/hue/pids":
+    ensure => 'link',
+    target => '/var/run/hue',
+  }
+
 }

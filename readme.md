@@ -6,20 +6,20 @@ This is a collection of puppet modules I have build up over some time, used main
 
 These scripts require a little bit of setup before they can be used.
 
-1) Install [Virtualbox 5.2.0(https://www.virtualbox.org/wiki/Downloads) - other versions may work, but I tested on 5.2.0
+1) Install [Virtualbox 5.2.x(https://www.virtualbox.org/wiki/Downloads) - other versions may work, but I tested on 5.2.26
 
-2) Install [Vagrant](https://www.vagrantup.com/downloads.html) - I have tested with 2.0.1
+2) Install [Vagrant](https://www.vagrantup.com/downloads.html) - I have tested with 2.2.0
 
 3) Download my base box for vagrant and install it. This box has a unix account vagrant, password vagrant. The root password is also vagrant, but the vagrant user has passwordless sudo setup, so it can do basically anything anyway. Some developer tools and Puppet are also installed on the base box.
 
-The box is on Google Drive - [download it](https://drive.google.com/open?id=1988zwf-6aM2AeyiJuXVz6y_9m_iXn0no) and then install the download into vagrant:
+The box is on Google Drive - [download it](https://drive.google.com/open?id=1yLCs_k3ZUy3RPYF4EGrnCoNoekSdjJTn) and then install the download into vagrant:
 
-vagrant box --name base-box-vb-5.2.0 add ~/Downloads/centos-6.9-base.box
+vagrant box --name centos7_base add ~/Downloads/centos-7-base.box
 
-It is import the box is named base-box in vagrant. Check the output of the following command looks like this:
+It is import the box is named centos7_base in vagrant. Check the output of the following command looks like this:
 
     $ vagrant box list
-    base-box-vb-5.2.0       (virtualbox, 0)
+    centos7_base      (virtualbox, 0)
 
 4) Clone this git repo
 
@@ -45,6 +45,16 @@ Virtual box provides a internal host only network, and the machines started by t
 All the boxes are created with two network interfaces - one is a NAT adapter that allows the box to reach the internet via your laptops network connection. The other is a host only adapter, that allows the Virtual box instances to talk to each other on that network, and also for you to ssh onto the boxes from the host (your laptop).
 
 I have run these boxes on machines with 16GB and 12GB of RAM, and they seem to work well. I suspect you will need at least 8GB on the host for the Hadoop VM, but 16 would be better.
+
+### Accessing the Host Only Network
+
+Prior to Mac OS Mojave, the host only network worked flawlessly for me. However after a fresh Mojave install, plus also upgrading Virtual box and many other things I found the host only network was not accessible from the host to the VMs. The issue appeared to be due to the routing table on the host, but I have not been able to figure out why the routes are not automatically added.
+
+By running the following, you can add a route, but it will be lost on each reboot:
+
+    sudo route -nv add -net 192.168.33 -interface vboxnet0
+
+That resolves the issue for me.
 
 ## Boxes
 
@@ -74,11 +84,11 @@ The root of this git repo is also mapped onto the box as /puppet_modules. You ca
 
 ### Basic
 
-The is the most simple box, giving you a basic Centos 6.6 install with 512MB RAM. It runs on IP 192.168.33.5, and there are no puppet scripts applied to it.
+The is the most simple box, giving you a basic Centos 7 install with 512MB RAM. It runs on IP 192.168.33.5, and there are no puppet scripts applied to it.
 
 ### Hadoop
 
-This is the most complicated box, as it allows you to build a Pseudo Distributed Hadoop Cluster at various versions of Cloudera Hadoop (CDH). I have tested builds with CDH 5.3.x, 5.4.x and 5.5.x. The box runs on 192.168.33.6 and has a hostname of standalone. If you switch into this directory, and run `vagrant up`, it will build a cluster with CDH 5.5.1. However, if you set the environment variable CDH_VERSION to a different version, it will be used instead:
+This is the most complicated box, as it allows you to build a Pseudo Distributed Hadoop Cluster at various versions of Cloudera Hadoop (CDH). I have tested builds with CDH 5.3.x to 5.16. box runs on 192.168.33.6 and has a hostname of standalone. If you switch into this directory, and run `vagrant up`, it will build a cluster with CDH 5.16.1. However, if you set the environment variable CDH_VERSION to a different version, it will be used instead:
 
     $ export CDH_VERSION=5.4.5
 
